@@ -1,0 +1,12 @@
+# Getting Started
+
+__Tutorials__. A number of [tutorials](Tutorial.Index.md) are available to get you started with using Platform for Situated Intelligence. We recommend starting with the [Brief Introduction](Tutorial.BriefIntroduction.md), which provides a guided walk-through for some of the main concepts in \\psi. It shows how to create a simple program, describes the core concept of a stream, and explains how to transform, synchronize, visualize, persist to and replay streams from disk. We recommend that you first work through the examples in this tutorial to familiarize yourself with these core concepts. The [Writing Components](Tutorial.WritingComponents.md) tutorial explains how to write new \\psi components, and the [Delivery Policies](Tutorial.DeliveryPolicies.md) tutorial describes how to control throughput on streams in your application.
+
+__Advanced Topics__. A number of documents on more [advanced topics](InDepth.Index.md) describe in more detail various aspects of the framework, including [stream operators](InDepth.StreamOperators.md), [synchronization](InDepth.Synchronization.md), [remoting](InDepth.Remoting.md), [interop](InDepth.Interop.md), [shared objects and memory management](InDepth.Shared.md), etc.
+
+__Samples__. Besides the tutorials and topics, it may be helpful to look through the set of [Samples](Samples.md) provided. While some of the samples address specialized topics such as how to leverage speech recognition components or how to bridge to ROS, reading them will give you more insight into programming with \\psi.
+
+__Components__. Additional useful information regarding available packages and components can be found in the [NuGet packages list](List.NuGet.md) and in the [component list](List.Components.md) pages.
+The latter page also has pointers to other repositories by third parties containing other \psi components.
+
+__Documentation__. Like the rest of the codebase, the documentation available in this wiki is still under construction and in various phases of completion. If you need further explanation in any of these areas, please open an issue, label it [`documentation`](https://github.com/Microsoft/psi/labels/documentation), as this will help us target our documentation development efforts to the highest priority needs.

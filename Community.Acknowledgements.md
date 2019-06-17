@@ -1,0 +1,3 @@
+# Acknowledgments
+
+We would like to thank our internal and external early adopters for the feedback provided during the alpha testing period, including (but not limited to): [Daniel McDuff](http://alumni.media.mit.edu/~djmcduff/) and [Kael Rowan](https://www.microsoft.com/en-us/research/people/kaelr/) at MSR, Chirag Raman and Louis-Phillipe Morency in the [MultiComp Lab](http://multicomp.cs.cmu.edu/) at CMU, as well as adopters in the [SLIM research group](https://coen.boisestate.edu/slim/) at Boise State and in the [Qualitative Reasoning Group](http://www.qrg.northwestern.edu/) at Northwestern University.
