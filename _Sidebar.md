@@ -1,6 +1,6 @@
-[**Welcome**](Home)
-* [Platform Overview](PlatformOverview)
-* [Getting Started](GettingStarted)
+[[**Home**]]
+* [[Platform Overview]]
+* [[Getting Started]]
 
 [**Basic Tutorials**](Tutorial.Index)
 * [Brief Introduction to \psi](Tutorial.BriefIntroduction)

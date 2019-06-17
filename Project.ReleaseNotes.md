@@ -256,7 +256,7 @@ Interim release with a few changes to the samples and some minor bug fixes:
 Initial, beta version of the Platform for Situated Intelligence. Includes the Platform for Situated Intelligence runtime, visualization tools, and an initial set of components (mostly geared towards audio and visual processing). Relevant documents:
 
 * [Documentation](/psi/) - top-level documentation page for Platform for Situated Intelligence.
-* [Platform for Situated Intelligence Overview](PlatformOverview) - high-level overview of the platform.
+* [Platform for Situated Intelligence Overview](Platform-Overview) - high-level overview of the platform.
 * [NuGet Packages List](List.NuGet) - list of NuGet packages available in this release.
 * [Building the Code](Using.BuildingPsi) - information about how to build the code.
 * [Brief Introduction](Tutorial.BriefIntroduction) - brief introduction on how to write a simple application.

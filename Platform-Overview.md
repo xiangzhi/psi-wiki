@@ -1,5 +1,3 @@
-# Platform for Situated Intelligence Overview
-
 ### What is Platform for Situated Intelligence?
 
 <b>P</b>latform for <b>S</b>ituated <b>I</b>ntelligence (which we abbreviate as \\psi, pronounced like the greek letter) is __an open, extensible framework that enables the development, fielding and study of situated, integrative-AI systems__.
