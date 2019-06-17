@@ -1,5 +1,3 @@
-# EventSource Component
-
 The `EventSource<TEventHandler, TOut>` component is used to generate a stream of messages triggered by an event to which it subscribes. Messages are generated whenever the event fires via an event handler of type `TEventHandler` that posts messages of type `TOut`.
 
 ## Construction

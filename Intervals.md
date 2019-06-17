@@ -1,5 +1,3 @@
-# Intervals
-
 Intervals are used to represent spans of real (`double`), integer (`int`), time (`DateTime`) or time span (`TimeSpan`) values. In the simplest case they are bounded by a pair of point values, inclusively. In some cases they may be unbounded at one or both ends and the endpoints may be exclusive.
 
 ## Construction

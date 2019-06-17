@@ -1,20 +1,18 @@
-# Basic Stream Operators
-
 The ability to manipulate streams of data plays a central role in the Platform for Situated Intelligence framework. This document provides a brief overview of the basic stream operators currently available. With a few exceptions (like generators and joins), stream operators generally transform one stream into another. The operators can be grouped into several classes:
 
-* [Producing](InDepth.StreamOperators.md#Producing): these operators provide the means for creating various source streams.
-* [Mapping](InDepth.StreamOperators.md#Mapping): these operators transform messages from the input stream.
-* [Filtering](InDepth.StreamOperators.md#Filtering): these operators filter messages from the input stream.
-* [Aggregating](InDepth.StreamOperators.md#Aggregating): these operators aggregate messages from the input stream.
-* [Window Computations](InDepth.StreamOperators.md#WindowComputations): these operators aggregate windows of messages from the input stream.
-* [Actuating](InDepth.StreamOperators.md#Actuating): these operators allow for actuating based on messages in a stream.
-* [Synchronizing](InDepth.StreamOperators.md#Synchronizing): these operators allow for synchronizing multiple streams.
-* [Sampling](InDepth.StreamOperators.md#Sampling): these operators allow for sampling over a stream.
-* [Parallel](InDepth.StreamOperators.md#Parallel): these operators allow for vector-parallel computations.
-* [Time Related](InDepth.StreamOperators.md#TimeRelated): these operators provide timing information.
-* [Miscellaneous](InDepth.StreamOperators.md#Miscellaneous): these operators provide various other functionalities.
+* [Producing](Stream-Operators.md#Producing): these operators provide the means for creating various source streams.
+* [Mapping](Stream-Operators.md#Mapping): these operators transform messages from the input stream.
+* [Filtering](Stream-Operators.md#Filtering): these operators filter messages from the input stream.
+* [Aggregating](Stream-Operators.md#Aggregating): these operators aggregate messages from the input stream.
+* [Window Computations](Stream-Operators.md#WindowComputations): these operators aggregate windows of messages from the input stream.
+* [Actuating](Stream-Operators.md#Actuating): these operators allow for actuating based on messages in a stream.
+* [Synchronizing](Stream-Operators.md#Synchronizing): these operators allow for synchronizing multiple streams.
+* [Sampling](Stream-Operators.md#Sampling): these operators allow for sampling over a stream.
+* [Parallel](Stream-Operators.md#Parallel): these operators allow for vector-parallel computations.
+* [Time Related](Stream-Operators.md#TimeRelated): these operators provide timing information.
+* [Miscellaneous](Stream-Operators.md#Miscellaneous): these operators provide various other functionalities.
 
-__NOTE__: Most stream operators described below take an optional `DeliveryPolicy` argument which allows the developer to control how the operators keep up with the incoming flow of messages when not enough computational resources are available to process them. More information is available in the [Delivery Policies](Tutorial.DeliveryPolicies) in-depth topic. Below, for improved readability, we simply omit this optional parameter from the operator descriptions.
+__NOTE__: Most stream operators described below take an optional `DeliveryPolicy` argument which allows the developer to control how the operators keep up with the incoming flow of messages when not enough computational resources are available to process them. More information is available in the [Delivery Policies](Delivery-Policies) in-depth topic. Below, for improved readability, we simply omit this optional parameter from the operator descriptions.
 
 <a name="Producing"></a>
 
@@ -263,9 +261,9 @@ Log(this IProducer<double> source, double newBase) -> IProducer<double>
 
 ## 5. Window computations
 
-While `Aggregate` accumulates values over the _entire_ stream, it is much more common to do this over some sliding window. The [`Window` operators](InDepth.Window) are very useful for producing these sliding windows (as `IEnumerable`) by count or `TimeSpan` over which to operate.
+While `Aggregate` accumulates values over the _entire_ stream, it is much more common to do this over some sliding window. The [`Window` operators](Windowing-Operators) are very useful for producing these sliding windows (as `IEnumerable`) by count or `TimeSpan` over which to operate.
 
-As a convenience, some of the above operations are available over windows by `size` or `timeSpan`. Under the covers, all of these are implemented using [`Window`](InDepth.Window):
+As a convenience, some of the above operations are available over windows by `size` or `timeSpan`. Under the covers, all of these are implemented using [`Window`](Windowing-Operators):
 
 ```csharp
 Sum(this IProducer<_> source, int size) -> IProducer<_>
@@ -328,13 +326,13 @@ myStream.ToEnumerable();
 myStream.ToObservable();
 ```
 
-[Bridging to events is a bit more involved.](InDepth.EventSource), requiring construction of an `EventSource` component and providing lambdas to subscribe/unsubscribe. This is due to events not being first class values in C# (as they are in F#).
+[Bridging to events is a bit more involved.](Event-Sources), requiring construction of an `EventSource` component and providing lambdas to subscribe/unsubscribe. This is due to events not being first class values in C# (as they are in F#).
 
 <a name="Synchronizing"></a>
 
 ## 7. Synchronizing
 
-Platform for Situated Intelligence provides operators that allow for fusing and synchronizing multiple streams in a variety of ways. The synchronization operators are `Join` and `Pair`. Given the complexity and importance of the topic, these operators are described in more detail in a separate [in-depth document on synchronization](InDepth.Synchronization).
+Platform for Situated Intelligence provides operators that allow for fusing and synchronizing multiple streams in a variety of ways. The synchronization operators are `Join` and `Pair`. Given the complexity and importance of the topic, these operators are described in more detail in a separate [in-depth document on synchronization](Synchronization).
 
 <a name="Sampling"></a>
 
@@ -342,7 +340,7 @@ Platform for Situated Intelligence provides operators that allow for fusing and 
 
 ### Sample(...)
 
-To sample values from a dense stream at some presumably sparser interval use `Sample`. A `clock` signal drives the sampling. At each signal, a value is taken from the source stream. If messages do not line up in time exactly, an `interpolator`, `matchWindow` or `tolerance` may be given specifying a policy (much like with [other synchronization operators](InDepth.Synchronization)).
+To sample values from a dense stream at some presumably sparser interval use `Sample`. A `clock` signal drives the sampling. At each signal, a value is taken from the source stream. If messages do not line up in time exactly, an `interpolator`, `matchWindow` or `tolerance` may be given specifying a policy (much like with [other synchronization operators](Synchronization)).
 
 ```csharp
 Sample(this IProducer<T> source, IProducer<TClock> clock, Interpolator<T> interpolator) -> IProducer<T>
@@ -431,7 +429,7 @@ Parallel<TIn, TKey, TOut>(
     ) -> IProducer<Dictionary<TKey, TOut>>
 ```
 
-Internally, sparse vector parallel processing creates and runs instances of [`Subpipeline`](Tutorial.WritingComponents.md#SubPipelines) dynamically and stops them based on the `branchTerminationPolicy`. The default policy is to stop and remove subpipelines when when the corresponding key is no longer available in the message.
+Internally, sparse vector parallel processing creates and runs instances of [`Subpipeline`](Writing-Components.md#SubPipelines) dynamically and stops them based on the `branchTerminationPolicy`. The default policy is to stop and remove subpipelines when when the corresponding key is no longer available in the message.
 
 A good example usage is when _tracking_ multiple entities (e.g. face tracking). When a set of tracked entities are represented as a stream of dictionaries, `Parallel` will create multiple `Subpipeline` instances, each processing a particular entity independently, and gather the results. Each `Subpipeline` will terminate when the tracked entity is no longer found (e.g. a particular face moves out of frame).
 

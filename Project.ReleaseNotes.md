@@ -7,7 +7,7 @@
 There are many additions and updates in this release, but the major changes can be summarized as:
 
 * Improvements and fixes to the pipeline shutdown procedure, as well as fixes to the `Parallel` and `Join` operators to support reproducible dynamic sub-pipeline construction and teardown via the `Parallel` operator.
-* Streamlining the use of `Shared<T>` for more efficient messaging of large objects such as images, and added [in-depth documentation](InDepth.Shared) on this topic.
+* Streamlining the use of `Shared<T>` for more efficient messaging of large objects such as images, and added [in-depth documentation](Shared-Objects) on this topic.
 * PsiStudio now supports connecting to live stores and fast layout switching.
 
 ### Breaking Changes:
@@ -101,7 +101,7 @@ There have been multiple changes made to the pipeline finalization code to suppo
     * `Buffer` - use `Window` instead.
     * `History` - use `Window` instead.
     * `Previous`
-* [Delivery Policies](Tutorial.DeliveryPolicies) have been simplified and renamed:
+* [Delivery Policies](Delivery-Policies) have been simplified and renamed:
     * The `Throttled` policy has been removed. It will be re-introduced in a later release once issues around throttling have been resolved.
     * The `Default`, `Immediate` and `ImmediateOrThrottle16` policies have been removed.
     * The `QueueSize` property has been renamed `InitialQueueSize`.
@@ -128,7 +128,7 @@ New Features in Platform for Situated Intelligence Studio:
 
 New Features in Platform for Situated Intelligence Runtime/Core:
 
-* Initial version of data interop with the introduction of `Microsoft.Psi.Interop`, with support for MessagePack, JSON and CSV data formats and ZeroMQ transport. See the [Interop topic](InDepth.Interop) for more details.
+* Initial version of data interop with the introduction of `Microsoft.Psi.Interop`, with support for MessagePack, JSON and CSV data formats and ZeroMQ transport. See the [Interop topic](Interop) for more details.
 * New `dynamic` store reader allows reading any stream from any store to `dynamic` primitives or to `ExpandoObject` of `dynamic` without requiring a reference to the .NET type of the stream messages.
 * New `PsiStoreTool` command-line tool which allows exploration of available streams in a store, conversion to other formats using interop, and saving to disk or sending over a message queue for consumption by other platforms and/or languages.
 * Exposed `Scheduler` as a parameter to `Pipeline` and `Clock` as a parameter to `Scheduler`.
@@ -226,15 +226,15 @@ Interim release with support for new devices, runtime enhancements and several A
 
 * Added support for RealSense depth camera
 * Added the `FFMPEGMediaSource` component for Linux
-* Added a [`Subpipeline`] class, enabling [nested pipelines](Tutorial.WritingComponents.md#SubPipelines)
-* [`Parallel`](InDepth.StreamOperators.md#Parallel) now uses subpipelines
-* [`Sequence`, `Repeat` and `Range` generators](InDepth.StreamOperators.md#Producing) now allow time-aligned messages
+* Added a [`Subpipeline`] class, enabling [nested pipelines](Writing-Components.md#SubPipelines)
+* [`Parallel`](Stream-Operators.md#Parallel) now uses subpipelines
+* [`Sequence`, `Repeat` and `Range` generators](Stream-Operators.md#Producing) now allow time-aligned messages
 * Additional minor bug fixes.
 
 Several API changes have been made:
 
 * `Generators.Timer(...)` is now `Timers.Timer(...)`
-* `IStartable` has been [replaced by `ISourceControl`/`IFiniteSourceControl`](Tutorial.WritingComponents.md#SourceComponents) and the [way that components get notified about the pipeline starting and stopping](Tutorial.WritingComponents.md#PipelineStartStop) has changed
+* `IStartable` has been [replaced by `ISourceControl`/`IFiniteSourceControl`](Writing-Components.md#SourceComponents) and the [way that components get notified about the pipeline starting and stopping](Writing-Components.md#PipelineStartStop) has changed
 
 ---
 
@@ -257,9 +257,9 @@ Initial, beta version of the Platform for Situated Intelligence. Includes the Pl
 
 * [Documentation](/psi/) - top-level documentation page for Platform for Situated Intelligence.
 * [Platform for Situated Intelligence Overview](Platform-Overview) - high-level overview of the platform.
-* [NuGet Packages List](List.NuGet) - list of NuGet packages available in this release.
+* [NuGet Packages List](List-of-NuGet-Packages) - list of NuGet packages available in this release.
 * [Building the Code](Using.BuildingPsi) - information about how to build the code.
-* [Brief Introduction](Tutorial.BriefIntroduction) - brief introduction on how to write a simple application.
+* [Brief Introduction](Brief-Introduction) - brief introduction on how to write a simple application.
 * [Samples](Samples) - list of samples available. 
 
 The [Roadmap](Roadmap) document provides insights about future planned developments.

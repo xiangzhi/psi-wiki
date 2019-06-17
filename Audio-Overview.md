@@ -1,5 +1,3 @@
-# Audio Overview
-
 Recording and playback of audio are common operations in situated interactive applications. For instance, audio input may be required for speech recognition, or to generate acoustic features for use with acoustic models. Applications may also need to generate and produce audio output to communicate with users. The `Microsoft.Psi.Audio` namespace provides components and operators for capturing,
 processing and rendering audio, as well as for generating a range of acoustic features.
 

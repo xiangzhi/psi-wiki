@@ -1,5 +1,3 @@
-# Media Overview
-
 The following is a brief overview of support for streaming media in Platform for Situated Intelligence.
 
 __NOTE__: Support for web cameras is currently limited to Windows only.

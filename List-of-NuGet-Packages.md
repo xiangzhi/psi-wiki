@@ -1,5 +1,3 @@
-# List of NuGet Packages
-
 The table below contains the list of Platform for Situated Intelligence NuGet packages that are available in the current release. The packages that end in `.Windows` contain functionality exclusively available on the Windows platform. The packages that end in `.Linux` contain functionality exclusively available on the Linux platform. The packages that end in `.x64` contain functionality that is only available in 64 bit applications.
 
 | Package name | Description | Linux | Windows | Platform |

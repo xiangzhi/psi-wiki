@@ -1,10 +1,3 @@
----
-layout: default
-title:  Synchronization
----
-
-# Synchronization
-
 ## Join(...)
 
 The `Join` operators allows synchronizing (or fusing) two or more streams into a single stream.

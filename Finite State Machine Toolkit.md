@@ -1,5 +1,3 @@
-# Finite State Machine Toolkit
-
 The Finite State Machine toolkit is a very lightweight framework in which to build non-hierarchical state machines. A `Machine` with a given `IContext` is initialized with `States` and transitions. It is then driven by `Update()` to trigger transitions with provided context-transforming functions being called. These may be tied to entry/exit of particular states or to transitions themselves.
 
 ## State

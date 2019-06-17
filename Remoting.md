@@ -1,10 +1,3 @@
----
-layout: default
-title:  Remoting
----
-
-# Remoting
-
 Remoting allows \\psi streams to be serialized and transmitted between processes and/or machines.
 The transport may be TCP, UDP or Named Pipes.
 

@@ -1,5 +1,3 @@
-# Imaging Overview
-
 This is a brief overview of imaging components and image-related APIs available in Platform for Situated Intelligence.
 
 ## Basic Components

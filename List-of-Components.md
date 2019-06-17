@@ -1,5 +1,3 @@
-# Components
-
 This document contains a [**list of components**](#ListOfComponents) available in the Platform for Situated Intelligence repository, as well as [**pointers to other third-party repositories**](#ThirdParty) containing other Platform for Situated Intelligence components.
 
 <a name="ListOfComponents"></a>

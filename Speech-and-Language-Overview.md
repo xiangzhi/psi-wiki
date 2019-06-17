@@ -1,5 +1,3 @@
-# Speech and Language Overview
-
 Situated interactive applications often need to deal with speech when communicating with users using natural language. The `Microsoft.Psi.Speech` and `Microsoft.Psi.Language` namespaces provide components and data types for basic speech recognition, voice activity detection and text-to-speech synthesis (Windows only).
 
 ## Speech recognition

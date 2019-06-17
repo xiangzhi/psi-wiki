@@ -1,5 +1,3 @@
-# Kinect Overview
-
 Platform for Situated Intelligence supports reading from a Microsoft Kinect V2 Depth Camera. This includes capture of video, audio, body tracking, and face tracking streams from the Kinect.
 
 **Please note**: <br/>Support for Kinect is currently limited to Windows only.<br/>Support for Face tracking via Kinect is limited to Windows 64 bit applications.

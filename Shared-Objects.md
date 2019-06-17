@@ -1,5 +1,3 @@
-# Shared Objects and Memory Management
-
 ## Introduction
 
 One of the design goals of the Platform for Situated Intelligence runtime was to leverage the ease of programming offered by the .NET framework, while enabling the type of performance usually afforded only by carefully tuned native applications. To this end, a number of memory management mechanisms have been introduced to mitigate the costs of frequent large memory allocations and garbage collection.
@@ -163,7 +161,7 @@ public void Dispose()
 }
 ```
 
-The above guidelines for creating long-lived references to `Shared<T>` objects beyond the lifetime of the receiver method using the `AddRef()` and `Dispose()` methods is analogous to creating long-lived copies of non-shared messages using `DeepClone()` and `Recycle()`, as discussed in the section on [message cloning](/psi/topics/InDepth.Shared.md#MessageCloning).
+The above guidelines for creating long-lived references to `Shared<T>` objects beyond the lifetime of the receiver method using the `AddRef()` and `Dispose()` methods is analogous to creating long-lived copies of non-shared messages using `DeepClone()` and `Recycle()`, as discussed in the section on [message cloning](/psi/topics/Shared-Objects.md#MessageCloning).
 
 > **Note**: Due to the unique implementation of the internal serializer for `Shared<T>` objects to support automatic reference counting when posting shared messages to receivers, the `DeepClone()` extension methods **do not** actually create deep-cloned copies when called on `Shared<T>` objects. Instead, the reference count is simply incremented as though `AddRef()` was called.
 

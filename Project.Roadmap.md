@@ -10,10 +10,10 @@ Apart from fixing bugs and issues, in the next few updates we expect to focus ou
 
 ### Runtime
 
-- expanding the available set of [delivery policies](Tutorial.DeliveryPolicies) to allow for throttling;
+- expanding the available set of [delivery policies](Delivery-Policies) to allow for throttling;
 - refining and documenting control for pipeline execution and replay;
 - improving the debugging experience by creating tools that allow for visualizing the application pipeline at runtime;
-- further developing [synchronization](InDepth.Synchronization) primitives, e.g., `Join` and interpolators;
+- further developing [synchronization](Synchronization) primitives, e.g., `Join` and interpolators;
 
 ### Visualization and Platform for Situated Intelligence Studio 
 
