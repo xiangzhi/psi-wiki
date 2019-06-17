@@ -4,5 +4,5 @@ Platform for Situated Intelligence is built on the .NET Framework. Large parts o
 
 You can build applications based on Platform for Situated Intelligence either by leveraging nuget packages, or by cloning and building the code. Below are instructions:
 
-* [Using \\psi via Nuget packages](Using.WithNuget.md)
-* [Building the \\psi codebase](Using.BuildingPsi.md)
+* [Using \\psi via Nuget packages](Using.WithNuget)
+* [Building the \\psi codebase](Using.BuildingPsi)

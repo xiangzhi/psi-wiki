@@ -1,6 +1,6 @@
 # Window Operators
 
-__NOTE__: The operators described below take an optional `DeliveryPolicy` argument which allows the developer to control how the operators keep up with the incoming flow of messages when not enough computational resources are available to process them. More information is available in the [Delivery Policies](Tutorial.DeliveryPolicies.md) in-depth topic. Below, for improved readability, we simply omit this optional parameter from the operator descriptions.
+__NOTE__: The operators described below take an optional `DeliveryPolicy` argument which allows the developer to control how the operators keep up with the incoming flow of messages when not enough computational resources are available to process them. More information is available in the [Delivery Policies](Tutorial.DeliveryPolicies) in-depth topic. Below, for improved readability, we simply omit this optional parameter from the operator descriptions.
 
 `Window` operators produce streams of sliding windows over data. Window extents may be specified by either a message count relative to the current message, or by a time interval relative to the current message.
 

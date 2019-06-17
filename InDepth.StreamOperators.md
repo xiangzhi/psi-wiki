@@ -14,7 +14,7 @@ The ability to manipulate streams of data plays a central role in the Platform f
 * [Time Related](InDepth.StreamOperators.md#TimeRelated): these operators provide timing information.
 * [Miscellaneous](InDepth.StreamOperators.md#Miscellaneous): these operators provide various other functionalities.
 
-__NOTE__: Most stream operators described below take an optional `DeliveryPolicy` argument which allows the developer to control how the operators keep up with the incoming flow of messages when not enough computational resources are available to process them. More information is available in the [Delivery Policies](Tutorial.DeliveryPolicies.md) in-depth topic. Below, for improved readability, we simply omit this optional parameter from the operator descriptions.
+__NOTE__: Most stream operators described below take an optional `DeliveryPolicy` argument which allows the developer to control how the operators keep up with the incoming flow of messages when not enough computational resources are available to process them. More information is available in the [Delivery Policies](Tutorial.DeliveryPolicies) in-depth topic. Below, for improved readability, we simply omit this optional parameter from the operator descriptions.
 
 <a name="Producing"></a>
 
@@ -263,9 +263,9 @@ Log(this IProducer<double> source, double newBase) -> IProducer<double>
 
 ## 5. Window computations
 
-While `Aggregate` accumulates values over the _entire_ stream, it is much more common to do this over some sliding window. The [`Window` operators](InDepth.Window.md) are very useful for producing these sliding windows (as `IEnumerable`) by count or `TimeSpan` over which to operate.
+While `Aggregate` accumulates values over the _entire_ stream, it is much more common to do this over some sliding window. The [`Window` operators](InDepth.Window) are very useful for producing these sliding windows (as `IEnumerable`) by count or `TimeSpan` over which to operate.
 
-As a convenience, some of the above operations are available over windows by `size` or `timeSpan`. Under the covers, all of these are implemented using [`Window`](InDepth.Window.md):
+As a convenience, some of the above operations are available over windows by `size` or `timeSpan`. Under the covers, all of these are implemented using [`Window`](InDepth.Window):
 
 ```csharp
 Sum(this IProducer<_> source, int size) -> IProducer<_>
@@ -328,13 +328,13 @@ myStream.ToEnumerable();
 myStream.ToObservable();
 ```
 
-[Bridging to events is a bit more involved.](InDepth.EventSource.md), requiring construction of an `EventSource` component and providing lambdas to subscribe/unsubscribe. This is due to events not being first class values in C# (as they are in F#).
+[Bridging to events is a bit more involved.](InDepth.EventSource), requiring construction of an `EventSource` component and providing lambdas to subscribe/unsubscribe. This is due to events not being first class values in C# (as they are in F#).
 
 <a name="Synchronizing"></a>
 
 ## 7. Synchronizing
 
-Platform for Situated Intelligence provides operators that allow for fusing and synchronizing multiple streams in a variety of ways. The synchronization operators are `Join` and `Pair`. Given the complexity and importance of the topic, these operators are described in more detail in a separate [in-depth document on synchronization](InDepth.Synchronization.md).
+Platform for Situated Intelligence provides operators that allow for fusing and synchronizing multiple streams in a variety of ways. The synchronization operators are `Join` and `Pair`. Given the complexity and importance of the topic, these operators are described in more detail in a separate [in-depth document on synchronization](InDepth.Synchronization).
 
 <a name="Sampling"></a>
 
@@ -342,7 +342,7 @@ Platform for Situated Intelligence provides operators that allow for fusing and 
 
 ### Sample(...)
 
-To sample values from a dense stream at some presumably sparser interval use `Sample`. A `clock` signal drives the sampling. At each signal, a value is taken from the source stream. If messages do not line up in time exactly, an `interpolator`, `matchWindow` or `tolerance` may be given specifying a policy (much like with [other synchronization operators](InDepth.Synchronization.md)).
+To sample values from a dense stream at some presumably sparser interval use `Sample`. A `clock` signal drives the sampling. At each signal, a value is taken from the source stream. If messages do not line up in time exactly, an `interpolator`, `matchWindow` or `tolerance` may be given specifying a policy (much like with [other synchronization operators](InDepth.Synchronization)).
 
 ```csharp
 Sample(this IProducer<T> source, IProducer<TClock> clock, Interpolator<T> interpolator) -> IProducer<T>

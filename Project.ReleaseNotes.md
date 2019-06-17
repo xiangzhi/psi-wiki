@@ -7,7 +7,7 @@
 There are many additions and updates in this release, but the major changes can be summarized as:
 
 * Improvements and fixes to the pipeline shutdown procedure, as well as fixes to the `Parallel` and `Join` operators to support reproducible dynamic sub-pipeline construction and teardown via the `Parallel` operator.
-* Streamlining the use of `Shared<T>` for more efficient messaging of large objects such as images, and added [in-depth documentation](InDepth.Shared.md) on this topic.
+* Streamlining the use of `Shared<T>` for more efficient messaging of large objects such as images, and added [in-depth documentation](InDepth.Shared) on this topic.
 * PsiStudio now supports connecting to live stores and fast layout switching.
 
 ### Breaking Changes:
@@ -101,7 +101,7 @@ There have been multiple changes made to the pipeline finalization code to suppo
     * `Buffer` - use `Window` instead.
     * `History` - use `Window` instead.
     * `Previous`
-* [Delivery Policies](Tutorial.DeliveryPolicies.md) have been simplified and renamed:
+* [Delivery Policies](Tutorial.DeliveryPolicies) have been simplified and renamed:
     * The `Throttled` policy has been removed. It will be re-introduced in a later release once issues around throttling have been resolved.
     * The `Default`, `Immediate` and `ImmediateOrThrottle16` policies have been removed.
     * The `QueueSize` property has been renamed `InitialQueueSize`.
@@ -128,7 +128,7 @@ New Features in Platform for Situated Intelligence Studio:
 
 New Features in Platform for Situated Intelligence Runtime/Core:
 
-* Initial version of data interop with the introduction of `Microsoft.Psi.Interop`, with support for MessagePack, JSON and CSV data formats and ZeroMQ transport. See the [Interop topic](InDepth.Interop.md) for more details.
+* Initial version of data interop with the introduction of `Microsoft.Psi.Interop`, with support for MessagePack, JSON and CSV data formats and ZeroMQ transport. See the [Interop topic](InDepth.Interop) for more details.
 * New `dynamic` store reader allows reading any stream from any store to `dynamic` primitives or to `ExpandoObject` of `dynamic` without requiring a reference to the .NET type of the stream messages.
 * New `PsiStoreTool` command-line tool which allows exploration of available streams in a store, conversion to other formats using interop, and saving to disk or sending over a message queue for consumption by other platforms and/or languages.
 * Exposed `Scheduler` as a parameter to `Pipeline` and `Clock` as a parameter to `Scheduler`.
@@ -256,10 +256,10 @@ Interim release with a few changes to the samples and some minor bug fixes:
 Initial, beta version of the Platform for Situated Intelligence. Includes the Platform for Situated Intelligence runtime, visualization tools, and an initial set of components (mostly geared towards audio and visual processing). Relevant documents:
 
 * [Documentation](/psi/) - top-level documentation page for Platform for Situated Intelligence.
-* [Platform for Situated Intelligence Overview](PlatformOverview.md) - high-level overview of the platform.
-* [NuGet Packages List](List.NuGet.md) - list of NuGet packages available in this release.
-* [Building the Code](Using.BuildingPsi.md) - information about how to build the code.
-* [Brief Introduction](Tutorial.BriefIntroduction.md) - brief introduction on how to write a simple application.
-* [Samples](Samples.md) - list of samples available. 
+* [Platform for Situated Intelligence Overview](PlatformOverview) - high-level overview of the platform.
+* [NuGet Packages List](List.NuGet) - list of NuGet packages available in this release.
+* [Building the Code](Using.BuildingPsi) - information about how to build the code.
+* [Brief Introduction](Tutorial.BriefIntroduction) - brief introduction on how to write a simple application.
+* [Samples](Samples) - list of samples available. 
 
-The [Roadmap](Roadmap.md) document provides insights about future planned developments.
+The [Roadmap](Roadmap) document provides insights about future planned developments.

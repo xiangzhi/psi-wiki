@@ -4,7 +4,7 @@
 
 __Delivery policies__ allow the developer to control whether and when the messages flowing over streams in a Platform for Situated Intelligence application get dropped. This allows the developer to configure how an application may keep up with the incoming streams when not enough computational resources are available to process every message.
 
-To introduce this concept, we will start with a simple example. Suppose we are processing a stream of data, but that the computation we are performing on each message is time-consuming, and takes more time than the interval between two consecutive messages on the stream. As a concrete example, here is a class representing a simple consumer-producer component (for more info see [__Writing Components__](Tutorial.WritingComponents.md) topic). In the receiver we sleep to simulate a time-consuming operation, which takes about 1 second for every message received.
+To introduce this concept, we will start with a simple example. Suppose we are processing a stream of data, but that the computation we are performing on each message is time-consuming, and takes more time than the interval between two consecutive messages on the stream. As a concrete example, here is a class representing a simple consumer-producer component (for more info see [__Writing Components__](Tutorial.WritingComponents) topic). In the receiver we sleep to simulate a time-consuming operation, which takes about 1 second for every message received.
 
 ```csharp
 using Microsoft.Psi.Components;

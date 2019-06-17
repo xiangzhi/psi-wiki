@@ -15,7 +15,7 @@ This document provides an introduction to the dataset APIs. It is structured in 
 ### 1. Stores and Datasets
 
 First, we should clarify some terminology - specifically the notions of a <b><i>\\psi store</i></b> and a <b><i>\\psi dataset</i></b>. A
-store is the unit of storage that is created when an application persists data to disk. As described in the [Brief Introduction](Tutorial.BriefIntroduction.md),
+store is the unit of storage that is created when an application persists data to disk. As described in the [Brief Introduction](Tutorial.BriefIntroduction),
 \\psi applications can write streams to disk using the `Store.Create` function and the `Write` stream
 operator. For example:
 

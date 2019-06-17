@@ -12,7 +12,7 @@ This document provides an introduction to how to write your own components. It i
 6. [**Source Components**](#SourceComponents): presents design patterns for writing source components, like sensors and other data generators.
 7. [**Guidelines for Writing Components**](#Guidelines): summarizes a set of recommended guidelines for writing component.
 
-This document assumes an understanding of the concept of originating time for \psi messages. To get familiar with this construct, please read first the [Brief Introduction](Tutorial.BriefIntroduction.md) and the [Synchronization](InDepth.Synchronization.md) in-depth topic.
+This document assumes an understanding of the concept of originating time for \psi messages. To get familiar with this construct, please read first the [Brief Introduction](Tutorial.BriefIntroduction) and the [Synchronization](InDepth.Synchronization) in-depth topic.
 
 <a name="SimpleComponent"></a>
 
@@ -83,7 +83,7 @@ The constructor for the component creates the receivers and emitters by calling 
 
 The signature for each receiver method has two parameters. The first one is of the same type as the receiver, and will contain at runtime the value of the incoming message on the stream. The second parameter is of type `Envelope` and will contain the message envelope information, including the message originating time, sequence number, etc.
 
-The `ReceiveString` receiver method simply captures the input message in the `lastStringInput` private variable. The `ReceiveCount` receiver creates the corresponding output by using a string builder and appending the stored string as many times as the `count` input. It then posts the results on the output stream by calling the `Post` method on the `this.Out` emitter. The `Post` call takes two parameters: the first is the message to be posted, which needs to be of the same type as the emitter. The second parameter is the originating time for this message. As explained in the [Brief Introduction](Tutorial.BriefIntroduction.md) tutorial and the [Synchronization](InDepth.Synchronization.md) in-depth topic, \psi components propagate the originating times for the incoming messages to the output streams. It is the responsibility of the component author to make sure this is the case and to choose what the originating time for each outgoing message is. In this case, we are choosing to propagate the originating time from the count input as this is what triggers the outputs.
+The `ReceiveString` receiver method simply captures the input message in the `lastStringInput` private variable. The `ReceiveCount` receiver creates the corresponding output by using a string builder and appending the stored string as many times as the `count` input. It then posts the results on the output stream by calling the `Post` method on the `this.Out` emitter. The `Post` call takes two parameters: the first is the message to be posted, which needs to be of the same type as the emitter. The second parameter is the originating time for this message. As explained in the [Brief Introduction](Tutorial.BriefIntroduction) tutorial and the [Synchronization](InDepth.Synchronization) in-depth topic, \psi components propagate the originating times for the incoming messages to the output streams. It is the responsibility of the component author to make sure this is the case and to choose what the originating time for each outgoing message is. In this case, we are choosing to propagate the originating time from the count input as this is what triggers the outputs.
 
 ### 1.2. Using the component
 
@@ -137,7 +137,7 @@ __Note__: In the example above, in the `ReceiveString` receiver method, it would
 
 Finally, with respect to output streams, it is important to note that a component can post a value to the output stream (via a `Post` call) and is free to immediately change the value. All the receivers that are connected to this emitter will receive the value that was provided during the call to `Post`. This is again accomplished by the runtime via automated cloning.
 
-The [Shared Objects](InDepth.Shared.md) in-depth topic contains more information about message cloning.
+The [Shared Objects](InDepth.Shared) in-depth topic contains more information about message cloning.
 
 <a name="StreamOperators"></a>
 
@@ -184,7 +184,7 @@ public static class Operators
 }
 ```
 
-The extension methods extends `IProducer<double>`, which represents a stream of `double`. Inside, it instantiates a new component (note that we can get a hold of the pipeline required to construct the component from the source stream), and connects the source stream to it, and returns the result. Notice how the stream operator also takes a `deliveryPolicy` parameter, with a default `null` value and uses it when connecting the source stream to the underlying component. This `deliveryPolicy` enables developers to control how messages are delivered to the component when computational constraints prevent the component from being able to process all messages at the rate at which they arrive. The [Delivery Policies](Tutorial.DeliveryPolicies.md) tutorial contains more information about how delivery policies operate. 
+The extension methods extends `IProducer<double>`, which represents a stream of `double`. Inside, it instantiates a new component (note that we can get a hold of the pipeline required to construct the component from the source stream), and connects the source stream to it, and returns the result. Notice how the stream operator also takes a `deliveryPolicy` parameter, with a default `null` value and uses it when connecting the source stream to the underlying component. This `deliveryPolicy` enables developers to control how messages are delivered to the component when computational constraints prevent the component from being able to process all messages at the rate at which they arrive. The [Delivery Policies](Tutorial.DeliveryPolicies) tutorial contains more information about how delivery policies operate. 
 
 The constructed _stream operator_ `Sign()` now becomes available on any stream of doubles, for instance, we can now write:
 
@@ -193,7 +193,7 @@ var stream = Generators.Sequence(p, 1.0, x => x + 1, 10);
 stream.Sign().Do(s => Console.WriteLine($"Sign: {s}"));
 ```
 
-The [Stream Operators](InDepth.StreamOperators.md) in the \psi runtime, like `Select`, `Do`, `Where`, etc., are implemented using this pattern.
+The [Stream Operators](InDepth.StreamOperators) in the \psi runtime, like `Select`, `Do`, `Where`, etc., are implemented using this pattern.
 
 A final note regarding a few interfaces that are available, `IConsumerProducer<TIn, TOut>`, `IConsumer<TIn>` and `IProducer<TOut>`. If you take a look at the `ConsumerProducer` class (under `Sources\Runtime\Microsoft.Psi\Components\ConsumerProducer.cs`), you will notice that it implements the `IConsumerProducer<TIn, TOut>` interface, which is an aggregate of the `IConsumer<TIn>` and `IProducer<TOut>` interfaces. These interfaces merely specify that a class has an `In` receiver, and/or an `Out` emitter. They are used largely for creating syntactic convenience. Specifically, they enable the `PipeTo` operator to take as an argument the component class directly, rather than the corresponding receiver. For instance, in the example above, we were able to say directly
 

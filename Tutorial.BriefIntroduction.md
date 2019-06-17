@@ -76,7 +76,7 @@ This time the timestamp for each message will be displayed. You may notice that 
 
 The `p.Run()` line simply runs the pipeline. A number of overloads and other (asynchronous) methods for running the pipeline are available, but for now, we use the simple `Run()` method which essentially tells the pipeline to execute to completion. This causes the generator to start generating messages, which in turn are processed by the `Do` operators. Since the generator outputs a timer stream that is infinite this application will continue running indefinitely until the console is closed by the user.
 
-There are many basic, generic stream operators available in the \\psi runtime (for an overview, see [Basic Stream Operators](InDepth.StreamOperators.md), and also operators for processing various types of streams (like operators for turning a stream of color images into a corresponding stream of grayscale images). Besides `Do`, another operator that is often used is `Select`. The `Select` operator allows you to transform the messages on a stream by simply applying a function to them. Consider the example below (you will have to also add a `using System.Linq;` directive at the top of your program to access the `Enumerable` class):
+There are many basic, generic stream operators available in the \\psi runtime (for an overview, see [Basic Stream Operators](InDepth.StreamOperators), and also operators for processing various types of streams (like operators for turning a stream of color images into a corresponding stream of grayscale images). Besides `Do`, another operator that is often used is `Select`. The `Select` operator allows you to transform the messages on a stream by simply applying a function to them. Consider the example below (you will have to also add a `using System.Linq;` directive at the top of your program to access the `Enumerable` class):
 
 ```csharp
 static void Main(string[] args)
@@ -96,7 +96,7 @@ Before we discuss the `Select`, note that we have used a different generator thi
 
 The `Select` operator we have injected transforms the messages from the sequence stream by computing the sine function over the messages. Try this and check out the results! You should see in the console a sequence of outputs that fluctuate between -1 and +1, like the sinus function.
 
-Beyond `Do` and `Select`, \\psi contains many operators: single stream operators like `Where`, `Aggregate`, `Parallel` etc. (similar with Linq and Rx), stream generators (`Sequence`, `Enumerate`, `Timer`) as well as operators for combining streams (`Join`, `Sample`, `Repeat`). Like `Do`, some of these operators also have overloads that can surface the message envelope information. Check out the [Basic Stream Operators](InDepth.StreamOperators.md) page for an in-depth look at all of them.
+Beyond `Do` and `Select`, \\psi contains many operators: single stream operators like `Where`, `Aggregate`, `Parallel` etc. (similar with Linq and Rx), stream generators (`Sequence`, `Enumerate`, `Timer`) as well as operators for combining streams (`Join`, `Sample`, `Repeat`). Like `Do`, some of these operators also have overloads that can surface the message envelope information. Check out the [Basic Stream Operators](InDepth.StreamOperators) page for an in-depth look at all of them.
 
 Finally, so far we have highlighted the language of stream operators, which encapsulate simple components that perform transformations on streams. In the more general case, \\psi components can have multiple inputs and outputs and can be wired into a pipeline via the `PipeTo` operator. For instance, in the example below we instantiate a wave file audio source component, and connect its output to an acoustic features extractor component, after which we display the results.
 
@@ -121,7 +121,7 @@ using (var p = Pipeline.Create())
 }
 ```
 
-Writing a \\psi application will often involve authoring a pipeline that connects various existing components and processes and transforms data via stream operators. In some cases, you may need to write your own components. The [Writing Components](Tutorial.WritingComponents.md) page has more in-depth information on this topic. In addition, to optimize the operation of your pipeline, you may need to specify delivery policies to control how messages may be dropped in case some of the components cannot keep up with the cadence of the incoming messages. The [Delivery Policies](Tutorial.DeliveryPolicies.md) page has more in-depth information on this topic.
+Writing a \\psi application will often involve authoring a pipeline that connects various existing components and processes and transforms data via stream operators. In some cases, you may need to write your own components. The [Writing Components](Tutorial.WritingComponents) page has more in-depth information on this topic. In addition, to optimize the operation of your pipeline, you may need to specify delivery policies to control how messages may be dropped in case some of the components cannot keep up with the cadence of the incoming messages. The [Delivery Policies](Tutorial.DeliveryPolicies) page has more in-depth information on this topic.
 
 <a name="Synchronization"></a>
 
@@ -178,7 +178,7 @@ var joined = sin.Pair(cos);
 
 Re-run the program. This time, the results are not always 1. In this case we have used a different operator, `Pair` that does not actually reason about the originating times but rather pairs each message arriving on the `sin` stream with the last message that was delivered on the `cos` stream. Because of asynchronous execution of operators in the pipeline, this time the pairing might not correspond to the a match in the originating times and in that case the result from summing up the squares is different from 1.
 
-We have illustrated above how to do an _exact_ join (the originating times must match exactly for the messages to be paired). There are many ways to do originating-time based synchronization, with important consequences for the behavior of the pipeline. In this introductory guide, we limit this discussion here, but we recommend that you read the more in-depth topic on the [Synchronization](InDepth.Synchronization.md) page.
+We have illustrated above how to do an _exact_ join (the originating times must match exactly for the messages to be paired). There are many ways to do originating-time based synchronization, with important consequences for the behavior of the pipeline. In this introductory guide, we limit this discussion here, but we recommend that you read the more in-depth topic on the [Synchronization](InDepth.Synchronization) page.
 
 <a name="SavingData"></a>
 
@@ -250,7 +250,7 @@ Visualization of multimodal streaming data plays a central role in developing mu
 __Notes__:
 * Kinect for Windows SDK is required to run PsiStudio which can be found [here](https://www.microsoft.com/en-us/download/details.aspx?id=44561).
 * Currently, PsiStudio runs only on Windows, although it can visualize data stores created by \\psi applications running on any platform supported by .NET Core.
-* The tool is not currently shipped as an executable, so to use it you will need to build the codebase; instructions for building the code are available [here](Using.BuildingPsi.md). The tool is implemented by the `Microsoft.Psi.PsiStudio` project in the `Psi.sln` solution tree under `Sources\Tools\PsiStudio`. To run it, simply run this project after building it.
+* The tool is not currently shipped as an executable, so to use it you will need to build the codebase; instructions for building the code are available [here](Using.BuildingPsi). The tool is implemented by the `Microsoft.Psi.PsiStudio` project in the `Psi.sln` solution tree under `Sources\Tools\PsiStudio`. To run it, simply run this project after building it.
 
 PsiStudio enables compositing multiple visualizers of different types (from simple streams of doubles to images, depth maps, etc.). In this section we will give a very brief introduction to this tool.
 
@@ -324,7 +324,7 @@ Now start up PsiStudio. You will see a window that looks similar to the image be
 
 ![PsiStudio (when opening the demo recording)](PsiStudio.Start.png)
 
-The PsiStudio application has a toolbar, a time-navigator (more on that in a second) and a visualization canvas in the center. On the left hand side, you will find the Datasets tab at the top with the Visualizations tab below it.  On the right hand side is a Properties page that lets you view the properties of any object selected in either the Datasets or the Visualizations tab. When opening a store, PsiStudio automatically wraps a __*dataset*__ around it (more information on datasets is available in the [Datasets](InDepth.Datasets.md) page), with the name _Untitled Dataset_. Double-clicking on _Untitled Dataset_ will open up the underlying demo session and demo partition will reveal the set of streams available in the store, in this case Sequence, Sin, Cos, Image, Audio, and Voice Activity. Right-clicking on the Sin stream will bring up a popup-menu, and selecting _Plot_ will allow you to visualize the Sin stream.  Alternatively you can just drag the stream from the datasets tab onto the Visualization Canvas.  PsiStudio should now look like this:
+The PsiStudio application has a toolbar, a time-navigator (more on that in a second) and a visualization canvas in the center. On the left hand side, you will find the Datasets tab at the top with the Visualizations tab below it.  On the right hand side is a Properties page that lets you view the properties of any object selected in either the Datasets or the Visualizations tab. When opening a store, PsiStudio automatically wraps a __*dataset*__ around it (more information on datasets is available in the [Datasets](InDepth.Datasets) page), with the name _Untitled Dataset_. Double-clicking on _Untitled Dataset_ will open up the underlying demo session and demo partition will reveal the set of streams available in the store, in this case Sequence, Sin, Cos, Image, Audio, and Voice Activity. Right-clicking on the Sin stream will bring up a popup-menu, and selecting _Plot_ will allow you to visualize the Sin stream.  Alternatively you can just drag the stream from the datasets tab onto the Visualization Canvas.  PsiStudio should now look like this:
 
 ![PsiStudio (visualizing a stream)](PsiStudio.SinVisualization.png)
 
@@ -414,6 +414,6 @@ Clicking the _Live_ button once more will switch the cursor mode back into _Live
 
 ## 6. Next steps
 
-Besides this brief introduction, a couple of additional [tutorials](Tutorial.Index.md) are available, as well as a number of more [advanced, in-depth topics](InDepth.Index.md) that dive into more details in various aspects of the framework, including [stream operators](InDepth.StreamOperators.md), [synchronization](InDepth.Synchronization.md), [shared objects and memory management](InDepth.Shared.md), [remoting](InDepth.Remoting.md), [interop](InDepth.Interop.md) etc.
+Besides this brief introduction, a couple of additional [tutorials](Tutorial.Index) are available, as well as a number of more [advanced, in-depth topics](InDepth.Index) that dive into more details in various aspects of the framework, including [stream operators](InDepth.StreamOperators), [synchronization](InDepth.Synchronization), [shared objects and memory management](InDepth.Shared), [remoting](InDepth.Remoting), [interop](InDepth.Interop) etc.
 
-Apart from the documentation, it may be helpful to look through the set of [Samples](Samples.md) provided. While some of the samples address specialized topics like how to leverage speech recognition components or how to bridge to ROS, reading them will give you more insights into programming with Platform for Situated Intelligence.
+Apart from the documentation, it may be helpful to look through the set of [Samples](Samples) provided. While some of the samples address specialized topics like how to leverage speech recognition components or how to bridge to ROS, reading them will give you more insights into programming with Platform for Situated Intelligence.

@@ -18,4 +18,4 @@ A set of **Tools and APIs** enable multimodal data visualization, processing and
 
 Finally, an open ecosystem of **Components** encapsulate various AI technologies and allow for quick compositing of integrative-AI applications. 
 
-For more information about the goals of the project, the types of systems that you can build using it, and the various layers see [Platform for Situated Intelligence Overview](PlatformOverview.md).
+For more information about the goals of the project, the types of systems that you can build using it, and the various layers see [Platform for Situated Intelligence Overview](PlatformOverview).
