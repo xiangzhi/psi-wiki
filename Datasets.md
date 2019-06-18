@@ -1,5 +1,3 @@
-# Datasets
-
 The Platform for Situated Intelligence framework provides a set of APIs that allow you to organize data collected by an application into datasets and process it accordingly.
 
 This document provides an introduction to the dataset APIs. It is structured in the following sections:

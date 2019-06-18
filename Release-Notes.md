@@ -1,5 +1,3 @@
-# Release Notes
-
 ## __2019/04/05: Beta-release, version 0.7.57.2__
 
 ### OVERVIEW:
@@ -258,7 +256,7 @@ Initial, beta version of the Platform for Situated Intelligence. Includes the Pl
 * [Documentation](/psi/) - top-level documentation page for Platform for Situated Intelligence.
 * [Platform for Situated Intelligence Overview](Platform-Overview) - high-level overview of the platform.
 * [NuGet Packages List](List-of-NuGet-Packages) - list of NuGet packages available in this release.
-* [Building the Code](Using.BuildingPsi) - information about how to build the code.
+* [Building the Code](Building-the-Codebase) - information about how to build the code.
 * [Brief Introduction](Brief-Introduction) - brief introduction on how to write a simple application.
 * [Samples](Samples) - list of samples available. 
 

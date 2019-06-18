@@ -248,7 +248,7 @@ Visualization of multimodal streaming data plays a central role in developing mu
 __Notes__:
 * Kinect for Windows SDK is required to run PsiStudio which can be found [here](https://www.microsoft.com/en-us/download/details.aspx?id=44561).
 * Currently, PsiStudio runs only on Windows, although it can visualize data stores created by \\psi applications running on any platform supported by .NET Core.
-* The tool is not currently shipped as an executable, so to use it you will need to build the codebase; instructions for building the code are available [here](Using.BuildingPsi). The tool is implemented by the `Microsoft.Psi.PsiStudio` project in the `Psi.sln` solution tree under `Sources\Tools\PsiStudio`. To run it, simply run this project after building it.
+* The tool is not currently shipped as an executable, so to use it you will need to build the codebase; instructions for building the code are available [here](Building-the-Codebase). The tool is implemented by the `Microsoft.Psi.PsiStudio` project in the `Psi.sln` solution tree under `Sources\Tools\PsiStudio`. To run it, simply run this project after building it.
 
 PsiStudio enables compositing multiple visualizers of different types (from simple streams of doubles to images, depth maps, etc.). In this section we will give a very brief introduction to this tool.
 

@@ -29,22 +29,22 @@
 * [[Media Overview]]
 * [[Finite State Machine Toolkit]]
 
-**[[Samples]**
+**[[Samples]]**
 
-[**Using and Building**](Using.Index)
-* [Using via NuGet Packages](Using.WithNuget)
-* [Building the codebase](Using.BuildingPsi)
+**[[Using and Building]]**
+* [[Using via NuGet Packages]]
+* [[Building the Codebase]]
 
 [**API Reference**](https://microsoft.github.io/psi/api/classes.html)
 
 **Community**
-* [Getting Help](Community.GettingHelp)
-* [Contributing](Community.Contributing)
-* [Who Is Using](Community.WhoIsUsing)
-* [Acknowledgments](Community.Acknowledgements)
+* [[Getting Help]]
+* [[Contributing]]
+* [[Who Is Using]]
+* [[Acknowledgements]]
 
 **Project Management**
-* [Roadmap](Project.Roadmap)
-* [Release Notes](Project.ReleaseNotes)
+* [[Roadmap]]
+* [[Release Notes]]
 * [Current Issues](https://github.com/Microsoft/psi/issues)
-* [License and Disclaimer](Project.LicenseAndDisclaimer)
+* [[License and Disclaimer]]

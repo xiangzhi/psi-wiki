@@ -1,5 +1,3 @@
-# Roadmap
-
 This is an initial, beta version of Platform for Situated Intelligence. The current version includes the Platform for Situated Intelligence runtime, visualization tools, and an initial set of components (mostly geared towards audio and visual processing).
 
 The codebase is currently in beta and various aspects of the platform are at different levels of completion and robustness. The are probably still bugs and we will likely be making breaking API changes. 

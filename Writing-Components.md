@@ -1,5 +1,3 @@
-# Writing Components
-
 Platform for Situated Intelligence applications are composed by connecting components together. A component in \psi is an encapsulated unit of data processing that, in the most general case, takes a number of streams as input and produces a number of streams as output. Many components are already provided with the framework and in time we expect this eco-system to grow -- the whole idea behind \psi is to enable reuse.
 
 This document provides an introduction to how to write your own components. It is structured in the following sections:

@@ -1,5 +1,3 @@
-# Building Platform for Situated Intelligence
-
 To build, first you will need to clone the Platform for Situated Intelligence [github repo](https://github.com/microsoft/psi "\psi"). Then, depending on which operating system you are, follow the steps below.
 
 ## On Windows
