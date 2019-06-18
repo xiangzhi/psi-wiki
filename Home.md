@@ -4,7 +4,7 @@ The wiki contains the main documentation pages for Platform for Situated Intelli
 
 # Overview
 
-**Platform for Situated Intelligence** is an open, extensible framework that enables the enables the development, fielding and study of situated, integrative-AI systems. 
+**Platform for Situated Intelligence** is an open, extensible framework that enables the development, fielding and study of situated, integrative-AI systems. 
 
 In recent years, we have seen significant progress with machine learning techniques on various perceptual and control problems. At the same time, building end-to-end, multimodal, integrative-AI systems that leverage multiple technologies and act autonomously or interact with people in the open world remains a challenging, error-prone and time-consuming engineering task. Numerous challenges stem from the sheer complexity of these systems and are amplified by the lack of appropriate infrastructure and development tools.
 
