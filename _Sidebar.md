@@ -2,10 +2,16 @@
 * [[Platform Overview]]
 * [[Getting Started]]
 
+**[[Using and Building]]**
+* [[Using via NuGet Packages]]
+* [[Building the Codebase]]
+
 **[[Basic Tutorials]]**
 * [[Brief Introduction]]
 * [[Writing Components]]
 * [[Delivery Policies]]
+
+**[[Samples]]**
 
 **[[More Advanced Topics]]**
 * [[Synchronization]]
@@ -28,12 +34,6 @@
 * [[Imaging Overview]]
 * [[Media Overview]]
 * [[Finite State Machine Toolkit]]
-
-**[[Samples]]**
-
-**[[Using and Building]]**
-* [[Using via NuGet Packages]]
-* [[Building the Codebase]]
 
 [**API Reference**](https://microsoft.github.io/psi/api/classes.html)
 
