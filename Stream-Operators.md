@@ -1,16 +1,16 @@
 The ability to manipulate streams of data plays a central role in the Platform for Situated Intelligence framework. This document provides a brief overview of the basic stream operators currently available. With a few exceptions (like generators and joins), stream operators generally transform one stream into another. The operators can be grouped into several classes:
 
-* [Producing](Stream-Operators.md#Producing): these operators provide the means for creating various source streams.
-* [Mapping](Stream-Operators.md#Mapping): these operators transform messages from the input stream.
-* [Filtering](Stream-Operators.md#Filtering): these operators filter messages from the input stream.
-* [Aggregating](Stream-Operators.md#Aggregating): these operators aggregate messages from the input stream.
-* [Window Computations](Stream-Operators.md#WindowComputations): these operators aggregate windows of messages from the input stream.
-* [Actuating](Stream-Operators.md#Actuating): these operators allow for actuating based on messages in a stream.
-* [Synchronizing](Stream-Operators.md#Synchronizing): these operators allow for synchronizing multiple streams.
-* [Sampling](Stream-Operators.md#Sampling): these operators allow for sampling over a stream.
-* [Parallel](Stream-Operators.md#Parallel): these operators allow for vector-parallel computations.
-* [Time Related](Stream-Operators.md#TimeRelated): these operators provide timing information.
-* [Miscellaneous](Stream-Operators.md#Miscellaneous): these operators provide various other functionalities.
+* [Producing](#Producing): these operators provide the means for creating various source streams.
+* [Mapping](#Mapping): these operators transform messages from the input stream.
+* [Filtering](#Filtering): these operators filter messages from the input stream.
+* [Aggregating](#Aggregating): these operators aggregate messages from the input stream.
+* [Window Computations](#WindowComputations): these operators aggregate windows of messages from the input stream.
+* [Actuating](#Actuating): these operators allow for actuating based on messages in a stream.
+* [Synchronizing](#Synchronizing): these operators allow for synchronizing multiple streams.
+* [Sampling](#Sampling): these operators allow for sampling over a stream.
+* [Parallel](#Parallel): these operators allow for vector-parallel computations.
+* [Time Related](#TimeRelated): these operators provide timing information.
+* [Miscellaneous](#Miscellaneous): these operators provide various other functionalities.
 
 __NOTE__: Most stream operators described below take an optional `DeliveryPolicy` argument which allows the developer to control how the operators keep up with the incoming flow of messages when not enough computational resources are available to process them. More information is available in the [Delivery Policies](Delivery-Policies) in-depth topic. Below, for improved readability, we simply omit this optional parameter from the operator descriptions.
 
@@ -429,7 +429,7 @@ Parallel<TIn, TKey, TOut>(
     ) -> IProducer<Dictionary<TKey, TOut>>
 ```
 
-Internally, sparse vector parallel processing creates and runs instances of [`Subpipeline`](Writing-Components.md#SubPipelines) dynamically and stops them based on the `branchTerminationPolicy`. The default policy is to stop and remove subpipelines when when the corresponding key is no longer available in the message.
+Internally, sparse vector parallel processing creates and runs instances of [`Subpipeline`](Writing-Components#SubPipelines) dynamically and stops them based on the `branchTerminationPolicy`. The default policy is to stop and remove subpipelines when when the corresponding key is no longer available in the message.
 
 A good example usage is when _tracking_ multiple entities (e.g. face tracking). When a set of tracked entities are represented as a stream of dictionaries, `Parallel` will create multiple `Subpipeline` instances, each processing a particular entity independently, and gather the results. Each `Subpipeline` will terminate when the tracked entity is no longer found (e.g. a particular face moves out of frame).
 
