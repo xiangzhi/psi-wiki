@@ -224,15 +224,15 @@ Interim release with support for new devices, runtime enhancements and several A
 
 * Added support for RealSense depth camera
 * Added the `FFMPEGMediaSource` component for Linux
-* Added a [`Subpipeline`] class, enabling [nested pipelines](Writing-Components.md#SubPipelines)
-* [`Parallel`](Stream-Operators.md#Parallel) now uses subpipelines
-* [`Sequence`, `Repeat` and `Range` generators](Stream-Operators.md#Producing) now allow time-aligned messages
+* Added a [`Subpipeline`] class, enabling [nested pipelines](Writing-Components#SubPipelines)
+* [`Parallel`](Stream-Operators#Parallel) now uses subpipelines
+* [`Sequence`, `Repeat` and `Range` generators](Stream-Operators#Producing) now allow time-aligned messages
 * Additional minor bug fixes.
 
 Several API changes have been made:
 
 * `Generators.Timer(...)` is now `Timers.Timer(...)`
-* `IStartable` has been [replaced by `ISourceControl`/`IFiniteSourceControl`](Writing-Components.md#SourceComponents) and the [way that components get notified about the pipeline starting and stopping](Writing-Components.md#PipelineStartStop) has changed
+* `IStartable` has been [replaced by `ISourceControl`/`IFiniteSourceControl`](Writing-Components#SourceComponents) and the [way that components get notified about the pipeline starting and stopping](Writing-Components#PipelineStartStop) has changed
 
 ---
 

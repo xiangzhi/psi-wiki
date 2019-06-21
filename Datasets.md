@@ -106,7 +106,7 @@ var session = dataset.CreateSession("MySession");
 
 The `Partition` class is the abstract base class from which all partition types derive. \psi currently supports <i>store partitions</i> implemented by the `StorePartition` class. A store partition represents all the data from a \psi store (either on disk or in-memory). Other partition types may be added in the future to represent different kinds of stores, such as an MPEG-4 file containing streams of audio and video, or a comma-separated values (CSV) file.
 
-Partitions may be added to a session in a variety of ways: by creating a new empty partition (and corresponding store on disk), by adding from a pre-existing store, or by computing a derived partition from the data contained in other partitions. The latter case will be covered in more detail in [a separate section](InDepth.Datasets.md#DerivedPartitions).
+Partitions may be added to a session in a variety of ways: by creating a new empty partition (and corresponding store on disk), by adding from a pre-existing store, or by computing a derived partition from the data contained in other partitions. The latter case will be covered in more detail in [a separate section](Datasets#DerivedPartitions).
 
 The `Session` class provides the `CreateStorePartition` method to create a new empty store and add the corresponding partition to a session:
 

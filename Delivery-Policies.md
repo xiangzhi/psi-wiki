@@ -98,7 +98,7 @@ The `PipeTo()` operators will use by default this pipeline-level delivery policy
 source.PipeTo(intensiveComponent.In, DeliveryPolicy.LatestMessage);
 ```
 
-Finally, note that the various stream operators such as `Select()`, `Where()`, `Process()` etc., also take an optional delivery policy parameter. The same holds true for all stream operators that follow the [__recommended design pattern__](Writing-Components.md#StreamOperators) for writing operators. For example:
+Finally, note that the various stream operators such as `Select()`, `Where()`, `Process()` etc., also take an optional delivery policy parameter. The same holds true for all stream operators that follow the [__recommended design pattern__](Writing-Components#StreamOperators) for writing operators. For example:
 
 ```csharp
 source.Select(x => x * 2, DeliveryPolicy.LatestMessage)

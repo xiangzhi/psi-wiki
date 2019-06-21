@@ -6,7 +6,7 @@ The table below contains a list of more advanced documentation topics.
 | [Stream Operators](Stream-Operators) | Describes the set of available stream operators in \\psi |
 | [Windowing Operators](Windowing-Operators) | Describes the set of available buffering or windowing operators in \\psi |
 | [Shared Objects](Shared-Objects) | Explains memory management optimizations in \\psi and the concept of _shared objects_, useful when dealing with large data types |
-| [Datasets](InDepth.Datasets) | Explains how multiple \\psi stores can be aggregated into a dataset, and discusses related APIs. |
+| [Datasets](Datasets) | Explains how multiple \\psi stores can be aggregated into a dataset, and discusses related APIs. |
 | [Event Sources](Event-Sources) | Explains how to create source streams based on Windows events. |
 | [Remoting](Remoting) | Describes how remoting works and how to construct distributed \\psi applications. |
 | [Interop](Interop) | Describes how to interoperate with systems outside of \\psi using standard data formats and transports. |
