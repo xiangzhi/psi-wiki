@@ -1,3 +1,75 @@
+## __2019/07/03: Beta-release, version 0.8.32.1__
+
+**IMPORTANT NOTE:**
+
+In this release we have retargeted all .NET Framework projects to .NET Framework 4.7.2, and all native projects to Windows 10 SDK version 10.0.18362.0. In order to build the source code, please ensure that the following additional components are added to your Visual Studio installation:
+
+* [.NET Framework 4.7.2 targeting pack](https://dotnet.microsoft.com/download/dotnet-framework/net472)
+* [Windows 10 SDK (10.0.18362.0)](https://developer.microsoft.com/en-US/windows/downloads/windows-10-sdk)
+
+If you are using Visual Studio 2019, you may install these components using the Visual Studio Installer, or via the download links provided above. For Visual Studio 2017, you may use the Visual Studio Installer to install the .NET Framework 4.7.2 targeting pack, but you will need to download and install the Windows 10 SDK (10.0.18362.0) using the provided link.
+
+### OVERVIEW:
+
+Some of the main highlights in this release include:
+
+* Support for pipeline structure visualization, including message flow and diagnostics information (e.g. latencies, throughputs, stream statistics, etc.).
+* Retargeted projects to .NET Framework 4.7.2 and Windows 10 SDK 10.0.18362.0.
+* Updated NuGet package references in many projects to more recent versions.
+* Runtime API changes and bug fixes.
+* Moved documentation to wiki pages.
+* Created [gitter](https://gitter.im/Microsoft/psi) channel.
+
+### Breaking Changes:
+
+* The `ISourceComponent.Stop` method now takes a `finalOriginatingTime` argument representing the pipeline shutdown time and a `notifyCompleted` delegate which the component must now call to notify the pipeline that it has completed generating source messages up to the `finalOriginatingTime`.
+* Pipeline exception handling is now exposed through new `PipelineException` event rather than overloading the `PipelineCompleted` event to also serve as an exception handler.
+* Input and output connectors for subpipelines should now be constructed using the new `CreateInputConnectorFrom` and `CreateOutputConnectorTo` static methods of the `Subpipeline` class.
+* The `Match.Any` interpolator has been removed.
+
+### Details of Changes to the Runtime:
+
+Several significant changes were made to the pipeline startup and shutdown logic:
+
+* There is now a single scheduler for the main pipeline and all subpipelines. To facilitate management of work items in subpipelines, a new `SchedulerContext` has been introduced to which work items may be assigned.
+* Message delivery in a pipeline is now delayed at startup until all source components in the pipeline have been activated.
+* To enable correct and reproducibile pipeline shutdown, changes were made to the `ISourceComponent` that will need to be implemented by stream sources.
+* Renamed the `PipelineElement` `Start` and `Stop` methods to `Activate` and `Deactivate` respectively.
+* Added a check in `Receiver.OnSubscribe` to ensure that emitters and receivers are not connected across pipelines (connectors should be used instead).
+* Changes to the pipeline exception handling mechanism via a new `PipelineException` event.
+
+### Details of Changes to Operators and Components:
+
+* Updated `ParallelSparse` and `Exporter` to use the composite component pattern, i.e. they are now implemented as a single subpipeline component.
+* Added `MessageConnector` and `IConnector` interface to support connectors that wrap the entire message as they pass it along (used by `Exporter`).
+* Added new static methods `CreateInputConnectorFrom` and `CreateOutputConnectorTo` on `Subpipeline` for creating connectors between pipelines.
+* Changed the `StreamEnumerable` component (used by the `ToObservable` operator) to listen to the `Unsubscribed` event of its source rather than the `PipelineCompleted` event.
+
+### Details of Changes to Platform for Situated Intelligence Studio:
+
+* New pipeline diagnostics visualization feature enables visualization of the pipeline structure and message flow statistics in PsiStudio.
+* Added a new toolbar button that lets the user toggle whether the navigator's cursor follows the mouse cursor when in manual cursor mode. This setting can be toggled via the button and also via the shortcut "Alt+F" (enabled by default).
+* When playing back in repeat/loop mode, we now ensure the cursor remains visible after looping from the end of the stream back to the beginning.
+* Added support for visualizing streams of strings.
+* Generic message visualizer now shows string representation of message in live legend.
+* Added support for formatting in legends.
+* Moved rectangle and coordinate system visualizers out of PsiStudio and into Visualization.Common.
+* Created interface IView3D as well as a base version for handling collections of 3D visuals.
+* Created a single base 3D visualization object, removing a lot of duplicate code.
+
+### Other Bug Fixes:
+
+* Fixed an issue which caused the pipeline to appear to hang if an exception is thrown in a subpipeline's attached `PipelineRun` event handler.
+* Fixed a bug in PsiStudio where the cursor remains a hand after dragging within a timeline visualization panel.
+* Fixes to various visualizers (cleaned-up pattern for InitNew and handling config and property changes).
+* Fixed an issue where live stores sometimes had no last message time.
+* Fixed an AccessViolation related to `IAudioEndpointVolumeCallback` in the Windows audio components.
+* Fixed a bug in one of the tuple-flattening `Join` operator overloads which was causing it to use the incorrect interpolator.
+* Fixed a thread safety issue in the `Join` operator.
+* Fixed a thread cleanup issue on disposal in `InfiniteFileWriter`.
+
+---
+
 ## __2019/04/05: Beta-release, version 0.7.57.2__
 
 ### OVERVIEW:
