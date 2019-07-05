@@ -22,7 +22,7 @@ Some of the main highlights in this release include:
 
 ### Breaking Changes:
 
-* The `ISourceComponent.Stop` method now takes a `finalOriginatingTime` argument representing the pipeline shutdown time and a `notifyCompleted` delegate which the component must now call to notify the pipeline that it has completed generating source messages up to the `finalOriginatingTime`.
+* The `ISourceComponent.Stop` method now takes a `finalOriginatingTime` argument representing the pipeline shutdown time and a `notifyCompleted` delegate which the component must now call to notify the pipeline that it has completed generating source messages up to the `finalOriginatingTime`. For more details, see [here](https://github.com/microsoft/psi/wiki/Writing-Components#6-source-component-interface).
 * Pipeline exception handling is now exposed through new `PipelineException` event rather than overloading the `PipelineCompleted` event to also serve as an exception handler.
 * Input and output connectors for subpipelines should now be constructed using the new `CreateInputConnectorFrom` and `CreateOutputConnectorTo` static methods of the `Subpipeline` class.
 * The `Match.Any` interpolator has been removed.
@@ -33,7 +33,7 @@ Several significant changes were made to the pipeline startup and shutdown logic
 
 * There is now a single scheduler for the main pipeline and all subpipelines. To facilitate management of work items in subpipelines, a new `SchedulerContext` has been introduced to which work items may be assigned.
 * Message delivery in a pipeline is now delayed at startup until all source components in the pipeline have been activated.
-* To enable correct and reproducibile pipeline shutdown, changes were made to the `ISourceComponent` that will need to be implemented by stream sources.
+* To enable correct and reproducibile pipeline shutdown, changes were made to the `ISourceComponent` that will need to be implemented by stream sources. For more details, see [here](https://github.com/microsoft/psi/wiki/Writing-Components#6-source-component-interface).
 * Renamed the `PipelineElement` `Start` and `Stop` methods to `Activate` and `Deactivate` respectively.
 * Added a check in `Receiver.OnSubscribe` to ensure that emitters and receivers are not connected across pipelines (connectors should be used instead).
 * Changes to the pipeline exception handling mechanism via a new `PipelineException` event.

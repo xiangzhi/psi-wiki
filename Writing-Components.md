@@ -328,7 +328,7 @@ Source components must be declared as such for the pipeline to behave correctly.
 
 ### 6.1. Completion
 
-Some source components have a notion of "completion". These represent finite streams of data. These are commonly "importers" of some kind; producing messages from a data source. The data is finite and so is the source component. The `Start(Action<DateTime> notifyCompletionTime)` method provides a means for the component to later notify the pipeline of completion by way of an `notifyCompletionTime` action to call once no more messages are forthcoming and indicating the originating time of the final message (or else `pipeline.GetCurrentTime()`):
+Some source components have a notion of "completion". These represent finite streams of data. These are commonly "importers" of some kind; producing messages from a data source. The data is finite and so is the source component. The `Start(Action<DateTime> notifyCompletionTime)` method provides a means for the component to later notify the pipeline of completion by way of a `notifyCompletionTime` action to call once no more messages are forthcoming and indicating the originating time of the final message (or else `pipeline.GetCurrentTime()`). Source components that are truly infinite and do not have a notion of completion (e.g. an always-on camera or other sensor component) should invoke the `notifyCompletionTime` action with a time of `DateTime.MaxValue`. 
 
 ```csharp
 // Implementors should advise the pipeline when they are done posting as well as
@@ -342,10 +342,10 @@ Once all source components have completed, downstream reactive components no lon
 
 ```csharp
 // Called by the pipeline when shutting down.
-void ISourceComponent.Stop();
+void ISourceComponent.Stop(DateTime finalOriginatingTime, Action notifyCompleted);
 ```
 
-`Stop()` is called when the pipeline is shutting down. Once this completes, the component should stop generating new messages. However, if the component does have inputs, it is expected to continue to handle incoming messages, which may include posting messages from inside their receivers.
+`Stop(...)` is called notify the source component that the pipeline is shutting down. The `finalOriginatingTime` indicates the pipeline time after which no messages bearing a later originating time will be delivered. However, if a source component expects to produce but has yet to post messages with originating times that occur before `finalOriginatingTime`, then it should continue to generate and post such messages. As soon as it has done so, or as soon as the source component can guarantee that it will never post any more messages with an originating time less than or equal to `finalOriginatingTime`, it should invoke the `notifyCompleted` action to inform the pipeline that it has completed generating new messages. However, if the component does have inputs, it is expected to continue to handle incoming messages, which may include posting messages from inside its receivers.
 
 ### 6.2. Infinite Sources
 
