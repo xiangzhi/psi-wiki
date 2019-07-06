@@ -66,7 +66,7 @@ public class StringMultiplier
         var stringBuilder = new StringBuilder();
         for(int i = 0; i < count; i++)
         {
-            stringBuilder.Append(this.inputString);
+            stringBuilder.Append(this.lastStringInput);
         }
 
         // Post result on the Out emitter, carrying the originating time
@@ -127,7 +127,7 @@ The second observation is more of a programming guideline. Because of exclusivit
 
 ### 1.4. Isolated execution and message ownership
 
-The \psi runtime uses an automatic cloning system when passing messages around to enable data-isolation between components. Component writers can _access_, _read_ and even _modify_ the messages arriving inside a receiver method (like in a regular .NET event handler) without worring about concurrency with other components that may also receive and operate simultaneously on the same message (multiple downstream components can be connected to the same source stream). Each receiver method connected to an emitter gets its own copy of the data that can be read and modified at will throughout the lifetime of that receiver method.
+The \psi runtime uses an automatic cloning system when passing messages around to enable data-isolation between components. Component writers can _access_, _read_ and even _modify_ the messages arriving inside a receiver method (like in a regular .NET event handler) without worrying about concurrency with other components that may also receive and operate simultaneously on the same message (multiple downstream components can be connected to the same source stream). Each receiver method connected to an emitter gets its own copy of the data that can be read and modified at will throughout the lifetime of that receiver method.
 
 At the same time, once the receiver method exits, the runtime may choose to reuse the memory underneath the message (the cloning mechanism reuses message buffers, in an effort to minimize the number of allocations and garbage collections that happen when the pipeline runs in steady-state). As a result, if the component needs to hold on to a message past the exit from the receiver, the message should be cloned. The \psi runtime provides a general method for cloning .NET objects called `DeepClone()`.
 
@@ -260,12 +260,12 @@ public class CompositeComponent : Subpipeline
         : base(pipeline, nameof(CompositeComponent))
     {
         // Create the connectors
-        this.stringIn = pipeline.CreateInputConnector<string>(this, this, nameof(this.StringIn));
-        this.countIn = pipeline.CreateInputConnector<int>(this, this, nameof(this.CountIn));
+        this.stringIn = this.CreateInputConnectorFrom<string>(pipeline, nameof(this.StringIn));
+        this.countIn = this.CreateInputConnectorFrom<int>(pipeline, nameof(this.CountIn));
 
         // Define the outputs
-        var stringOut = this.CreateOutputConnector<string>(pipeline, this, nameof(this.StringOut));
-        var absCountOut = this.CreateOutputConnector<int>(pipeline, this, nameof(this.AbsCountOut));
+        var stringOut = this.CreateOutputConnectorTo<string>(pipeline, nameof(this.StringOut));
+        var absCountOut = this.CreateOutputConnectorTo<int>(pipeline, nameof(this.AbsCountOut));
         this.StringOut = stringOut.Out;
         this.AbsCountOut = absCountOut.Out;
 
