@@ -5,6 +5,6 @@ To build a \\psi application using [NuGet packages](http://www.nuget.org), simpl
 __Choice of .NET Framework__. Platform for Situated Intelligence is build on .NET, and can be used from .NET applications.
 
 * If you are developing a Linux or a cross-platform application, make sure you use .NET Core 2.0 or above.
-* If you are building a Windows-only application that needs to leverage features specific only to .NET Framework, make sure you configure your application to use .NET Framework 4.7 or above. 
+* If you are building a Windows-only application that needs to leverage features specific only to .NET Framework, make sure you configure your application to use .NET Framework 4.7.2 or above. 
 
 __Platform target__. Certain \\psi nuget packages work only on 64 bit configurations (see [\\psi NuGet packages list](List-of-NuGet-Packages)). If you plan to use one of these packages, you will need to configure the platform target for your application accordingly. You can change the platform target by going to right-clicking on the project, then _Properties_ -> _Build_ -> _Platform Target_ set from `AnyCPU` to `x64`.
