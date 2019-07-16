@@ -2,14 +2,37 @@ To build, first you will need to clone the Platform for Situated Intelligence [g
 
 ## On Windows
 
-__Setup Visual Studio__:
+Visual Studio is required to build the `Psi.sln` solution on Windows. _Either_ Visual Studio 2019 or the older Visual Studio 2017 may be used. Install one or the other version below:
 
-Install [Visual Studio 2017](https://www.visualstudio.com/vs/) version 15.7 or later (the Community Edition of Visual Studio is sufficient). Make sure the following features are installed (you can check these features by running the Visual Studio Installer again and looking at both the Workloads and Individual components tabs):
+__Setup Visual Studio 2019__:
 
-* Make sure you have installed the __.NET desktop development__ workload, as well as the __.NET Framework 4.7 targeting pack__ feature.
-* Make sure you have installed the __Desktop development with C++__ workload, as well as the __Windows 10 SDK (10.0.17134.0) for Desktop C++ [x86 and x64]__ feature.
-* Make sure you have installed the __VC++ 2017 version *version_number* Libs for Spectre (x86 and x64)__ component from the Individual components tab.
-* Make sure you have installed the __Visual C++ ATL (x86/x64) with Spectre Mitigations__ component from the Individual components tab.
+Install [Visual Studio 2019](https://www.visualstudio.com/vs/). The Community Edition of Visual Studio is sufficient. Make sure the following features are installed (you can check these features by running the Visual Studio Installer again and looking at both the Workloads and Individual components tabs):
+
+* Workloads:
+  * __.NET desktop development__
+  * __.NET Core cross-platform development__
+  * __Desktop development with C++__
+* Individual Components:
+  * __MSVC v141 - C++ x64/x86 Spectre-mitigated libs__
+  * __Visual C++ ATL for v141 build tools (x86/x64)__
+  * __Windows 10 SDK (10.0.18362.0)__
+
+Currently, our projects target the older Platform Toolset v141 for compatibility with VS 2017. When you first open the solution, you will be prompted to Retarget Projects. Press __Cancel__.
+
+__Setup Visual Studio 2017__:
+
+The older [Visual Studio 2017](https://visualstudio.microsoft.com/vs/older-downloads/) (version 15.7 or later) continues to be supported. The Community Edition of Visual Studio is sufficient. Make sure the following features are installed (you can check these features by running the Visual Studio Installer again and looking at both the Workloads and Individual components tabs):
+
+* Workloads:
+  * __.NET desktop development__
+  * __.NET Core cross-platform development__
+  * __Desktop development with C++__
+* Individual Components:
+  * __VC++ 2017 Libs for Spectre (x86 and x64)__
+  * __Visual C++ ATL (x86/x64) with Spectre Mitigations__
+  * __.NET Framework 4.7.2 targeting pack__
+
+The [Windows 10 SDK (10.0.18362.0)](https://developer.microsoft.com/en-US/windows/downloads/windows-10-sdk) is not included as an Individual Component with VS _2017_ and must be installed separately.
 
 __Optional prerequisites__:
 
@@ -25,13 +48,15 @@ A couple of the projects in the Platform for Situated Intelligence codebase have
 
 __Build__:
 
-* Launch Visual Studio 2017.
+* Launch Visual Studio.
 * Open the `Psi.sln` solution from the root of your cloned repo.
 * From the *Build* menu choose *Rebuild Solution*.
   * This will build the currently selected configuration (Release or Debug).
   * It is a good idea to build both configurations - select the other configuration and rebuild.
 
 ## On Linux
+
+Under Linux, we recommend using [Visual Studio Code](https://code.visualstudio.com/). A subset of projects are cross-platform and some offer Linux-specific implementations.
 
 __Prerequisites__:
 
@@ -41,4 +66,4 @@ Although \psi is built on .NET Standard, IL assembly still depends on _Mono's_ `
 
 __Build__:
 
-To build, launch the `./build.sh` script. This will build all individual projects that support Linux by calling individual `build.sh` scripts that are associated with each of these projects. 
+To build, launch the `./build.sh` script. This will build all individual projects that support Linux by calling individual `build.sh` scripts that are associated with each of these projects.
