@@ -13,8 +13,8 @@ Install [Visual Studio 2019](https://www.visualstudio.com/vs/). The Community Ed
   * __.NET Core cross-platform development__
   * __Desktop development with C++__
 * Individual Components:
-  * __MSVC v141 - C++ x64/x86 Spectre-mitigated libs__
-  * __Visual C++ ATL for v141 build tools (x86/x64)__
+  * __MSVC v141 - VS 2017 C++ x64/x86 Spectre-mitigated libs (v14.16)__
+  * __C++ ATL for v141 build tools with Spectre Mitigations (x86 & x64)__
   * __Windows 10 SDK (10.0.18362.0)__
 
 Currently, our projects target the older Platform Toolset v141 for compatibility with VS 2017. When you first open the solution, you will be prompted to Retarget Projects. Press __Cancel__.
@@ -28,7 +28,7 @@ The older [Visual Studio 2017](https://visualstudio.microsoft.com/vs/older-downl
   * __.NET Core cross-platform development__
   * __Desktop development with C++__
 * Individual Components:
-  * __VC++ 2017 Libs for Spectre (x86 and x64)__
+  * __VC++ 2017 version 15.9 v14.16 Libs for Spectre (x86 and x64)__
   * __Visual C++ ATL (x86/x64) with Spectre Mitigations__
   * __.NET Framework 4.7.2 targeting pack__
 
