@@ -354,7 +354,7 @@ On the toolbar are three _Timing Display_ buttons that can be used to display ti
 
 You can also change how a stream is rendered.  In the picture below the Interpolation Style property of the Sin stream has been changed to _Step_ which renders the stream so that it maintains its current value until the next message is received.  For the Cos stream the Interpolation Style property has been changed to _None_ so that only the values of the messages are displayed and no connecting lines are drawn between them.  When using this valule for Interpolation Style the Marker Style property must be changed to something other than _None_ or nothing at all will be rendered.  Notice in the picture below that the Visualization Panel for the Sin stream has been resized by dragging its bottom edge in order to get a better view of the data.
 
-Notice also that _Snap to Stream_ has been enabled on the Sin stream so that the Cursor always snaps to the message nearest to the mouse.  If one or more of the timing displays is activated, then the user can find the exact time of any message in the stream by moving the cursor near it.  To enable _Snap to Stream_, right-click the stream you wish to snap to in the Visualizations tab and select _Snap to Stream_ in the context menu.  The stream that is currently being snapped to will display an additional magnet icon next to it in the Visualizations tab.  To cancel _Snap to Stream_, right-click the stream in the Visualizations tab and again select the _Snap to Stream_ menu item.
+Notice also that _Snap to Stream_ has been enabled on the Sin stream so that the Cursor always snaps to the message nearest to the mouse.  If one or more of the timing displays is activated, then the user can find the exact time of any message in the stream by moving the cursor near it.  To enable _Snap to Stream_, right-click the stream you wish to snap to in the Visualizations tab and select _Snap to Stream_ in the context menu.  The stream that is currently being snapped to will display a slightly different icon next to it in the Visualizations tab.  To cancel _Snap to Stream_, right-click the stream in the Visualizations tab and again select the _Snap to Stream_ menu item.
 
 ![PsiStudio (Interpolation Style)](PsiStudio.InterpolationStyle.png)
 
@@ -390,13 +390,13 @@ Since you just restarted your \\psi application, it's generating a new dataset i
 
 ![PsiStudio (Live Store)](PsiStudio.OpenLiveStore.png)
 
-We now have two sessions loaded, the previous session (which we can tell is the session being displayed in the Visualizations area because all of the tree nodes under it are white), and the new Live session. Notice that PsiStudio detected that the store that we opened was live, and it added a _Live_ icon next to the partition name and all of the streams in that parition.  Notice also that it generated a new name for the session _demo_1_ to ensure that all sessions in our dataset have unique names.
+We now have two sessions loaded, the previous session (which we can tell is the session being displayed in the Visualizations area because all of the tree nodes under it are lit up), and the new Live session which is currently displayed dimmed as it's not the current session being visualized.  Notice that PsiStudio generated a new name for the session _demo_1_ to ensure that all sessions in our dataset have unique names.
 
 To switch to visualizing the live session, right-click on the _demo_1_ session and from the context menu select _Visualize Session_.
 
 After PsiStudio switched to the new session it automatically rebound all of the visualizers in the Visualizations area to the streams in the new session.
 
-Because we've switched to visualizing a live session, PsiStudio pressed the _LIVE_ Button on your behalf to set the cursor mode to _Live_. Also notice that in this mode the timeline is automatically scrolling to keep up with new messages being written to the store.
+Because we've switched to visualizing a live session, PsiStudio pressed the _LIVE_ Button on your behalf to set the cursor mode to _Live_. Also notice that in this mode the timeline is automatically scrolling to keep up with new messages being written to the store.  Notice also that the blue details of the Partition and Stream icons of a live partition are highlighted in bright blue, regular partitions and streams are rendered with a darker blue color.
 
 PsiStudio will monitor this partition so that any new streams that the app writes will be automatically added to the _Datasets_ tree view. PsiStudio will also detect when your \\psi application stops writing to the store and will switch the cursor mode from _Live_ mode back to _Manual_ mode, and the _Live_ icons next to the streams will disappear.
 

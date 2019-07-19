@@ -1,3 +1,32 @@
+## __2019/07/18: Beta-release, version 0.9.6.1__
+
+### OVERVIEW:
+
+The main highlights in this release are:
+
+* A major refresh of the `Platform for Situated Intelligence Studio` user interface, including a new color scheme, updated icons, and new functionality.
+
+### Details of Changes to Documentation:
+
+* The installation documentation has been updated to detail how to build the \psi codebase on Windows (using either Visual Studio 2017 or 2019), or on Linux.
+
+### Details of Changes to Platform for Situated Intelligence Studio:
+
+* Updated the look and feel of the user interface, including new colors and icons.
+* The `Datasets` treeview and the `Visualizations` treeview now feature `Expand All` and `Collapse All` buttons to fully expand and collapse the tree.
+* The `Visualizations` treeview now contains a new button to synchronize between it and the `Datasets` treeview.  When a stream in the `Visualizations` treeview is selected, clicking this button will select the source stream in the `Datasets` treeveiw and bring it into view.  This feature is useful for those times when you forget exactly which source stream a visualization is depicting.
+* When in `Live` cursor mode, the timing information for the selection start and end markers is now not displayed as this information is irrelevent when in live mode.
+* Added new context menu item `Zoom to Stream Extents` to streams in the `Visualizations` tree view.
+* Added new context menu item `Zoom to Panel Extents` to panels in the `Visualizations` tree view.
+
+### Bug Fixes:
+
+* Fixed a bug in the `Join` operator that made it not correctly take into account open relative time intervals. See [this issue](https://github.com/microsoft/psi/issues/27).
+* Fixed bug in the `Diagnostics` visualizer where connectors between subpipelines were being incorrectly rendered.
+* Fixed bug in the `Diagnostics` visualizer that would cause it to crash if it encountered messages with unserializable fields.  We now return 0 for the size of such messages.
+* Fixed bug in `Rodrigues` method in the `Orientation` class of `Microsoft.Psi.Kinect.Windows`.  This method was returning an NaN rotation matrix when passed a zero rotation vector, it now returns an identity matrix instead.
+
+
 ## __2019/07/03: Beta-release, version 0.8.32.1__
 
 **IMPORTANT NOTE:**
