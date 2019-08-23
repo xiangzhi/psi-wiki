@@ -15,7 +15,7 @@ The tutorial is structured in the following easy steps:
 
 Before writing up our first \\psi app, we will need to setup a Visual Studio project for it. Follow these steps to set it up:
 
-1. First, create a simple .NET Core console app (for the examples below, a console app will suffice). You can do so by going to _File -> New Project -> Visual C# -> Console App (.NET Core)_. (.NET Core is a cross-platform solution; if you want to createa .NET Framework solution which runs only on Windows, make sure you change your project settings to target .NET Framework 4.7.2 or above.)
+1. First, create a simple .NET Core console app (for the examples below, a console app will suffice). You can do so by going to _File -> New Project -> Visual C# -> Console App (.NET Core)_. (.NET Core is a cross-platform solution; if you want to createa .NET Framework solution which runs only on Windows, make sure you change your project settings to target .NET Framework 4.7 or above.)
 
 2. Add a reference to the `Microsoft.Psi.Runtime` NuGet package that contains the core Platform for Situated Intelligence infrastructure. You can do so by going to References (under your project), right-click, then _Manage NuGet Packages_, then go to _Browse_. Make sure the _Include prerelease_ checkbox is checked. Type in `Microsoft.Psi.Runtime` and install.
 
@@ -74,7 +74,7 @@ This time the timestamp for each message will be displayed. You may notice that 
 
 The `p.Run()` line simply runs the pipeline. A number of overloads and other (asynchronous) methods for running the pipeline are available, but for now, we use the simple `Run()` method which essentially tells the pipeline to execute to completion. This causes the generator to start generating messages, which in turn are processed by the `Do` operators. Since the generator outputs a timer stream that is infinite this application will continue running indefinitely until the console is closed by the user.
 
-There are many basic, generic stream operators available in the \\psi runtime (for an overview, see [Basic Stream Operators](Stream-Operators), and also operators for processing various types of streams (like operators for turning a stream of color images into a corresponding stream of grayscale images). Besides `Do`, another operator that is often used is `Select`. The `Select` operator allows you to transform the messages on a stream by simply applying a function to them. Consider the example below (you will have to also add a `using System.Linq;` directive at the top of your program to access the `Enumerable` class):
+There are many basic, generic stream operators available in the \\psi runtime (for an overview, see [Basic Stream Operators](Basic-Stream-Operators), and also operators for processing various types of streams (like operators for turning a stream of color images into a corresponding stream of grayscale images). Besides `Do`, another operator that is often used is `Select`. The `Select` operator allows you to transform the messages on a stream by simply applying a function to them. Consider the example below (you will have to also add a `using System.Linq;` directive at the top of your program to access the `Enumerable` class):
 
 ```csharp
 static void Main(string[] args)
@@ -94,7 +94,7 @@ Before we discuss the `Select`, note that we have used a different generator thi
 
 The `Select` operator we have injected transforms the messages from the sequence stream by computing the sine function over the messages. Try this and check out the results! You should see in the console a sequence of outputs that fluctuate between -1 and +1, like the sinus function.
 
-Beyond `Do` and `Select`, \\psi contains many operators: single stream operators like `Where`, `Aggregate`, `Parallel` etc. (similar with Linq and Rx), stream generators (`Sequence`, `Enumerate`, `Timer`) as well as operators for combining streams (`Join`, `Sample`, `Repeat`). Like `Do`, some of these operators also have overloads that can surface the message envelope information. Check out the [Basic Stream Operators](Stream-Operators) page for an in-depth look at all of them.
+Beyond `Do` and `Select`, \\psi contains many operators: single stream operators like `Where`, `Aggregate`, `Parallel` etc. (similar with Linq and Rx), stream generators (`Sequence`, `Enumerate`, `Timer`) as well as operators for combining streams (`Join`, `Sample`, `Repeat`). Like `Do`, some of these operators also have overloads that can surface the message envelope information. Check out the [Basic Stream Operators](Basic-Stream-Operators) page for an in-depth look at all of them.
 
 Finally, so far we have highlighted the language of stream operators, which encapsulate simple components that perform transformations on streams. In the more general case, \\psi components can have multiple inputs and outputs and can be wired into a pipeline via the `PipeTo` operator. For instance, in the example below we instantiate a wave file audio source component, and connect its output to an acoustic features extractor component, after which we display the results.
 
@@ -412,6 +412,6 @@ Clicking the _Live_ button once more will switch the cursor mode back into _Live
 
 ## 6. Next steps
 
-Besides this brief introduction, a couple of additional [tutorials](Basic-Tutorials) are available, as well as a number of more [advanced, in-depth topics](More-Advanced-Topics) that dive into more details in various aspects of the framework, including [stream operators](Stream-Operators), [synchronization](Synchronization), [shared objects and memory management](Shared-Objects), [remoting](Remoting), [interop](Interop) etc.
+Besides this brief introduction, a couple of additional [tutorials](Basic-Tutorials) are available, as well as a number of more [advanced, in-depth topics](More-Advanced-Topics) that dive into more details in various aspects of the framework, including [stream operators](Basic-Stream-Operators), [synchronization](Synchronization), [interpolation and sampling](Interpolation-and-Sampling), [shared objects and memory management](Shared-Objects), [remoting](Remoting), [interop](Interop) etc.
 
 Apart from the documentation, it may be helpful to look through the set of [Samples](Samples) provided. While some of the samples address specialized topics like how to leverage speech recognition components or how to bridge to ROS, reading them will give you more insights into programming with Platform for Situated Intelligence.

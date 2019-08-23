@@ -1,115 +1,175 @@
-## Join(...)
+Platform for Situated Intelligence provides a set of stream operators and interpolators that allow the developer to easily implement a variety of fusion and data synchronization scenarios. This document describes these mechanisms.
 
-The `Join` operators allows synchronizing (or fusing) two or more streams into a single stream.
-Other frameworks (e.g. Rx) have similar operators such as `Zip()`, but in the Platform for Situated Intelligence framework these are not based on the wall-clock time or ordinal of message arrival. Instead, synchronization in \\psi is based on the message _originating time_, captured by the `OriginatingTime` field transported in the message envelope.
+__Note__: Prior to reading this document, we strongly recommend that you familiarize yourself with the core concepts of the \\psi framework, by reading the [Brief Introduction](Brief-Introduction) tutorial. The concepts of streams and originating times are a prerequisite for the documentation below.
 
-The originating times are usually set by the sensor components or stream generators, at origin, and capture the originating time to which each message corresponds. For instance, a camera component will set the originating time for each frame, and as each frame goes through a pipeline of components that may process it in various ways (e.g. convert to grayscale, extract optical flow, etc.) the originating time is propagated with the resulting messages. The optical flow results may arrive at some downstream component at a later time, but they still carry the originating time (that corresponds to when the original video frame happened in the world) in the envelope. This originating time is what really matters for synchronization, because when we want to synchronize two streams (e.g. audio and video), we often care about when the events on those streams actually happened in the world. 
+# Data Fusion
 
-Joins are driven by a _primary_ stream while pairing with _secondary_ streams.
-When we say `a.Join(b)`, then `a` is the primary stream.
-Each message from the primary stream _may_ produce at most one joined value, taken or synthesized from the secondary stream. The result of the join operation is a stream of tuples.
+Suppose that we have two streams _s1_ and _s2_ that produce messages, as illustrated in the figure below. These might be streams of the same type, or of different types (say audio and video), each with their own (not necessarily equal or even constant) cadence.
 
-_Interpolators_ determine how values are chosen from the secondary stream to be joined with a given message on the primary stream.
+![Fusion component](Synchronization.Fuse.PNG)
 
-## Interpolators
+A data fusion component takes two such streams as input (as we shall see later, this can be generalized to more than two), and produces a single output stream. Each output message is constructed by fusing a pair of messages from the input streams. Since the messages arrive on the two input streams on their own timing, the fundamental problem the fusion component has to resolve is therefore _how to pair_ the messages on the two input streams. Certain applications might have different requirements around how this pairing should be done. For instance in one case we might want to pair messages from _s1_ with the closest message in originating time from _s2_ (this pairing is illustrated in the figure above); in another case we might want to pair it with the last message available on _s2_, and so forth. 
 
-Two types of interpolators are currently available: `Exact` and `Best`
+In \\psi, this pairing problem is resolved via _interpolators_, which we describe below.
 
-| Interpolator | Window | Require Next Value |
-|:--|:--|:--|
-| `Match.Exact()` | ∅ | yes |
-| `Match.Best<T>(...)` | [−∞, +∞] (default) | yes |
+# Interpolators
 
-By default, if no interpolator is specified, `Join` uses the `Exact` interpolator. An `Exact` match requires that messages in the secondary stream align _exactly_ in originating time.
-If no _exact_ match is found in the secondary stream then the primary stream message is dropped.
-You may however specify another interpolator such as `Best` (discussed next) or a custom window (see section below). 
+An **_interpolator_** specifies how a generate a new message at a given interpolation time, from a stream of messages. The \\psi framework provides a number of such interpolators, and new ones can also be created. For instance, one of the simplest interpolators, called `Reproducible.Nearest`, generates as an interpolation result the nearest message to the interpolation time. If we use this interpolator over the messages shown in the figure below to interpolate at the time shown as _t_, the interpolation result would be message __z__. The `Reproducible.Nearest` interpolator simply selects a message from the existing stream, but in general an interpolator can create new messages (e.g., a linear interpolator between two points).
 
-A `Best` match will pair with a message from the secondary stream having the _nearest_ time; searching backward and/or forward in time.
-The default is to search an _infinite_ time window both forward and backward in time; producing the absolute _best_ match.
-No primary messages are dropped. Each is paired with the nearest secondary message or else waits (potentially forever) for a provably _best_ match.
+![Interpolating at time t](Synchronization.Interpolate.PNG)
 
-To do this properly, notice that it is required that the next message is seen.
-It cannot be known whether a given message from the secondary stream is the "best" match until the next message has been seen to confirm that it is not better.
-Waiting for the next secondary message before emitting a pairing introduces latency.
-Message times do increase monotonically so the _single_ next message is sufficient.
-It is important to note that this may cause awkward pairings if the secondary stream drops or is extremely sparse. Primary messages may be paired with _very_ distant secondaries for lack of anything better. For this reason, it is occasionally desirable to give a time window constraint (discussed next).
+Fusion components (such as `Fuse` and `Join` discussed later) fuse data from a **_primary_** stream with a **_secondary_** stream by applying a specified interpolator: for every message received on the primary stream, the interpolator is called over the secondary stream to produce a message that the primary message should be paired with. For example, the pairing that results when fusing _s1_ as a primary stream with _s2_ as a secondary stream, using the `Reproducible.Nearest` interpolator is illustrated below:
 
-## Custom Windows
+![Fusing with Reproducible.Nearest](Synchronization.FuseNearest.PNG)
 
-Instead of the default behavior of `Best` (matching an _infinite_ time window), we may specify a window to `Match.Best(...)` as either a `RelativeTimeInterval` directly or as a `TimeSpan` which becomes an interval [-span, +span].
-In fact, there is an implicit type conversion from `RelativeTimeInterval` and `TimeSpan` to a `Best` interpolator so _anywhere_ an interpolator is expected, a window may be specified.
-This includes `Join` (e.g. `Join(TimeSpan.FromMilliseconds(50))` is equivalent to `Join(Match.Best(TimeSpan.FromMilliseconds(50)))`) and other domain-specific "Join-like" operators which may not necessarily provide direct overloads.
-It is important to note that a non-infinite time window means that `Best` is no longer guaranteed not to drop primary messages — it _will_ if no secondary is found within the window.
+Notice that for each message on the primary stream one (or possibly zero) messages may be produced on the output, fused stream. At the same time, a message on the secondary stream may be used multiple times in the fusion process. For instance, in the example above, __z__ was the nearest message on the secondary stream for both __c__ and __d__.
 
-## Default Values
+## Interpolation Windows
 
-When no suitable message is found in the secondary stream, the joins above will _not_ produce a value.
-If instead we want to _always_ get something for every primary stream message, we can use one of the `*OrDefault()` variants: `Match.ExactOrDefault()`, `Match.BestOrDefault(...)`.
-These will pair with `default(T)` values when nothing more suitable is found.
+By default, the `Reproducible.Nearest` interpolator we have introduced above looks for the nearest message on the entire secondary stream. The interpolator can be customized however with an optional parameter that specifies a time window or time tolerace, relative to the interpolation time, that should be considered when looking for the nearest match.
 
-# Scalar Joins
+Relative time windows are represented via the `RelativeTimeInterval` class, which provides a number of constructors and static methods that enable creating a variety of relative time windows, shown in the table below.
 
-Restating, simple joins between a primary stream and a _single_ secondary are done with `primary.Join(secondary)`.
-Optionally, an interpolator may be given (`Match.Best()` by default) or a `RelativeTimeInterval` or `TimeSpan`.
+| Expression | Relative time window | 
+| :-- | :-- |
+| `RelativeTimeInterval.Infinite` | (-∞, +∞) |
+| `RelativeTimeInterval.Empty` | (0, 0) |
+| `RelativeTimeInterval.Zero` | [0, 0] |
+| `RelativeTimeInterval.Past()` | (-∞, 0] |
+| `RelativeTimeInterval.Future()` | [0, +∞) |
+| `new RelativeTimeInterval(TimeSpan.FromSeconds(-2), TimeSpan.FromSecond(3))` | [-2, 3] |
+| `new RelativeTimeInterval(TimeSpan.FromSeconds(-5), true, TimeSpan.Zero, false)` | [-5, 0) |
 
-A function mapping pairs of joined values to a type of our choosing (`Func<TPrimary, TSecondary, TOut>`) may be given as well.
+For instance, if we wish to select the nearest message _before_ time _t_, we can construct a relative time window that from minus infinity (e.g. infinite past) to zero (e.g., present moment) via `RelativeTimeInterval.Past()`. Interpolating at time _t_ with a `Reproducible.Nearest(RelativeTimeInterval.Past())` in the figure below selects message __y__, as this is the closest message to time _t_, when looking in the past. 
 
-## Tuple-flattening
+![Interpolating with past at time t](Synchronization.InterpolatePast.PNG)
 
-If no mapping function is given to `Join(...)` then a stream of `ValueTuple` is produced by default.
-That is, essentially `ValueTuple.Create` is the default mapping function.
+If we use a `Reproducible.Nearest(RelativeTimeInterval.Past())` interpolator to fuse the streams _s1_ and _s2_, the pairing that results is illustrated below -- each message on the primary stream _s1_ is paired with the previous message on _s2_:
 
-This would become unwieldy once joins of joins of joins were used; producing tuples of tuples of tuples...
-For example, `a.Join(b).Join(c).Join(d)` would produce `(((a, b), c), d)`.
-To remedy this, there are versions of `Join(...)` on `IProducer<ValueTuple<...>>` up to an arity of seven which produce _flattened_ tupples.
-This way `a.Join(b)` produces `(a, b)` but then this `.Join(c)` produces `(a, b, c)` and further `.Join(d)` produces `(a, b, c, d)`.
-This is what is meant by "tuple-flattening."
+![Fusing with past](Synchronization.FusePast.PNG)
 
-A stream of scalar (or otherwise non-tuple) values joined with a stream of `ValueTuple<...>` _also_ produces a flattened tuple stream.
-That is, aside from `a.Join(b).Join(c).Join(d)` producing `(a, b, c, d)` as above, the following does as well:
+Instead of relative time intervals, an optional time tolerance parameter can also be specified as a `TimeSpan`, and is automatically converted into a symmetric relative time interval, for instance: 
+
+    Reproducible.Nearest(TimeSpan.FromSeconds(1)))
+
+is equivalent to:
+
+    Reproducible.Nearest(new RelativeTimeInterval(TimeSpan.FromSeconds(-1), TimeSpan.FromSeconds(1)))
+
+## Basic Interpolators: `Exact`, `Nearest`, `First`, and `Last`
+
+The list of interpolators extends well beyond the `Reproducible.Nearest` interpolator discussed above. Interpolators are implemented as classes that derive from `Interpolator<TIn, TResult>` and most of them are directly accessible via static factory methods on the `Reproducible` and `Available` classes, as shown in the table below: 
+
+| Interpolator | Description | 
+|:--|:--|
+| Reproducible Interpolators | | 
+| `Reproducible.Exact()` | Selects the message with the same originating time as the interpolation time. |
+| `Reproducible.Nearest<T>(...)` | Selects the nearest message (within a relative time interval or time tolerance) to the interpolation time. | 
+| `Reproducible.First<T>(...)` | Selects the first message (within a relative time interval or time tolerance) to the interpolation time. | 
+| `Reproducible.Last<T>(...)` | Selects the last message (within a relative time interval or time tolerance) to the interpolation time. | 
+| `Reproducible.Linear(...)` | Produces an interpolation result over a stream of doubles by linear interpolation between the messages before and after the interpolation time. |
+| `AdjacentValuesInterpolator(...)` | Produces an interpolation result over a generic stream by applying a user-specified function to the messages adjacent (before and after) to the interpolation time. (The linear interpolator above is based on this adjacent values interpolator.) |
+| Greedy Interpolators | | 
+| `Available.Exact()` | Selects from the messages already available on the interpolation stream the message with the same originating time as the interpolation time. |
+| `Available.Nearest<T>(...)` | Selects from the messages already available on the interpolation stream the nearest message (within a relative time interval or time tolerance) to the interpolation time. | 
+| `Available.First<T>(...)` | Selects from the messages already available on the interpolation stream the first message (within a relative time interval or time tolerance) to the interpolation time. | 
+| `Available.Last<T>(...)` | Selects from the messages already available on the interpolation stream the last message (within a relative time interval or time tolerance) to the interpolation time. | 
+
+The `Nearest`, `First` and `Last` interpolators from the table above also come in an `OrDefault` flavor, e.g. `NearestOrDefault`, `FirstOrDefault`, `LastOrDefault` (not shown in the table for compactness). When a `Nearest`, `First` or `Last` interpolator does not find a corresponding match for a primary message (e.g. there is no matching secondary message in the specified interpolation window, etc.), no message will be produced on the output stream for that primary message. With the `OrDefault` version a default secondary stream value will be produced instead in this case. For instance, the Figure below shows the results over our example streams _s1_ and _s2_, when using `Reproducible.Nearest(RelativeTimeInterval.Past())` versus `Reproducible.NearestOrDefault(RelativeTimeInterval.Past(), '0')`. The default value to be used can be specified by the developer, or it itself defaults to `default(T)`.
+
+## Reproducible versus Greedy interpolators
+
+As the table above indicates, the interpolators in the \\psi framework are divided into two broad categories: called **_reproducible_** interpolators and **_greedy_** interpolators. The important difference between these two classes is that the _reproducible_ interpolators will always generate the same _provably-correct_ result, regardless of the arrival time of the messages, whereas the _greedy_ ones do not provide this guarantee. This is a very important point, as it significantly changes the behavior of data fusion -- we discuss it in depth below. 
+
+To explain the difference between _reproducible_ and _greedy_ interpolators, let's look back at a concrete example involving the streams _s1_ and _s2_ we have introduced earlier. In the figures above we have illustrated the messages on a horizontal time axis, at the position corresponding to their _originating times_. Note however that these messages might arrive with arbitrary latencies. And, while they will always appear in the order of the originating times on an individual stream, _the arrival order might be different across streams_ because of the delays with which the message arrive.
+
+Consider for instance the two examples below. 
+
+![Examples](Synchronization.Examples.PNG)
+
+Each shows the same messages with the same originating times, but appearing in different orders. In example 1, __a__ appears (1st), then __x__ (2nd), then __b__ (3rd), __y__ (4th), __c__ (5th), __z__ (6th), __d__ (7th), __w__ (8th) and finally __e__ (9th). In this case the messages appear across streams actually in increasing originating time order. This however is most often not the case, as the example on the right-hand side shows. In this example , __x__ appears (1st), then __a__ (2nd), __b__ (3rd), and __c__ (4th) appear, followed by __y__ (5th), then __d__ (6th), then __z__ (7th) and __w__ (8th), and finally __e__ (9th).
+
+The _reproducible_ interpolators will produce the same result, regardless of the order in which the messages appear on the two streams. In contrast, let's look the other, greedy version of the "nearest" interpolator, called `Available.Nearest`. This interpolator also selects the message nearest in originating time to the primary message, but it does so by looking only at the messages that are currently available on the secondary stream when the interpolator is first queried (e.g. when the primary message arrives) -- hence the name _greedy_. In contrast, the `Reproducible.Nearest` interpolator will potentially "wait" for new messages until it accumulates enough evidence that it has the correct answer, no matter what other messages might arrive on the secondary stream.
+
+As a result, performing fusion via the `Reproducible.Nearest` interpolator will produce the same set of pairs for both examples above: __(a,x)__, __(b,y)__, __(c,z)__, __(d,z)__, __(e,w)__. 
+
+![Examples](Synchronization.ExamplesReproducible.PNG)
+
+In contrast, the results produced by the `Available.Nearest` operator depend not just on the originating times, but also on the order of arrival across streams that is induced by the latency of the messages. In example 1, the `Available.Nearest` interpolator will produce: __(b,x)__, __(c,y)__, __(d,z)__, __(e,w)__. Note that in this example no output is generated corresponding to the primary stream message __a__, as no secondary message is already available at the time __a__ arrives. In example 2, the output of `Available.Nearest` will again be different: __(a,x)__, __(b,x)__, __(c,x)__, __(d,x)__, and __(e,w)__.
+
+![Examples](Synchronization.ExamplesAvailable.PNG)
+
+## Reproducibility and Correctness versus Latency
+
+There is a fundamental tradeoff between the _reproducible_ and _greedy_ interpolators: _reproducible_ interpolators will produce the correct results in terms of originating time regardless of the latency at which the messages arrive, but they do so at the potential cost of introducing more latency. This is the case because the _reproducible_ interpolators have to see enough messages on the secondary stream to guarantee that the result they output will never change, regardless of what else might appear in the future on the secondary stream. 
+
+For instance, in the situated from example 2 we have shown above (see again below), at the time message __c__ arrives on the primary, the only message available on the secondary stream is __x__, and this is the nearest message at this point in time. However, at this point in time the interpolator "knows" that other messages might arrive on the secondary stream that might be even closer in originating time, so it does not create an output. The interpolator waits in essence until it sees a message __z__ in this case. Once __z__ appears, it is clear that no future messages arriving on the secondary stream will change the answer, and an output is created. Note however that in the meantime other messages have arrived (__d__ and __y__), including even messages on the primary stream (__d__) -- the fusion components are queuing these messages and will process them later on. In effect, in the case above, to generate an interpolation result for __c__ we have to wait until __z__ arrives. As a consequence _the cadence and latency of the secondary stream dictates the latency of the interpolation result and fusion process_. 
+
+In contrast the greedy, `Available.*` version of the interpolators produce the result right away, as the primary message arrives, but they only take into account what is present at that moment on the secondary stream, and as such might generate less precise, and generally non-reproducible results. They however do not incur the latency of the messages on the secondary stream.
+
+
+# Fusion Components and Operators
+
+Having introduced the various types of interpolators above we now finally turn attention back to data fusion. Data fusion in \\psi can be accomplished via one of two data fusion components and corresponding sets of stream operators: `Fuse` and `Join`. Both components use interpolators to determine how messages on a secondary and primary streams are paired and used together to generate a fused result. 
+
+`Fuse` is the most general data fusion component/operator, and can use any type of interpolator. In contrast, `Join` is a component that derives off of `Fuse`, and only allows for using _reproducible_ interpolators. The distinction was introduced as a way to syntatically highlight in the code written when a reproducible fusion is performed versus not, i.e. `Join` means reproducible.
+
+Other than this distinction, the usage for these two operators is very similar, and is illustrated below with a few examples, based on `Join`.
+
+The basic syntax for joining two streams is: 
 
 ```csharp
-    var cd = c.Join(d); // (c, d)
-    var bcd = b.Join(cd); // (b, c, d)
-    var abcd = a.Join(bcd); // (a, b, c, d)
+var joined = primary.Join(secondary);
 ```
 
-# Vector Joins
+In this case, `primary` and `secondary` are the primary and secondary streams respectively. `Join` is a stream operator that applies to the primary stream, and takes as a first parameter the secondary stream. If no interpolator is specified, as in the example above, `Join` assumes by default the `Reproducible.Exact` interpolator -- this requires that the messages in the secondary stream align _exactly_ in originating time with the primary stream messages. However, an interpolator can be specified by the developer, either directly:
 
-Vector joins are from a single primary stream (`IProducer<T>`), as usual, but with a sequence of secondary streams.
-That is, secondary streams as an `IEnumerable<IProducer<T>>`; each secondary of the same type as the primary.
-The result is a _collection_ of values having been joined.
-Results are in the form of a `T[]`, or a mapping function may be provided.
+```csharp
+var joined = primary.Join(secondary, Reproducible.Nearest(RelativeTimeInterval.Past()));
+```
 
-## Sparse Vector Joins
+or by providing a relative time interval or a time tolerance, in which case a `Reproducible.Nearest` interpolator with that corresponding time window is assumed:
 
-Like (dense) vector joins above, sparse vector joins work over a sequence of secondary streams (`IEnumerable<IProducer<T>>`).
-However, it is not expected that every primary value has a corresponding secondary value to which to join.
-Instead, the secondary stream may represent streams that "exist" (in a sense) or not for any given primary message.
+```csharp
+var joined = primary.Join(secondary, RelativeTimeInterval.Past());
+```
 
-A concrete example might me a face detector and tracker.
-Each time a new face is detected, a _new_ stream of tracking results (location, size) is created.
-These may proceed in parallel (in fact, sparse joins are most often used in conjunction with `Parallel` operations).
-At one point face A and B may be detected and tracking streams started.
-Then a new face C appears, then face B moves out of frame leaving only A and C, etc.
-At each point we would like to join just the current faces.
+By default, in the examples aboved the `joined` stream will be a stream of tuples of elements `(p, s)`, where `p` is an element from the primary stream and `s` is an element from the secondary stream. Alternatively, `Join` and `Fuse` accept as an optional parameter a _fusion-function_ that maps the paired values to a different output type. For instance, if `primary` and `secondary` are two integer streams:
 
-This is a job for a sparse vector join.
-As faces come and go a stream of mappings from ID to stream ordinal should be produced.
-This becomes the primary stream.
-Faces are tracked in parallel and become the secondary streams.
-The result of the join is then a stream of collections of tracking results, where each collection contains only the active faces.
+```csharp
+var joined = primary.Join(secondary, RelativeTimeInterval.Past(), (p, s) => p + s);
+```
 
-The primary stream may be of mappings directly (`IProducer<Dictionary<TKey, int>>`) or may be of any type, providing a `keyMapSelector` function is given.
+will construct a `joined` stream of integers, where each fused integer output is the sum of the two inputs.
+
+Finally, `Join` and `Fuse` also accept two additional parameters named `primaryDeliveryPolicy` and `secondaryDeliveryPolicy` which control the [delivery policies](Delivery-Policies) on the primary and secondary stream connections. By default, the pipeline-level delivery policy will be used. 
+
+## Tuple-flattening Fusion
+
+When sequentially fusing multiple streams without explicitly specifying a fusion-function, the end result would naturally be a tuple of tuples. For example, `a.Join(b).Join(c).Join(d)` would produce a tuple of the form `(((a, b), c), d)`. This was deemed unwieldy, and to remedy it, a number of versions of `Join(...)` and `Fuse(...)` operators are available for streams of the type `IProducer<ValueTuple<...>>` which produce _flattened_ tuples up to an arity of 7. This way `a.Join(b)` produces `(a, b)` but then `.Join(c)` produces `(a, b, c)` and further `.Join(d)` produces `(a, b, c, d)`. We refer to this as _tuple-flattening_.
+
+A stream of scalar (or otherwise non-tuple) values joined with a stream of `ValueTuple<...>` _also_ produces a flattened tuple stream. That is, aside from `a.Join(b).Join(c).Join(d)` producing `(a, b, c, d)` as above, the following does as well:
+
+```csharp
+var cd = c.Join(d); // (c, d)
+var bcd = b.Join(cd); // (b, c, d)
+var abcd = a.Join(bcd); // (a, b, c, d)
+```
+
+## Vector Fusion
+
+Another version of the `Join` and `Fuse` operators enable _vector fusion_. Vector fusion operates with a single primary stream (`IProducer<TPrimary>`), as usual, but with a sequence of secondary streams. That is, an enumeration of secondary streams (`IEnumerable<IProducer<TSecondary>>`) can be provided. All the secondary streams must have the same type. A fusion-function mapping from a pair of `TPrimary` and `TSecondary[]` to a new, fused output type must be provided. 
+
+Based on this vector-fusion version, `Join` and `Fuse` overloads are also available that simply take as input a single array of streams of a given type, and fuse them in a vector. For example, assuming `streams` is an enumeration of streams, i.e. `IEnumerable<IProducer<T>>`:
+
+```csharp
+var vectorStream = Operators.Join(streams, Reproducible.Nearest());
+```
+
+the resulting `vectorStream` will be a stream of vectors of type `T`, i.e. `IProducer<T[]>`. This is implemented by using the first stream in the `streams` enumeration as a primary, and all the other streams as secondary streams in a vector-fusion operation.
 
 # Pair
 
-The `Pair` operator is much like `Join` but does not take message timestamps into account.
-Instead, it merely pairs with the latest message seen in the wall-clock sense.
-It is important to note that this makes `Pair` inherently non-deterministic and in fact not strictly a _synchronization_ operation.
+Apart from `Fuse` and `Join`, the `Pair` operator can also be used to perform data fusion, but mostly exists for historical reasons and might be deprecated in the future. 
 
-An overload accepts an `initialValue` to be used when a message arrives on a one stream while nothing at all has been seen on the other.
-It is paired with the `initialValue` in this case.
-Otherwise, when no `initialValue` is provided, the `Pair` operator emits _nothing_ until a message on each stream has been seen.
-
-Just as with `Join`, there is tuple-flattening behavior with `Pair` (see above).
+`Pair` behaves in essence like a `Fuse` with a greedy `Available.LastOrDefault()` interpolator: as soon as primary message is received, it will pair it with the last received secondary message, and output the corresponding tuple. Like with `Fuse` and `Join`, overloads are available to perform tuple flattening, and also to allow specifying a fusion function and primary and secondary delivery policies.

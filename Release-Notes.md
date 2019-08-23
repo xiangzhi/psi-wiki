@@ -326,8 +326,8 @@ Interim release with support for new devices, runtime enhancements and several A
 * Added support for RealSense depth camera
 * Added the `FFMPEGMediaSource` component for Linux
 * Added a [`Subpipeline`] class, enabling [nested pipelines](Writing-Components#SubPipelines)
-* [`Parallel`](Stream-Operators#Parallel) now uses subpipelines
-* [`Sequence`, `Repeat` and `Range` generators](Stream-Operators#Producing) now allow time-aligned messages
+* [`Parallel`](Parallel-Operator) now uses subpipelines
+* [`Sequence`, `Repeat` and `Range` generators](Stream-Generators) now allow time-aligned messages
 * Additional minor bug fixes.
 
 Several API changes have been made:

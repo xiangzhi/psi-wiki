@@ -8,6 +8,8 @@
 
 **[[Basic Tutorials]]**
 * [[Brief Introduction]]
+* [[Basic Stream Operators]]
+* [[Stream Fusion]]
 * [[Writing Components]]
 * [[Delivery Policies]]
 
@@ -15,8 +17,10 @@
 
 **[[More Advanced Topics]]**
 * [[Synchronization]]
-* [[Stream Operators]]
+* [[Interpolation and Sampling]]
 * [[Windowing Operators]]
+* [[Stream Generators]]
+* [[Parallel Operator]]
 * [[Shared Objects]]
 * [[Datasets]]
 * [[Event Sources]]
