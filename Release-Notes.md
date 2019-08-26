@@ -26,7 +26,6 @@ The main highlights in this release are:
 * Fixed bug in the `Diagnostics` visualizer that would cause it to crash if it encountered messages with unserializable fields.  We now return 0 for the size of such messages.
 * Fixed bug in `Rodrigues` method in the `Orientation` class of `Microsoft.Psi.Kinect.Windows`.  This method was returning an NaN rotation matrix when passed a zero rotation vector, it now returns an identity matrix instead.
 
-
 ## __2019/07/03: Beta-release, version 0.8.32.1__
 
 **IMPORTANT NOTE:**
@@ -55,6 +54,7 @@ Some of the main highlights in this release include:
 * Pipeline exception handling is now exposed through new `PipelineException` event rather than overloading the `PipelineCompleted` event to also serve as an exception handler.
 * Input and output connectors for subpipelines should now be constructed using the new `CreateInputConnectorFrom` and `CreateOutputConnectorTo` static methods of the `Subpipeline` class.
 * The `Match.Any` interpolator has been removed.
+* Enabing diagnostics at pipeline creation time (e.g. `Pipeline.Create(true, ...)`) used to take an optional `TimeSpan` interval. Now it takes an optional `DiagnosticsConfiguration`; containing this and other settings.
 
 ### Details of Changes to the Runtime:
 
@@ -66,6 +66,7 @@ Several significant changes were made to the pipeline startup and shutdown logic
 * Renamed the `PipelineElement` `Start` and `Stop` methods to `Activate` and `Deactivate` respectively.
 * Added a check in `Receiver.OnSubscribe` to ensure that emitters and receivers are not connected across pipelines (connectors should be used instead).
 * Changes to the pipeline exception handling mechanism via a new `PipelineException` event.
+* New `DiagnosticsConfiguration.TrackMessageSize` flag determines whether message byte counts are tracked (`false` by default, as it is an expensive operation).
 
 ### Details of Changes to Operators and Components:
 
