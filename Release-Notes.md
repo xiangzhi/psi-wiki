@@ -1,3 +1,56 @@
+## __2019/08/27: Beta-release, version 0.10.16.1__
+
+### OVERVIEW:
+
+The major changes in this release are updates and added functionality in the stream operators for [fusion and synchronization](Synchronization), operators for [interpolation and sampling](Interpolation-and-Sampling), and operators for [generating streams](Stream-Generators). The release also includes a number of other updates and bug fixes - see more details below.
+
+### Details of Changes to Stream Operators
+
+A number of changes have been made to the set of interpolators, and the synchronization operators (for the latest documentation on synchronization and fusion see [here](Synchronization)):
+
+* The set of interpolators has been restructured, generalized and expanded. Interpolators can now produce a result that has a different type than the input message type, and allow for matching with the `Nearest`, `First` or `Last` message. A taxonomy of greedy versus reproducible interpolators has been defined.
+* Added support for an adjacent-values-interpolator, and constructed a linear interpolator based on it.
+* The existing `Join` operator that allows for reproducible stream fusion and correct synchronization now operates with reproducible interpolators. 
+* A `Fuse` operator has been added to enable stream fusion with any generic interpolator (reproducible or greedy). 
+* Interpolators now accept a user-specified default value to use.
+
+A number of other operators for sampling, generating streams, and statistical computations have also been updated: 
+
+* Redesign of `Sample` and `Interpolate` stream operators. Both operators are driven by a clock stream. The `Sample` stream operator selects the nearest message to the sampling point (within a tolerance or relative time window). The `Interpolate` operator uses a specified interpolator to generate the result. The documentation for sampling and interpolation is available [here](Interpolation-and-Sampling).
+* The `Generators.*` methods have been updated to allow the developer to specify whether the generated streams should stay open or close after the enumeration terminates. The current documentation on stream generators is available [here](Stream-Generators).
+* Refactoring and clean-up of [mathematical and statistical operators](https://github.com/microsoft/psi/wiki/Basic-Stream-Operators#mathematical-and-statistical-operators).
+
+### Details of Updates to Pipeline Diagnostics
+
+* Added extension methods to provide access to graph-wide statistics such as total queued messages, total dropped, etc. across the whole graph.
+* Enabing diagnostics at pipeline creation time (e.g. `Pipeline.Create(true, ...)`) used to take an optional `TimeSpan` interval. Now it takes an optional `DiagnosticsConfiguration`; containing this and other settings.
+* New `DiagnosticsConfiguration.TrackMessageSize` flag determines whether message byte counts are tracked (`false` by default, as it is an expensive operation).
+
+### Details of Changes to Platform for Situated Intelligence Studio:
+
+* Minor icon updates.
+* Ensure that dialog boxes appear above the PsiStudio main window.
+
+### Other Updates
+
+* Moved `EncodedImage` and `EncodedImagePool` out of `Microsoft.Psi.Imaging.Windows` and `.Linux` into the central .NET Standard shared `Microsoft.Psi.Imaging`. This is to enable referencing a single `EncodedImage` type across platforms.
+* Interop: Updated CSV format docs for new behavior.
+* Added sensor_msgs/Image message type to the ROS bridge.
+* Added more informative exception message when posting messages on a stream with out-of-order sequence IDs.
+
+### Bug Fixes:
+
+* Fixed bug in pipeline diagnostics capture regarding counts of messages dropped.
+* Fixed bug in queue-size-constrained delivery policies (including `DeliveryPolicy.Latest`) which sometimes led to a queue size larger by one than the max, and allowed additional messages to be processed.
+
+### **Breaking Changes:**
+* As a result of the re-organization of interpolators, the `Match` static class and the interpolators it contained have been renamed. Specifically: `Match.Best` -> `Reproducible.Nearest`, `Match.Exact` -> `Reproducible.Exact`; similar for the OrDefault versions.
+* `Interpolator<T>` was replaced with `Interpolator<TIn, TOut>` to support interpolation to a different output type.
+* `Generators.Sequence`, `Generators.Repeat` and `Generators.Range` require specifying an explicit time interval (previously the time interval parameter was optional and defaulted to 1 tick).
+* The existing overloads of the `Sample` stream operator that used an interpolator were renamed to `Interpolate`.
+* The OpenCV Sample (see Public\Samples\OpenCVSample) now requires OpenCV 4.1.1 to compile. You must also set the environment variable OpenCVDir_V4 to point to your local installation of OpenCV 4.1.1.
+* Enabing diagnostics (e.g. `Pipeline.Create(true, ...)`) now takes an optional `DiagnosticsConfiguration` rather than a `TimeSpan` interval.
+
 ## __2019/07/18: Beta-release, version 0.9.6.1__
 
 ### OVERVIEW:
