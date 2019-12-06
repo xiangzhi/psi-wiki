@@ -66,9 +66,9 @@ Under Linux, we recommend using [Visual Studio Code](https://code.visualstudio.c
 
 __Prerequisites__:
 
-You will need .NET Core on Linux. You can find the [installation instructions here](https://docs.microsoft.com/en-us/dotnet/core/linux-prerequisites?tabs=netcore2x).
+You will need .NET Core 2.2 on Linux. You can find the [installation instructions here](https://docs.microsoft.com/en-us/dotnet/core/linux-prerequisites?tabs=netcore2x). Be sure to install the 2.2 version, as some of Psi packages use this. To check your installation, run `dotnet --info` in your terminal. You should see lists of information such as Runtime Environment and SDK Versions.
 
-Although \psi is built on .NET Standard, IL assembly still depends on _Mono's_ `ilasm` tool. [Install at least `mono-devel`](https://www.mono-project.com/download/stable/#download-lin).
+Although \psi is built on .NET Standard, IL assembly still depends on _Mono's_ `ilasm` tool. [Install at least `mono-devel`](https://www.mono-project.com/download/stable/#download-lin). It is important to install (or reinstall) Mono _after_ the .NET SDK. If you see an error such as `IL/MemoryAccess.il (16, 0): error : irrecoverable synatx error` it is likely due to an incompatible `ilasm` installation (try reinstalling Mono).
 
 __Build__:
 
