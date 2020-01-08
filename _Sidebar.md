@@ -15,6 +15,10 @@
 
 **[[Samples]]**
 
+**Platform/Language Interop**
+* [[Bridge to Python, JavaScript, ...](Interop)]
+* [[Bridge to ROS](ROS Integration)]
+
 **[[More Advanced Topics]]**
 * [[Synchronization]]
 * [[Interpolation and Sampling]]
@@ -25,9 +29,7 @@
 * [[Datasets]]
 * [[Event Sources]]
 * [[Remoting]]
-* [[Interop]]
 * [[Intervals]]
-* [[ROS Integration]]
 
 **Components and Toolkits**
 * [[List of Components]]
