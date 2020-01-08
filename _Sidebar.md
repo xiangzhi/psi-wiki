@@ -16,7 +16,7 @@
 **[[Samples]]**
 
 **Platform/Language Interop**
-* [Bridge to Python, JavaScript, ...](../Interop)
+* [Bridge to Python, JS, ...](../Interop)
 * [Bridge to ROS](../ROS-Integration)
 
 **[[More Advanced Topics]]**
