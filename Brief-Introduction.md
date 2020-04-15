@@ -246,7 +246,7 @@ We can control the speed of the execution of the pipeline, via a replay descript
 Visualization of multimodal streaming data plays a central role in developing multimodal, integrative-AI applications. Visualization scenarios in \\psi are enabled by the __Platform for Situated Intelligence Studio__ (which we will refer to in short as PsiStudio)
 
 __Notes__:
-* Kinect for Windows SDK is required to run PsiStudio which can be found [here](https://www.microsoft.com/en-us/download/details.aspx?id=44561).
+* Kinect for Windows Runtime 2.0 is required to run PsiStudio which can be found [here](https://www.microsoft.com/en-us/download/details.aspx?id=44559).
 * Currently, PsiStudio runs only on Windows, although it can visualize data stores created by \\psi applications running on any platform supported by .NET Core.
 * The tool is not currently shipped as an executable, so to use it you will need to build the codebase; instructions for building the code are available [here](Building-the-Codebase). The tool is implemented by the `Microsoft.Psi.PsiStudio` project in the `Psi.sln` solution tree under `Sources\Tools\PsiStudio`. To run it, simply run this project after building it.
 
@@ -256,13 +256,15 @@ PsiStudio enables compositing multiple visualizers of different types (from simp
 
 ### 5.1 Offline Visualization
 
-For the rest of the samples in this tutorial we're going to add several more realistic streams to our project, for video, audio, and voice activity detection. To get the best out of this sample you'll need a webcam, but if you don't have one you can comment out the code below that references the MediaCapture, AudioCapture, and SystemVoiceActivityDetector components.
+For the rest of the samples in this tutorial we're going to create a project to generate more realistic streams for video, audio, and voice activity detection. To get the best out of this sample you'll need a webcam, but if you don't have one you can comment out the code below that references the MediaCapture, AudioCapture, and SystemVoiceActivityDetector components. You'll also need to be running Windows on a x64-based processor.
 
-In your Visual Studio project, add the following NuGet references in the same way you did in the first section of this tutorial:
+Create a new .NET Framework console app by going to _File -> New Project -> Visual C# -> Console App (.NET Framework)_. Add the following NuGet references to your project in the same way you did in the first section of this tutorial:
 
 1. `Microsoft.Psi.Media.Windows.x64`
 2. `Microsoft.Psi.Imaging.Windows`
 3. `Microsoft.Psi.Speech.Windows`
+
+Because this project uses components which are only available for the x64 processor architecture, we need to modify the project build settings to reflect this. Right-click on your project, select _Properties_, then go to _Build_. Change the _Platform target_ from _Any CPU_ to _x64_. Do this for both _Debug_ and _Release_ configurations.
 
 Now add the following `using` statements to the top of your class:
 
@@ -366,7 +368,11 @@ In PsiStudio you can not only view data streams, you can also play them back at 
 
 Create a new visualization panel by clicking the _Insert Timeline Panel_ button and add the _Audio_ stream and also the _Voice Acitvity_ stream to it.  Notice that having two related streams in the same visualization panel makes it easy to see how they relate to each other; overlaying the voice activity detection stream over the audio, we can see at a glance that the VAD is correctly identifying speech regions.
 
-In the _Datasets_ tab, right-click on the _Image_ stream and select _Visualize_ from the context menu to display the video stream.  You PsiStudio window should now look like the picture below.  Notice that the image visualizer is synchronized to the timeline, as you move the cursor within any of the timeline visualization windows, the video stream shows the image that was captured at that point in time.
+In the _Datasets_ tab, right-click on the _Image_ stream and select _Visualize in New Panel_ from the context menu to display the video stream.  Alternatively, you can simply drag the image stream from the _Datasets_ tab into an empty area on the _Visualizations Canvas_.  Your PsiStudio window should now look similar to the picture below.
+
+In the _Visualizations_ tab an _Instant Panel_ was created which allows multiple instant visualization panels to be arrayed side by side.  Clicking on this instant panel will display its properties in the _Properties_ window on the right.  The _Cells_ property is currently set to 1 but you can increase this value to have up to 5 instant visualization panels side by side.  If you increase this value to 2 you will see a second instant visualization panel added to the right of the existing one.  Notice in the _Visualizations_ tab there are now two child panels of _Instant Panel_: the 2D panel containing the _Image_ visualization panel, and a second panel named _-Empty-_.  This empty panel will be transformed into either a 2D Panel or a 3D Panel when you drop your first stream into it.  For now though, we'll only be using a single instant vislualization panel, so go back to the _Properties_ tab and set the _Cells_ property back to 1.
+
+The image visualizer is synchronized to the timeline, as you move the cursor within any of the timeline visualization windows, the video stream shows the image that was captured at that point in time.
 
 There are three _Cursor Modes_ in PsiStudio, and up until now we have been using the _Manual_ cursor mode, where the cursor follows the user's mouse pointer and will display images and data values at whatever point in time the user places his mouse.  Now we'll demonstrate the second cursor mode, known as _Playback Mode_, and it is engaged whenever we play back our data within some time interval.
 

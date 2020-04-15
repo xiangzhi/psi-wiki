@@ -12,7 +12,7 @@ IProducer<int> sequence = Generators.Sequence(p, new int[] { 1, 2, 3, 7, 42 }, T
 
 produces a stream of integers called `sequence` on which the values 1, 2, 3, 7, 42 will be posted at 10 millisecond intervals once the pipeline `p` starts. 
 
-In the example above, `Generators.Sequence` uses an `IEnumerable<T>` as a parameter. A number of other overloads are available, including one that uses an `IEnumerator<T>`, and one that uses an initial value and a function to produce the next value. For instance: 
+In the example above, `Generators.Sequence` uses an `IEnumerable<T>` as a parameter. A number of other overloads are available, including one that uses an initial value and a function to produce the next value. For instance: 
 
 ```csharp
 IProducer<int> sequence = Generators.Sequence(p, 0, x => x + 1, TimeSpan.FromMilliseconds(10));
@@ -26,7 +26,7 @@ IProducer<int> sequence100 = Generators.Sequence(p, 0, x => x + 1, 100, TimeSpan
 
 will produce the finite sequence of 100 messages: 0, 1, 2, ..., 99. 
 
-The versions above produce messages at a constant, specified cadence. Alternatively a couple of overloads allow the user to specify as input an enumerable or enumerator of tuples containing both the value and the originating time at which the message should be posted (i.e., `IEnumerable<(T, DateTime)>` or `IEnumerator<(T, DateTime)>`). In this case, the times should be in strictly increasing order (as messages can only be posted on a stream with strictly increasing originating times.)
+The versions above produce messages at a constant, specified cadence. Alternatively a couple of overloads allow the user to specify as input an enumerable of tuples containing both the value and the originating time at which the message should be posted (i.e., `IEnumerable<(T, DateTime)>`). In this case, the times should be in strictly increasing order (as messages can only be posted on a stream with strictly increasing originating times.)
 
 __A (more advanced) side note on finite versus infinite streams__: By default, `Generators.Sequence` produces a source stream that closes when the sequence is finished. So in the case above, the `sequence100` stream will close after message 99. As a result if this stream is added to a pipeline that contains other infinite sources, the pipeline will shut down after message 99 (pipelines containing both finite and infinite sources shut down when all the finite sources have completed). This behavior of `Generators.Sequence` can be modified with an optional parameter called `keepOpen`. So, for instance:
 
@@ -72,7 +72,7 @@ var life = Generators.Return(pipeline, 42);
 
 We have seen above that typically generators can be used to produce messages on a specified cadence. In addition, generators may be also instructed to produce _time-aligned_ messages. That is, a sequence of messages may be generated at a given interval (e.g., 100ms) but may be additionally required to align those intervals on a particular time (e.g. the start of a particular second). This is sometimes a useful guarantee when later joining many generated streams that may otherwise be misaligned by some fraction of time.
 
-The `Return`, `Range`, `Sequence` and `Repeat` generators described above take an optional `DateTime?` parameter called `alignDateTime` that specifies which date-time the messages should align to. To illustrate this conside the code below:
+The `Range`, `Sequence` and `Repeat` generators described above take an optional `DateTime?` parameter called `alignDateTime` that specifies which date-time the messages should align to. To illustrate this consider the code below:
 
 ```csharp
 using (var p = Pipeline.Create())

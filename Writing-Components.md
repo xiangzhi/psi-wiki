@@ -170,7 +170,7 @@ We have seen in the previous section that components can be used in an applicati
 public static class Operators
 {
     // static stream operator method
-    public static IProducer<int> Sign(this IProducer<double> source, DeliveryPolicy deliveryPolicy = null)
+    public static IProducer<int> Sign(this IProducer<double> source, DeliveryPolicy<double> deliveryPolicy = null)
     {
         // create the component
         var signComponent = new Sign(source.Out.Pipeline);
@@ -217,7 +217,7 @@ The `Subpipeline` class is essentially a `Pipeline` (it derives from it), but is
 
 Because they may include source components, subpipelines implement the [`ISourceComponent` interface](#SourceComponents) and complete when all of their child source components have completed. If a `Subpipeline` contains _no_ source components then it completes (calls `notifyCompletionTime`) at startup, and therefore behaves as a purely reactive component.
 
-Subpipelines have their own `Scheduler`, but unless otherwise specified, share the parent's global `DeliveryPolicy`. 
+Subpipelines have their own `Scheduler`, and unless otherwise specified, adopt a `DeliveryPolicy.Unlimited` [default delivery policy](Delivery-Policies). 
 
 If not explicitly started via `Run()` or `RunAsync()`, subpipelines start when the parent pipeline starts - just as a normal component. They may also be created and started dynamically at runtime. 
 
@@ -425,7 +425,7 @@ The component must override the virtual `GenerateNext` method to produce data on
 
 In general, follow the guidelines we have already provided above when writing components.
 
-If you are writing a single-input, single-output component, use the `ConsumerProducer<TIn, TOut>` base class and write a corresponding stream operator as an extension method as this will simplify authoring. Make sure the stream operator takes a `DeliveryPolicy` parameter, and uses it when creating the connection to the receiver of the consumer-producer class.
+If you are writing a single-input, single-output component, use the `ConsumerProducer<TIn, TOut>` base class and write a corresponding stream operator as an extension method as this will simplify authoring. Make sure the stream operator takes a `DeliveryPolicy<TIn>` parameter, and uses it when creating the connection to the receiver of the consumer-producer class.
 
 If your component has a single input, but multiple outputs, name the input `In` and implement the `IConsumer<T>` interface. Similarly, if your component has multiple inputs but a single output, name the output `Out` and implement the `IProducer<T>` interface.
 

@@ -1,3 +1,150 @@
+## __2020/04/14: Beta-release, version 0.11.82.2__
+
+### __OVERVIEW__:
+
+This update brings several new developments, and numerous improvements and bug fixes in the \psi Runtime, Tools and Components.
+
+- In __Runtime__ the major changes include the addition of new types of delivery policies, emitter validators, and streamlining of the APIs for running the pipelines (see more details below)
+- In __Tools__ a number of significant updates have been brought to PsiStudio, including performance improvements, support for 3rd party visualizers, and matrix layouting, and other extended functionality. Similarly, the performance of the Diagnostics subsystem has been improved and visualization functionality for diagnostics data has been extended. A number of updates have been made also to PsiStoreTool.
+- In __Stream Operators__ and __Components__ a number of extensions and bug fixes have been added.
+
+### __Details of Changes to Runtime__
+
+A number changes have been made to clean up and streamline the APIs for pipeline execution. The changes below are breaking changes:
+* Removed the `Pipeline.Run(TimeSpan)` method as its meaning was inconsistent with running a pipeline with a finite originating time interval. To run a pipeline for a given wall-clock duration, call `RunAsync()`, followed by `WaitAll(TimeSpan)`, then dispose the pipeline to stop it.
+* `ReplayDescriptors` no longer define the `UseOriginatingTime` property as it was redundant. We always assume originating times when reading messages within a given time interval from a store. Consequently, `Pipeline.ProposeReplayTime()` now takes only a single `TimeInterval` parameter representing the originating time interval.
+* `Pipeline.WaitAny` has been removed. To be notified of source component completion, use the `Pipeline.ComponentCompleted` event instead.
+* Pipeline replay at speeds other than real-time or maximum speed are no longer supported. Consequently, the `replaySpeedFactor` parameter and `ReplaySpeedFactor` property have been removed the `Pipeline.Run` methods and the `ReplayDescriptor` class respectively.
+* The `deliveryPolicy` parameter for the Pipeline and Subpipeline constructors has been renamed to `defaultDeliveryPolicy`.
+
+The available set of delivery policies has been extended. See more information in [Delivery Policies](Delivery-Policies) tutorial:
+* Added support for throttling policies via DeliveryPolicy.Throttled.
+* Added a new lossless policy that attempts synchronous delivery or throttles otherwise via DeliveryPolicy.SynchronousOrThrottle.
+* Added support for data-driven delivery policies via typed delivery policies with guarantees.
+
+A number of additional changes have been made to the Runtime:
+* `Pipeline.RunAsync` now supports progress reporting by means of an `IProgress<double>` object.
+* The pipeline start time is now captured in a new `Pipeline.StartTime` property.
+* Subpipelines provide access to the parent pipeline via the protected `ParentPipeline` property.
+* When persisting a stream to a store, the stream closing time is now saved in the store catalog.
+* Emitters now support optional user-defined message validation.
+* Fixed a bug where the presence of an infinite source component within a subpipeline was in some cases causing the pipeline to terminate.
+* Added message validation for emitters, and support for pipeline level defaults.
+
+
+### __Details of Changes to PsiStudio__
+
+A number of significant updates have been brought to PsiStudio, including performance improvements, support for 3rd party visualizers, and matrix layouting, and other extended functionality:
+
+Performance updates: 
+* Improved performance when reading data from disk for instant visualization objects.  Previously these reads were occurring on the UI thread whereas now they happen in a worker thread. Now they are optimized so that the same piece of data is not read multiple times for different visualization objects.
+
+New functionality and bug fixes:
+* In order to make better use of available screen real estate, instant visualization objects (2D and 3D visualization objects) can now be arranged in a horizontal matrix in the visualization container. These matrices can contain from one to five instant visualization objects.
+* PsiStudio can now visualize the Messages and Latencies for all streams, regardless of type.
+* The states of the timing info buttons are now persisted across PsiStudio sessions.
+* When the use clicks in a visualization panel, PsiStudio displays the properties of the first visualization object in that panel, or if the panel has no visualization objects it displays the properties of the panel itself.  Similarly, whenever the user adds a new visualization object to the visualization container its properties are  immediately displayed.
+* All DateTime displays in PsiStudio now show the value down to 1/10,000 of a second.
+* Fixed bug where certain line segments were not drawn if the value of any of the data points was NaN or positive infinity or negative infinity.
+* Users can now play multiple audio streams simultaneously.
+* Added snap to stream context menu item to the timeline panel.
+* 3D visualization panel now supports camera manipulation and the execution of camera animation storyboards.
+
+Support for 3rd party visualizers:
+* Added support for 3rd party visualizers. Users who have written their own visualizers can now use them in PsiStudio in a much more seamless manner. Add a new node called `<AdditionalAssemblies>` to the PisStudio settings file at `MyDocuments/PsiStudio/PsiStudioSettings.xml`.  Any visualization object marked with the `[VisualizationObject]` attribute, and any stream adapter marked with the `[StreamAdapter]` attribute will be automatically added to PsiStudio’s list of visualizers.
+
+Other updates:
+* For historical reasons related to PsiStudio previously supporting a COM model,  Visualization Objects and Visualization Panels each had a separate `Configuration` class.  This configuration has now been merged back into the visualization objects or visualization panels, simplifying the code.
+* Updated the 3D visualization objects to have a more hierarchial structure.
+* Layout serialization now includes a version number to help prevent loading a layout that is not compatible with the current version of PsiStudio.
+
+
+### __Details of Changes to Diagnostics__
+
+The diagnostics system enables collecting and visualizing application diagnostics in PsiStudio. This release includes many performance improvements to the diagnostics system. The overhead of collecting diagnostics information has been improved. Message sizes are half what they were and rendering in PsiStudio has been improved by orders of magnitude. Many bug fixes have been made as well, mosting having to do with visualization in PsiStudio. There have been breaking changes to the diagnostics message type affecting visualization.
+
+Visualization:
+* To simplify the graph display, we now allow checking a box _Show Exporter Links_ to show/hide connectors and edges from them to Exporters.
+* Connectors render with a little icon (☍) and `Joins` now render in their own color with a simple plus (+).
+* Type names have been simplified from their fully qualified form to a more natural “code form” such as `(List<string>, Dictionary<char, (int[], double)>)`.
+* Connector tooltip now shows target/source.
+* Emitter names can now be optionally shown on edge labels.
+* Delivery policies can now be optionally shown on edge labels and hilighting of edges by delivery policy is now supported.
+* Property panel now allows toggling emitter/receiver names as well as delivery policies.
+* A dotted line edge is now shown indicating a connector into a descendant pipeline. That is, an edge to the direct child containing the descendant.
+
+Naming Improvements:
+* `Subpipeline` and `Exporter` node label is now the pipeline name (with type name now as a tooltip)
+* Components can now provide names via `ToString()` used to render nodes (rather than the default type name)
+
+Miscellaneous:
+* Averaging is performed by unit time rather than past n-messages and added dropped & processed averages.
+
+### __Details of Changes to PsiStoreTool__
+
+* Added `concat` verb to PsiStoreTool (as well as `Store.Concat(…)` static method) allowing concatenation of stores.
+* Added `crop` verb to PsiStoreTool allowing cropping of stores (exposing `Store.Crop(…)` functionality).
+* Added `Microsoft.Psi.TaskAttribute` to mark “task” methods as light-weight jobs that may be executed by PsiStoreTool (and future PsiStudio).
+* Added `tasks` and `exec` verbs to `PsiStoreTool` allowing listing and executing tasks.
+
+
+### __Details of Changes to Stream Operators__
+
+A number of BREAKING CHANGES were made to stream operators:
+* [Windowing operators](https://github.com/microsoft/psi/wiki/Windowing-Operators) now produce streams of `T[]` rather than `IEnumerable<T>`, because the latter are not serializable.
+* The [mathematical and statistical operators](https://github.com/microsoft/psi/wiki/Basic-Stream-Operators#mathematical-and-statistical-operators) no longer apply to streams of `IEnumerable<T>`, but to streams of `T[]`.
+* Removed the `Sequence<T>` operator overloads that take an `IEnumerator` argument. Use the overloads that takes an `IEnumerable` instead.
+* Removed the optional `interval` and `alignmentDateTime` parameters from the `Once` and `Return` operators.
+
+A number of other additional enhancements were made to other stream operators:
+* Added support for default delivery policies and naming of the `Parallel` composite components and operators.
+* Generator changes:
+    - Streams produced by `Generators` are now aligned by default to the pipeline start time, unless explicit message times are supplied.
+    - Fixed a bug in the time alignment computation which may in rare cases result in a missing first message when an `alignmentDateTime` is supplied.
+    - Fixed a bug where some `Generators` were not obeying a `ReplayDescriptor` with a finite end time.
+* Added a `DynamicWindow` component and corresponding (`Window(…)` overload) stream operators that enable data-driven windowing.
+* Small extension (with optional parameter) to `RelativeTimeWindow` component and corresponding `Window()` stream operator, enabling them to post results immediately before seeing a full window. Default behavior is still to wait for the complete window.
+* Added `Merge` operator, which trivially combines one or more streams of type `T` into a single stream of type `Message<T>`, each with generated at the pipeline time when the message arrives at `Merge`, but containing the original envelope.
+* Added `Zip` operator, which operates like `Merge` but ensures delivery in originating time order (ordered within single tick by stream ID)
+* Added `First(n)` operator, which filters a stream to the first _n_ messages.
+* Added a `WriteEnvelopes` method for streams that enables writing only the envelopes from a stream (without the payload) to the store.
+* `Importer.OpenStream<T>` now checks that the type of the underlying stream messages matches the supplied type argument `T` and throws an exception if they do not match.
+* Performance improvements to the `Std` operator. 
+* Minor changes in the way `Generator`, `Importer` and `Exporter` apply delivery policies.
+
+### __Details of Changes to Components__
+
+A number of changes were made in a variety of components:
+* AudioCapture component
+    - Component now uses WASAPI event-driven capture by default. The previous behavior of pulling data from the engine at the target latency is still available by setting the UseEventDrivenCapture configuration parameter to false.
+    - The default audio capture buffer size may now be overridden by setting the `AudioEngineBuffer` configuration parameter. Larger values may help reduce the likelihood of audio glitches.
+    - Component now throws an `IOException` if it is unable to create the audio capture device.
+* AzureSpeechRecognizer component:
+    - Final recognition results are now aligned in originating time to the input voice activity detection signal.
+* SystemSpeechSynthesizer component:
+    - Added `ReceiveSsml` and `CancelAll` receivers to support issuing SSML-based speech synthesis requests and stopping of speech synthesis.
+* SystemVoiceActivityDetection component:
+    - Added `InitialSilenceTimeoutMs`, `BabbleTimeoutMs`, `EndSilenceTimeoutMs`, and `EndSilenceTimeoutAmbiguousMs` parameters in the component configuration. More details about these parameters may be found in the [SpeechRecognitionEngine documentation](https://docs.microsoft.com/en-us/dotnet/api/system.speech.recognition.speechrecognitionengine?view=netframework-4.8#properties).
+* Face Identification:
+    - The `FaceRecognizer` component, which identifies faces in a stream of `Shared<Image>`, has been updated to the latest Azure Face APIs.
+    - A `PersonGroup` class supports managing person groups in Azure (creating, adding faces, training, deletion).
+    - Also included are `PsiStoreTool` tasks supporting creating, training and testing from a directory of labeled static image files.
+* `Microsoft.Psi.Calibration` changes (these are Breaking Changes):
+    - Added support for full rational distortion model (with k1-k6 parameters)
+    - Calibration representations now uses a canonical coordinate system throughout, in alignment with MathNet (right-handed, X forward, Y Left, Z up, column-vectors). 
+    - Moved `KinectCameraCalibration` class and corresponding interface into `Microsoft.Psi.Calibration` and renamed to `DepthDeviceCalibrationInfo`
+    - `SystemCalibration` was renamed to `MultiCameraCalibration`
+    - Moved `ProjectTo3D` class from `Microsoft.Psi.Kinect` to `Microsoft.Psi.Calibration`.
+* Added `Microsoft.Psi.DeviceManagement` project which enables device enumeration. Updated `Microsoft.Psi.Kinect` project to allow for enumerating all Kinect devices.
+* The `Microsoft.Psi.CognitiveServices.Vision.Windows` project is now .NET Standard and has been renamed `Microsoft.Psi.CognitiveServices.Vision`.
+
+### __Miscellaneous__
+
+* Updated projects in solution to new .csproj style.
+* Updated and consolidated NuGet references to the latest versions.
+* Fixed a bug that was causing two unit tests to fail occasionally.
+
+
 ## __2019/08/27: Beta-release, version 0.10.16.1__
 
 ### OVERVIEW:
@@ -142,7 +289,7 @@ Several significant changes were made to the pipeline startup and shutdown logic
 
 ### Other Bug Fixes:
 
-* Fixed an issue which caused the pipeline to appear to hang if an exception is thrown in a subpipeline's attached `PipelineRun` event handler.
+* Fixed an issue which caused the pipeline to appear to stop responding if an exception is thrown in a subpipeline's attached `PipelineRun` event handler.
 * Fixed a bug in PsiStudio where the cursor remains a hand after dragging within a timeline visualization panel.
 * Fixes to various visualizers (cleaned-up pattern for InitNew and handling config and property changes).
 * Fixed an issue where live stores sometimes had no last message time.

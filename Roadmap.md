@@ -8,16 +8,16 @@ Apart from fixing bugs and issues, in the next few updates we expect to focus ou
 
 ### Runtime
 
-- expanding the available set of [delivery policies](Delivery-Policies) to allow for throttling;
-- refining and documenting control for pipeline execution and replay;
 - improving the debugging experience by creating tools that allow for visualizing the application pipeline at runtime;
+- generalized data importers and exporters;
+- evolving the documentation with additional topics;
 
 ### Visualization and Platform for Situated Intelligence Studio 
 
 - enabling data annotation scenarios;
+- ability to work with other data sources besides \\psi stores;
 - refining existing visualizers;
-- enabling constructing and registering third-party visualizers;
-- enabling more complex layouts for visualization panels;
+- evolving and documenting the support for third-party visualizers and batch task processing in PsiStudio;
 
 ### Data processing and Machine Learning
 
@@ -26,8 +26,7 @@ Apart from fixing bugs and issues, in the next few updates we expect to focus ou
 
 ### Components
 
-- bug fixes and improving the existing set of components based on community feedback;
-- adding support for Kinect for Azure;
+- adding component for AzureKinect;
 
 ### Interaction Toolkit
 

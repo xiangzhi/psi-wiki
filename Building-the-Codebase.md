@@ -38,7 +38,7 @@ __Required prerequisites for PsiStudio__:
 
 In order to run PsiStudio, the Windows-only visualization tool, the following component must be installed.
 
-* __Kinect for Windows Runtime 2.0__: this SDK can be downloaded from the [Microsoft Download Center](https://www.microsoft.com/en-us/download/confirmation.aspx?id=44559) and is required for PsiStudio to function correctly, even if you don't intend to use the Kinect sensor in your \psi applications.
+* __Kinect for Windows Runtime 2.0__: this can be downloaded from the [Microsoft Download Center](https://www.microsoft.com/en-us/download/confirmation.aspx?id=44559) and is required for PsiStudio to function correctly, even if you don't intend to use the Kinect sensor in your \psi applications.
 
 __Optional prerequisites__:
 

@@ -11,6 +11,7 @@
 * [[Basic Stream Operators]]
 * [[Stream Fusion]]
 * [[Writing Components]]
+* [[Pipeline Execution]]
 * [[Delivery Policies]]
 
 **[[Samples]]**
