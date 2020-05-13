@@ -246,7 +246,6 @@ We can control the speed of the execution of the pipeline, via a replay descript
 Visualization of multimodal streaming data plays a central role in developing multimodal, integrative-AI applications. Visualization scenarios in \\psi are enabled by the __Platform for Situated Intelligence Studio__ (which we will refer to in short as PsiStudio)
 
 __Notes__:
-* Kinect for Windows Runtime 2.0 is required to run PsiStudio which can be found [here](https://www.microsoft.com/en-us/download/details.aspx?id=44559).
 * Currently, PsiStudio runs only on Windows, although it can visualize data stores created by \\psi applications running on any platform supported by .NET Core.
 * The tool is not currently shipped as an executable, so to use it you will need to build the codebase; instructions for building the code are available [here](Building-the-Codebase). The tool is implemented by the `Microsoft.Psi.PsiStudio` project in the `Psi.sln` solution tree under `Sources\Tools\PsiStudio`. To run it, simply run this project after building it.
 
