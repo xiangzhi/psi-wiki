@@ -34,12 +34,6 @@ The older [Visual Studio 2017](https://visualstudio.microsoft.com/vs/older-downl
 
 The [Windows 10 SDK (10.0.18362.0)](https://developer.microsoft.com/en-US/windows/downloads/windows-10-sdk) is not included as an Individual Component with VS _2017_ and must be installed separately.
 
-__Required prerequisites for PsiStudio__:
-
-In order to run PsiStudio, the Windows-only visualization tool, the following component must be installed.
-
-* __Kinect for Windows Runtime 2.0__: this can be downloaded from the [Microsoft Download Center](https://www.microsoft.com/en-us/download/confirmation.aspx?id=44559) and is required for PsiStudio to function correctly, even if you don't intend to use the Kinect sensor in your \psi applications.
-
 __Optional prerequisites__:
 
 A couple of the projects in the Platform for Situated Intelligence codebase have install prerequisites. If you want to build these projects as part of the solution, you will need to install the prerequisites below. If the prerequisites are not found, these projects will not be build (the rest of the solution will build correctly.)
