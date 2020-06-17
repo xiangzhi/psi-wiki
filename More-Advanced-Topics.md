@@ -2,7 +2,7 @@ The table below contains a list of more advanced documentation topics.
 
 | Topic | Description |
 | :---- | :----------------- |
-| [Synchronization](Synchronization) | Introduces operators for stream fusion and synchronization. |
+| [Stream Fusion and Merging](Stream-Fusion-and-Merging) | Introduces operators for stream fusion, merging, and synchronization. |
 | [Interpolation and Sampling](Interpolation-and-Sampling) | Introduces operators for interpolation and sampling. |
 | [Windowing Operators](Windowing-Operators) | Introduces operators that allow buffering over streams of data. |
 | [Stream Generators](Stream-Generators) | Explains stream generators and timers. |

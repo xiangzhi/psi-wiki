@@ -17,6 +17,7 @@ The table below contains the list of Platform for Situated Intelligence NuGet pa
 | Microsoft.Psi.Imaging.Linux      | Provides Linux-specific components for encoding and decoding images. | Yes | - | AnyCPU |
 | Microsoft.Psi.Imaging.Windows      | Provides Windows-specific components for encoding and decoding images. | - | Yes | AnyCPU |
 | Microsoft.Psi.Interop    | Provides APIs and components for interoperation with other data formats. | Yes | Yes | AnyCPU |
+| Microsoft.Psi.AzureKinect.x64 | Provides APIs and components for using Microsoft Azure Kinect sensor. | Yes | Yes | x64 |
 | Microsoft.Psi.Kinect.Windows | Provides APIs and components for using Microsoft Kinect sensor. | - | Yes | AnyCPU |
 | Microsoft.Psi.Kinect.Face.Windows.x64 | Provides APIs and components for using Microsoft Kinect Face APIs. | - | Yes | x64 |
 | Microsoft.Psi.Language    | Provides data structures for natural language processing. | Yes | Yes | AnyCPU |

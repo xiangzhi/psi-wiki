@@ -1,3 +1,119 @@
+## __2020/06/16: Beta-release, version 0.12.53.2__
+
+### __Overview__:
+
+The major changes in this release include the addition of support for the Azure Kinect sensor (including body tracking), an overhaul of Microsoft.Psi.Imaging, some additional Kinect for Windows component cleanup, visualization updates, as well as an upgrade of projects to Visual Studio 2019 and .NET Core 3.1. Miscellaneous updates were also made to other areas (see more details below).
+
+### __Azure Kinect Component (New)__
+
+* Added `AzureKinectSensor` and `AzureKinectBodyTracker` components that enable using the Azure Kinect sensor with \psi (see more: [Overview](Azure-Kinect-Overview), [Sample](https://github.com/microsoft/psi/tree/master/Samples/AzureKinectSample), [Azure Kinect Documentation](https://azure.microsoft.com/en-us/services/kinect-dk/)).
+
+### __Updates to Microsoft.Psi.Imaging__
+
+A number of updates were made to the imaging infrastructure in Microsoft.Psi.Imaging, including the addition of support for depth images.
+
+BREAKING CHANGES:
+* `EncodedImage` now requires `width`, `height` and `pixelFormat` to be specified on construction.
+* `EncodedImagePool` is now keyed, and `GetOrCreate()` now requires the encoded image `width`, `height` and `pixelFormat`.
+* Renamed `Image.FromManagedImage()` to `Image.FromBitmap()`.
+* Renamed `Image.ToManagedImage()` to `Image.ToBitmap()`.
+* Renamed `ImagePool.GetOrCreate(Bitmap)` to `ImagePool.GetOrCreateFromBitmap(Bitmap)`.
+* `Image.EncodeFrom()` now takes in an `IImageToStreamEncoder` instead of an `Action<>`.
+* Moved `ImageEncoder` and `ImageDecoder` \psi components from the platform-specific .Windows and .Linux projects into the cross-platform Microsoft.Psi.Imaging project. These components are now provided an `IImageToStreamEncoder` or `IImageFromStreamDecoder` object to do the actual encoding and decoding. A variety of implementations (e.g. for JPEG, PNG) are available in the corresponding platform-specific .Windows and .Linux projects.
+* Removed the static method `ImageEncoder.EncodeFrom(encoder, ...)` and replaced with `encoder.EncodeFrom(...)`.
+* Renamed `CompressionMethod.PNG` to `CompressionMethod.Png`.
+* Renamed the `Convert()` stream operator for shared images to `ToPixelFormat()`, for clarity and to match the underlying component.
+* The 3D related operators from `DepthExtensions` in Calibration now operate only on depth images.
+* `KinectSensor.DepthImage` stream now returns a stream of `DepthImage` rather than a stream of `Image`.
+
+Other changes:
+
+* Added new `DepthImage` and `EncodedDepthImage` types to represent depth images, and a set of associated operators.
+* Overhauled the various image processing functions and corresponding stream operators to rationalize the API.
+* Added support for preserving the pixel format when decoding an `EncodedImage`.
+* Fixed a number of bugs, including issues related to pixel formats and decoding.
+
+### __Changes to Visualization and PsiStudio__
+
+* Kinect body visualization removed from Visualization.Common and put in its own project so that _Visualization.Common and PsiStudio no longer have a dependency on the Kinect SDK_.
+* `KinectDepth` visualizer is now a more general `DepthImage` visualizer supporting both mesh and point cloud views.
+* Updated handling of Shared objects in instant visualizers.
+* PsiStudio now starts up with no default dataset and the main window titlebar now displays the name of the current Dataset and the name of the stream currently being snapped to (if any).
+* Updated visualization object selection algorithm to select the visualizer the user most likely wants to use.
+* A StreamVisualizationObject can now only be snapped to when it is bound to a source, and if it becomes unbound then we remove snap-to-stream.
+* A TimelineVisualizationObject can now only be zoomed to when it is bound to a source.
+* Multiple bug fixes to StreamBinding serialization, we now write out the assembly qualified name of StreamAdapterType, and we now correctly serialize child objects of 3D visualization object collections.
+* Code cleanup of XyzVisualizationPanel and its view including adding bidirectional properties for camera position, direction and field-of-view.
+* Added support for specifying which items in an UpdatableModelVisual3DVisualizationObjectDictionary are visible via a predicate.
+* Added PsiStudio cursor nudging feature.
+* The pipeline visualizer now shows a dotted edge connection between subpipelines when they contain a connection (perhaps even between deep descendants) spanning them.
+* Fixed bug where PsiStudio settings were sometimes not being correctly written when shutting down PsiStudio.
+* Fixed bug involving the index view in StreamReaders for InstantVisualizationObjects when the user changed the value of CursorEpsilon.
+
+### __Changes to Runtime__
+
+* Changes to improve backward compatibility with some older stores.
+* Added `BridgeTo` operator to `Producer<T>` creating a connector as needed to bridge pipelines.
+* Raise `PipelineRun` event for all subpipelines before starting.
+* Change pipeline state to `Running` as soon as subpipelines have started.
+* Fixed a pipeline shutdown race condition.
+* Fixed `DeliveryPolicy<T>.WithGuarantees` to do a union between guaranteed message sets.
+
+### __Changes to Stores__
+
+* BREAKING CHANGE: Removed `Exporter.WriteEmitters`.
+* Added `CropInPlace` store operation.
+* Added support for supplemental metadata on streams.
+* Fixed a bug in `Store.Copy` and `Store.Crop` which were using the `ActiveTimeInterval` instead of the `OriginatingTimeInterval`.
+
+### __Changes to Calibration__
+
+* Added "Pose" fields for `DepthDeviceCalibrationInfo` objects, which are the inverse of Extrinsics.
+* Added ability to specify distort/undistort as either normal or reversed. Normal would be the closed form equation which returns distorted points and the reverse version returns undistorted points.
+* Changes related to the CoordinateSystem changes (where \psi now uses the MathNet conventions (PosZ, NegX, NegY) and all matrices are column-major and assume column-vectors).
+
+### __Changes to PsiStoreTool__
+
+* Added support for showing stream size information in PsiStoreTool.
+* Added verb for removing a stream from a store to PsiStoreTool.
+
+### __Changes to Operators__
+
+* Updated `Sample` operator with a new default, that allows it to sample the nearest message to the clock when no tolerance or relative-time-interval is specified.
+* The `Zip` component and corresponding operators were changed to return `T[]`.
+
+### __Changes to Other Components__
+
+* BREAKING CHANGES to `KinectSensor` component:
+    - Removed custom Matrix code in `KinectInternalCalibration` and re-implemented using MathNet.
+    - Removed `IKinectSensor`, `KinectExtensions`, `DepthExtensions` and all GZip encoding functionality.
+    - Removed `DepthToColorConverter` and re-implemented as a generic imaging operator.
+    - Moved Orientation functions and LevenbergMarquardt optimization into `Microsoft.Psi.Calibration`.
+    - Changed `KinectBody` definition to store Joint poses as MathNet CoordinateSystems, with immediate conversion into MathNet basis.
+* Added a constructor for `AudioCapture` component allowing an output format to be specified.
+* Added ALSA error codes in exceptions thrown by the Linux `AudioCapture` and `AudioSource` components.
+* Fixed Linux audio and video components to work on 32-bit OS.
+* Converted `RealSenseSensor` component to use new `DepthImage`.
+* Added a constructor for `MediaSource` component that accepts a `System.IO.Stream` as input.
+* Fixed an issue with `Mpeg4Writer` where image data was being written in RGB instead of BGR.
+
+### __Miscellaneous Engineering Updates__
+
+* This release moves .NET Core projects to version 3.1. As a result, Visual Studio 2019 is now required to build the code. Building with Visual Studio 2017 will no longer be supported.
+* Added code analysis to projects.
+* The following NuGet packages were updated to the versions shown:
+    - Extended.Wpf.Toolkit (3.6.0)
+    - HelixToolkit.Wpf (2.11.0)
+    - MathNet.Numerics.Signed (4.9.1)
+    - MathNet.Spatial.Signed (0.6.0)
+    - MessagePack (2.1.90)
+    - Microsoft.NET.Test.Sdk (16.6.1)
+    - MSTest.TestAdapter (2.1.1)
+    - MSTest.TestFramework (2.1.1)
+    - System.ServiceModel.Primitives (4.7.0)
+* Various bug fixes, typographical corrections, and code cleanup.
+
+
 ## __2020/04/14: Beta-release, version 0.11.82.2__
 
 ### __OVERVIEW__:
@@ -153,7 +269,7 @@ The major changes in this release are updates and added functionality in the str
 
 ### Details of Changes to Stream Operators
 
-A number of changes have been made to the set of interpolators, and the synchronization operators (for the latest documentation on synchronization and fusion see [here](Synchronization)):
+A number of changes have been made to the set of interpolators, and the synchronization operators (for the latest documentation on synchronization and stream fusion and merging see [here](Stream-Fusion-and-Merging)):
 
 * The set of interpolators has been restructured, generalized and expanded. Interpolators can now produce a result that has a different type than the input message type, and allow for matching with the `Nearest`, `First` or `Last` message. A taxonomy of greedy versus reproducible interpolators has been defined.
 * Added support for an adjacent-values-interpolator, and constructed a linear interpolator based on it.

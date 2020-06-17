@@ -6,12 +6,14 @@ This document contains a [**list of components**](#ListOfComponents) available i
 
 The table below contains the list of \psi components that are available in the current release, together with the namespace in which the component can be found (in general, the NuGet packages in which you can find the component follow the same naming convention, potentially with additional platform suffixes)
 
-| | Name | Description | Windows | Linux | Namespace / NuGet Package |
+| | Name | Description | Windows | Linux | Namespace |
 | :--- | :---- | :------------------------ | :----: |:----: |:--------- |
 | __Sensors__ | | | | | | 
 | | `AudioCapture` | Component that captures and streams audio from an input device such as a microphone |	AnyCPU | Yes | Microsoft.Psi.Audio |
 | | `MediaCapture` | Component that captures and streams video and audio from a video camera (audio is currently supported only on the Windows version) | X64 | Yes | Microsoft.Psi.Media |
 | | `RealSenseSensor` |	Component that captures and streams video and depth from an Intel RealSense camera | X64 | No | Microsoft.Psi.RealSense |
+| | `AzureKinectSensor` | Component that captures and streams information (video, depth, IMU, tracked bodies etc.) from an Azure Kinect sensor | x64 | Yes | Microsoft.Psi.AzureKinect |
+| | `AzureKinectBodyTracker` | Component that performs body tracking from the depth/IR images captured by the Azure Kinect sensor. | x64 | Yes | Microsoft.Psi.AzureKinect |
 | | `KinectSensor` | Component that captures and streams information (video, depth, audio, tracked bodies, etc.) from a Kinect One (v2) sensor | AnyCPU | No | Microsoft.Psi.Kinect |
 | __File sources__ | | | | | |
 | | `FFMPEGMediaSource` | Component that streams video and audio from an MPEG file | No | Yes | Microsoft.Psi.Media |
@@ -21,7 +23,9 @@ The table below contains the list of \psi components that are available in the c
 | | `WaveFileWriter` | Component that writes an audio stream into a WAVE file | AnyCPU | Yes | Microsoft.Psi.Audio |
 | | `MPEG4Writer` | Component that writes video and audio streams into an MPEG-4 file | X64 | No | Microsoft.Psi.Media |
 | __Imaging__ | | | | | |
+| | `DepthImageEncoder` | Component that encodes a depth image using a specified encoder (e.g. PNG) | AnyCPU | Yes | Microsoft.Psi.Imaging |
 | | `ImageEncoder` | Component that encodes an image using a specified encoder (e.g. JPEG, PNG) | AnyCPU | Yes | Microsoft.Psi.Imaging |
+| | `DepthImageDecoder` | Component that decodes a depth image using a specified decoder (e.g. JPEG, PNG) | AnyCPU | Yes | Microsoft.Psi.Imaging |
 | | `ImageDecoder` | Component that decodes an image using a specified decoder (e.g. JPEG, PNG) | AnyCPU | Yes | Microsoft.Psi.Imaging |
 | | `ImageTransformer` | Component that transforms an image given a specified transformer | AnyCPU | Yes | Microsoft.Psi.Imaging |
 | __Vision__ | | | | | |
@@ -41,6 +45,8 @@ The table below contains the list of \psi components that are available in the c
 | | `LUISIntentDetector` | Component that performs intent detection and entity extraction using the [Microsoft Cognitive Services LUIS API](https://www.luis.ai/). | AnyCPU | Yes | Microsoft.Psi.CognitiveServices.Language | 
 | | `PersonalityChat` | Component that generates dialogue responses to textual inputs using the [Microsoft Cognitive Services Personality Chat API](https://labs.cognitive.microsoft.com/en-us/project-personality-chat). | AnyCPU | Yes | Microsoft.Psi.CognitiveServices.Language | 
 | | <div style="color:red;font-weight:bold">[DEPRECATED]</div> `BingSpeechRecognizer` | Component that performs speech recognition using the [Microsoft Cognitive Services Bing Speech API](https://docs.microsoft.com/en-us/azure/cognitive-services/Speech). | AnyCPU | Yes | Microsoft.Psi.CognitiveServices.Speech |
+| __Calibration__ | | | | | |
+| | `ProjectTo3D` | Component that projects 2D color-space points into 3D camera-space points in the depth camera's coordinate system. | AnyCPU | Yes | Microsoft.Psi.Calibration |
 | __Output__ | | | | | |
 | | `AudioPlayer` | Component that plays back an audio stream to an output device such as the speakers. | AnyCPU | Yes | Microsoft.Psi.Audio |
 | | `SystemSpeechSynthesizer` | Component that performs speech synthesis via the desktop speech synthesis engine from `System.Speech`. | AnyCPU | No | Microsoft.Psi.Speech

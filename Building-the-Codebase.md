@@ -2,7 +2,7 @@ To build, first you will need to clone the Platform for Situated Intelligence [g
 
 ## On Windows
 
-Visual Studio is required to build the `Psi.sln` solution on Windows. _Either_ Visual Studio 2019 or the older Visual Studio 2017 may be used. Install one or the other version below:
+Starting with release 0.12.53.2, Visual Studio 2019 is required to build the `Psi.sln` solution on Windows.
 
 __Setup Visual Studio 2019__:
 
@@ -13,26 +13,9 @@ Install [Visual Studio 2019](https://www.visualstudio.com/vs/). The Community Ed
   * __.NET Core cross-platform development__
   * __Desktop development with C++__
 * Individual Components:
-  * __MSVC v141 - VS 2017 C++ x64/x86 Spectre-mitigated libs (v14.16)__
-  * __C++ ATL for v141 build tools with Spectre Mitigations (x86 & x64)__
+  * __MSVC v142 - VS 2019 C++ x64/x86 Spectre-mitigated libs (v14.25)__
+  * __C++ ATL for latest v142 build tools with Spectre Mitigations (x86 & x64)__
   * __Windows 10 SDK (10.0.18362.0)__
-
-Currently, our projects target the older Platform Toolset v141 for compatibility with VS 2017. When you first open the solution, you will be prompted to Retarget Projects. Press __Cancel__.
-
-__Setup Visual Studio 2017__:
-
-The older [Visual Studio 2017](https://visualstudio.microsoft.com/vs/older-downloads/) (version 15.7 or later) continues to be supported. The Community Edition of Visual Studio is sufficient. Make sure the following features are installed (you can check these features by running the Visual Studio Installer again and looking at both the Workloads and Individual components tabs):
-
-* Workloads:
-  * __.NET desktop development__
-  * __.NET Core cross-platform development__
-  * __Desktop development with C++__
-* Individual Components:
-  * __VC++ 2017 version 15.9 v14.16 Libs for Spectre (x86 and x64)__
-  * __Visual C++ ATL (x86/x64) with Spectre Mitigations__
-  * __.NET Framework 4.7.2 targeting pack__
-
-The [Windows 10 SDK (10.0.18362.0)](https://developer.microsoft.com/en-US/windows/downloads/windows-10-sdk) is not included as an Individual Component with VS _2017_ and must be installed separately.
 
 __Optional prerequisites__:
 
@@ -60,7 +43,7 @@ Under Linux, we recommend using [Visual Studio Code](https://code.visualstudio.c
 
 __Prerequisites__:
 
-You will need .NET Core 2.2 on Linux. You can find the [installation instructions here](https://docs.microsoft.com/en-us/dotnet/core/linux-prerequisites?tabs=netcore2x). Be sure to install the 2.2 version, as some of Psi packages use this. To check your installation, run `dotnet --info` in your terminal. You should see lists of information such as Runtime Environment and SDK Versions.
+You will need .NET Core 3.1 on Linux. You can find the [installation instructions here](https://docs.microsoft.com/en-us/dotnet/core/linux-prerequisites?tabs=netcore31). Be sure to install the 3.1 version, as some of Psi packages use this. To check your installation, run `dotnet --info` in your terminal. You should see lists of information such as Runtime Environment and SDK Versions.
 
 Although \psi is built on .NET Standard, IL assembly still depends on _Mono's_ `ilasm` tool. [Install at least `mono-devel`](https://www.mono-project.com/download/stable/#download-lin). It is important to install (or reinstall) Mono _after_ the .NET SDK. If you see an error such as `IL/MemoryAccess.il (16, 0): error : irrecoverable synatx error` it is likely due to an incompatible `ilasm` installation (try reinstalling Mono).
 

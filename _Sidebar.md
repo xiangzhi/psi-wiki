@@ -9,7 +9,6 @@
 **[[Basic Tutorials]]**
 * [[Brief Introduction]]
 * [[Basic Stream Operators]]
-* [[Stream Fusion]]
 * [[Writing Components]]
 * [[Pipeline Execution]]
 * [[Delivery Policies]]
@@ -21,7 +20,7 @@
 * [Bridge to ROS](ROS-Integration)
 
 **[[More Advanced Topics]]**
-* [[Synchronization]]
+* [[Stream Fusion and Merging]]
 * [[Interpolation and Sampling]]
 * [[Windowing Operators]]
 * [[Stream Generators]]
@@ -36,6 +35,7 @@
 * [[List of Components]]
 * [[List of NuGet Packages]]
 * [[Audio Overview]]
+* [[Azure Kinect Overview]]
 * [[Kinect Overview]]
 * [[Speech and Language Overview]]
 * [[Imaging Overview]]

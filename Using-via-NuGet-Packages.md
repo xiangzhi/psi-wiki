@@ -1,4 +1,4 @@
-To build \\psi applications, we recommend using [Visual Studio 2017](https://www.visualstudio.com/vs/ "Visual Studio 2017") on Windows (the free, Community editions is sufficient). Under Linux, we recommend using [Visual Studio Code](https://code.visualstudio.com/).
+To build \\psi applications, we recommend using [Visual Studio 2019](https://www.visualstudio.com/vs/ "Visual Studio 2019") on Windows (the free, Community editions is sufficient). Under Linux, we recommend using [Visual Studio Code](https://code.visualstudio.com/).
 
 To build a \\psi application using [NuGet packages](http://www.nuget.org), simply reference the relevant `Microsoft.Psi.*` packages available on www.nuget.org in your application. Please note that to use these packages, you need to check the _Include prerelease_ checkbox when you browse for NuGet packages in Visual Studio. The [Brief Introduction](Brief-Introduction) tutorial also contains a quick description of how you build a very simple, initial \\psi application.
 

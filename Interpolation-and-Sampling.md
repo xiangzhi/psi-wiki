@@ -1,4 +1,4 @@
-Interpolation and sampling are performed in Platform for Situated Intelligence via the corresponding `Interpolate` and `Sample` operators. These operators rely on a specified interpolator class - please first read the in-depth topic on [Fusion and Synchronization](Synchronization) to first understand interpolators before proceeding below.
+Interpolation and sampling are performed in Platform for Situated Intelligence via the corresponding `Interpolate` and `Sample` operators. These operators rely on a specified interpolator class - please first read the in-depth topic on [Stream Fusion and Merging](Stream-Fusion-and-Merging) to first understand interpolators before proceeding below.
 
 Both `Interpolate` and `Sample` take as a first parameter either a clock stream that drives the interpolation/sampling by providing the interpolation or sampling points, or a `TimeSpan` interval (in which case a generator stream with that cadence is produced and used). 
 

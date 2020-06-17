@@ -299,7 +299,7 @@ Most stream operators discussed above accept as an optional parameter a [deliver
 
 We have introduced in this tutorial some of the most basic and frequently used stream operators in the \psi framework. The framework provides however a number of more advanced stream operators that deal with specific streaming aspects, such as windowing, sampling, synchronization, etc., These topics and the corresponding stream operators are introduced in more detail in additional tutorials:
 
-* [Synchronization](Synchronization): introduces operators for stream fusion and synchronization.
+* [Stream Fusion and Merging](Stream-Fusion-and-Merging): introduces operators for stream fusion, merging and synchronization.
 * [Interpolation and Sampling](Interpolation-and-Sampling): introduces operators for interpolation and sampling.
 * [Windowing Operators](Windowing-Operators): introduces operators that allow buffering over streams of data.
 * [Stream Generators](Stream-Generators): explains stream generators and timers.

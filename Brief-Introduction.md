@@ -176,7 +176,7 @@ var joined = sin.Pair(cos);
 
 Re-run the program. This time, the results are not always 1. In this case we have used a different operator, `Pair` that does not actually reason about the originating times but rather pairs each message arriving on the `sin` stream with the last message that was delivered on the `cos` stream. Because of asynchronous execution of operators in the pipeline, this time the pairing might not correspond to the a match in the originating times and in that case the result from summing up the squares is different from 1.
 
-We have illustrated above how to do an _exact_ join (the originating times must match exactly for the messages to be paired). There are many ways to do originating-time based synchronization, with important consequences for the behavior of the pipeline. In this introductory guide, we limit this discussion here, but we recommend that you read the more in-depth topic on the [Synchronization](Synchronization) page.
+We have illustrated above how to do an _exact_ join (the originating times must match exactly for the messages to be paired). There are many ways to do originating-time based synchronization, with important consequences for the behavior of the pipeline. In this introductory guide, we limit this discussion here, but we recommend that you read the more in-depth topic on the [Stream Fusion and Merging](Stream-Fusion-and-Merging) page.
 
 <a name="SavingData"></a>
 
@@ -417,6 +417,6 @@ Clicking the _Live_ button once more will switch the cursor mode back into _Live
 
 ## 6. Next steps
 
-Besides this brief introduction, a couple of additional [tutorials](Basic-Tutorials) are available, as well as a number of more [advanced, in-depth topics](More-Advanced-Topics) that dive into more details in various aspects of the framework, including [stream operators](Basic-Stream-Operators), [synchronization](Synchronization), [interpolation and sampling](Interpolation-and-Sampling), [shared objects and memory management](Shared-Objects), [remoting](Remoting), [interop](Interop) etc.
+Besides this brief introduction, a couple of additional [tutorials](Basic-Tutorials) are available, as well as a number of more [advanced, in-depth topics](More-Advanced-Topics) that dive into more details in various aspects of the framework, including [stream operators](Basic-Stream-Operators), [stream fusion and merging](Stream-Fusion-and-Merging), [interpolation and sampling](Interpolation-and-Sampling), [shared objects and memory management](Shared-Objects), [remoting](Remoting), [interop](Interop) etc.
 
 Apart from the documentation, it may be helpful to look through the set of [Samples](Samples) provided. While some of the samples address specialized topics like how to leverage speech recognition components or how to bridge to ROS, reading them will give you more insights into programming with Platform for Situated Intelligence.

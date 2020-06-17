@@ -10,7 +10,7 @@ This document provides an introduction to how to write your own components. It i
 6. [**Source Components**](#SourceComponents): presents design patterns for writing source components, like sensors and other data generators.
 7. [**Guidelines for Writing Components**](#Guidelines): summarizes a set of recommended guidelines for writing component.
 
-This document assumes an understanding of the concept of originating time for \psi messages. To get familiar with this construct, please read first the [Brief Introduction](Brief-Introduction) and the [Synchronization](Synchronization) in-depth topic.
+This document assumes an understanding of the concept of originating time for \psi messages. To get familiar with this construct, please read first the [Brief Introduction](Brief-Introduction) and the [Stream Fusion and Merging](Stream-Fusion-and-Merging) in-depth topic.
 
 <a name="SimpleComponent"></a>
 
@@ -81,7 +81,7 @@ The constructor for the component creates the receivers and emitters by calling 
 
 The signature for each receiver method has two parameters. The first one is of the same type as the receiver, and will contain at runtime the value of the incoming message on the stream. The second parameter is of type `Envelope` and will contain the message envelope information, including the message originating time, sequence number, etc.
 
-The `ReceiveString` receiver method simply captures the input message in the `lastStringInput` private variable. The `ReceiveCount` receiver creates the corresponding output by using a string builder and appending the stored string as many times as the `count` input. It then posts the results on the output stream by calling the `Post` method on the `this.Out` emitter. The `Post` call takes two parameters: the first is the message to be posted, which needs to be of the same type as the emitter. The second parameter is the originating time for this message. As explained in the [Brief Introduction](Brief-Introduction) tutorial and the [Synchronization](Synchronization) in-depth topic, \psi components propagate the originating times for the incoming messages to the output streams. It is the responsibility of the component author to make sure this is the case and to choose what the originating time for each outgoing message is. In this case, we are choosing to propagate the originating time from the count input as this is what triggers the outputs.
+The `ReceiveString` receiver method simply captures the input message in the `lastStringInput` private variable. The `ReceiveCount` receiver creates the corresponding output by using a string builder and appending the stored string as many times as the `count` input. It then posts the results on the output stream by calling the `Post` method on the `this.Out` emitter. The `Post` call takes two parameters: the first is the message to be posted, which needs to be of the same type as the emitter. The second parameter is the originating time for this message. As explained in the [Brief Introduction](Brief-Introduction) tutorial and the [Stream Fusion and Merging](Stream-Fusion-and-Merging) in-depth topic, \psi components propagate the originating times for the incoming messages to the output streams. It is the responsibility of the component author to make sure this is the case and to choose what the originating time for each outgoing message is. In this case, we are choosing to propagate the originating time from the count input as this is what triggers the outputs.
 
 ### 1.2. Using the component
 

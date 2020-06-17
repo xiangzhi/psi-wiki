@@ -103,3 +103,34 @@ The following operators are provided to manipulate raw audio samples and to comp
 - `ZeroCrossingRate` - Computes the zero-cross frequency of an audio frame.
 
 While any one of these operators may be used individually, they are usually produced collectively using the `AcousticFeaturesExtractor` component which aggregates a set of commonly used acoustic feature streams into a single component. Configuration parameters specified in the `AcousticFeaturesExtractorConfiguration` object determine which features to generate. Note that the audio input to this component is assumed to be 1-channel 16-bit PCM audio. Ensure that this format is specified in `AudioCaptureConfiguration` if using the `AudioCapture` to capture live audio as input, or use the `AudioResampler` component to convert the audio stream to the required format.
+
+## Troubleshooting Audio on Linux
+
+The Linux `AudioCapture` and `AudioPlayer` \\psi components are built on the [Advanced Linux Sound Architecture (ALSA) library APIs](http://www.alsa-project.org/alsa-doc/alsa-lib) and depend on the `asound` shared object. This comes installed with many Linux distributions but if you receive an error such as `"Unable to load shared library 'asound'"` then you may need to install:
+
+    apt install libasound2-dev
+
+To test your audio hardware outside of \\psi, you may record and playback audio with the `arecord` and `aplay` command line utilities. For example, to record and playback a 10 second test clip:
+
+    arecord -f S16_LE -d 10 -r 16000 -D hw:1,0 test.wav
+    aplay test.wav
+
+You can list available capture (`arecord -L`) and playback (`aplay -L`) hardware to determine device names. You may want to experiment with sample rates and formats to ensure that your settings are correct.
+
+Once in \\psi, the `AudioCapture` and `AudioPlayer` components each take configuration details at construction time including the `DeviceName` (default `"plughw:0,0"`) and `Format` (default 16KHz, 1 channel, 16-bit PCM).
+
+    var audioInput = new AudioCapture(
+        pipeline,
+        new AudioCaptureConfiguration()
+        {
+            DeviceName = "plughw:0,0",
+            Format = WaveFormat.Create16kHz1Channel16BitPcm(),
+        });
+
+    var audioOutput = new AudioPlayer(
+        pipeline,
+        new AudioPlayerConfiguration()
+        {
+            DeviceName = "plughw:0,0",
+            Format = WaveFormat.Create16kHz1Channel16BitPcm(),
+        });
