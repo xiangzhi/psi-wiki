@@ -25,6 +25,7 @@ BREAKING CHANGES:
 * Renamed the `Convert()` stream operator for shared images to `ToPixelFormat()`, for clarity and to match the underlying component.
 * The 3D related operators from `DepthExtensions` in Calibration now operate only on depth images.
 * `KinectSensor.DepthImage` stream now returns a stream of `DepthImage` rather than a stream of `Image`.
+* The `Window()` operator now correctly handles `TimeInterval` inclusivity rather than excluded messages _on_ the boundary. Additionally, the operator no longer accepts a `waitForCompleteWindow` parameter and never delays the initial window.
 
 Other changes:
 
