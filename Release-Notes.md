@@ -71,7 +71,6 @@ Other changes:
 
 * Added "Pose" fields for `DepthDeviceCalibrationInfo` objects, which are the inverse of Extrinsics.
 * Added ability to specify distort/undistort as either normal or reversed. Normal would be the closed form equation which returns distorted points and the reverse version returns undistorted points.
-* Changes related to the CoordinateSystem changes (where \psi now uses the MathNet conventions (PosZ, NegX, NegY) and all matrices are column-major and assume column-vectors).
 
 ### __Changes to PsiStoreTool__
 
@@ -90,7 +89,7 @@ Other changes:
     - Removed `IKinectSensor`, `KinectExtensions`, `DepthExtensions` and all GZip encoding functionality.
     - Removed `DepthToColorConverter` and re-implemented as a generic imaging operator.
     - Moved Orientation functions and LevenbergMarquardt optimization into `Microsoft.Psi.Calibration`.
-    - Changed `KinectBody` definition to store Joint poses as MathNet CoordinateSystems, with immediate conversion into MathNet basis.
+    - Changed `KinectBody` definition to store Joint poses as MathNet CoordinateSystems, with immediate conversion into MathNet basis (X Forward, Y Left, Z Up).
 * Added a constructor for `AudioCapture` component allowing an output format to be specified.
 * Added ALSA error codes in exceptions thrown by the Linux `AudioCapture` and `AudioSource` components.
 * Fixed Linux audio and video components to work on 32-bit OS.
