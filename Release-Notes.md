@@ -4,7 +4,7 @@
 
 The major changes in this release include the addition of support for the Azure Kinect sensor (including body tracking), an overhaul of Microsoft.Psi.Imaging, some additional Kinect for Windows component cleanup, visualization updates, as well as an upgrade of projects to Visual Studio 2019 and .NET Core 3.1. Miscellaneous updates were also made to other areas (see more details below).
 
-_A Note About Coordinate Systems_: This release begins to rationalize the handling of coordinate system bases throughout the code base. We adopt the MathNet.Spatial convention everywhere, in which the X-axis represents "forward", the Y-axis represents "left", and the Z-axis represents "up". Matrix representations assume column vectors and are stored in column-major order. These changes particularly affect code in Microsoft.Psi.Calibration as well as the Kinect and Azure Kinect sensor and body joint representations.
+_A Note About Coordinate Systems_: This release begins to rationalize the handling of coordinate system bases throughout the code base. We adopt the MathNet.Spatial convention everywhere, in which the X-axis represents "forward", the Y-axis represents "left", and the Z-axis represents "up". Matrix representations assume column vectors and are stored in column-major order. These changes particularly affect code and data from Microsoft.Psi.Calibration as well as the Kinect and Azure Kinect sensor and body joint representations.
 
 ### __Azure Kinect Component (New)__
 
