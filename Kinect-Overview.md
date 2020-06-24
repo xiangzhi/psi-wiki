@@ -81,7 +81,7 @@ using (var pipeline = Pipeline.Create())
 
 ## A Note About Coordinate Systems
 
-The `KinectSensor` component emits all its calibration, joint, and body orientation information in the coordinate system basis of MathNet.Spatial. This is a different basis assumption from that used by the [sensor technology underneath](https://docs.microsoft.com/en-us/previous-versions/windows/kinect/dn785530(v=ieb.10).
+The `KinectSensor` component emits all its calibration, joint, and body orientation information in the coordinate system basis of MathNet.Spatial. This is a different basis assumption from that used by the [sensor technology underneath](https://docs.microsoft.com/en-us/previous-versions/windows/kinect/dn785530(v=ieb.10)).
 
 All coordinate systems are immediately rebased inside the component such that the X-axis represents "forward", the Y-axis represents "left", and Z-axis represents "up". All coordinate system information emitted by these components adhere to this basis.
 
