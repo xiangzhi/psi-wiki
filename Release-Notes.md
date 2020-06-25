@@ -9,6 +9,7 @@ _A Note About Coordinate Systems_: This release begins to rationalize the handli
 ### __Azure Kinect Component (New)__
 
 * Added `AzureKinectSensor` and `AzureKinectBodyTracker` components that enable using the Azure Kinect sensor with \psi (see more: [Overview](Azure-Kinect-Overview), [Sample](https://github.com/microsoft/psi/tree/master/Samples/AzureKinectSample), [Azure Kinect Documentation](https://azure.microsoft.com/en-us/services/kinect-dk/)).
+* The Kinect and AzureKinect body visualizers have moved into their own projects and need to be loaded as [3rd party visualizers for PsiStudio](3rd-Party-Visualizers) to become available.
 
 ### __Updates to Microsoft.Psi.Imaging__
 
