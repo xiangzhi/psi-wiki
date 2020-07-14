@@ -4,6 +4,7 @@ The `Samples` folder contains a few small example applications written with Plat
 | Name | Description | Windows | Linux |
 | :----------- | :---------- | :--: | :--: |
 | [WebcamWithAudioSample](https://github.com/Microsoft/psi/blob/master/Samples/WebcamWithAudioSample) | This sample illustrates how to get images from a camera and audio from a microphone. | Yes | - |
+| [AzureKinectSample](https://github.com/microsoft/psi/blob/master/Samples/AzureKinectSample) | This sample demonstrates how to use the Azure Kinect sensor with body tracking and how to use the `Join()` and `Pair()` operators to synchronize and fuse streams. | Yes | Yes |
 | [KinectSample](https://github.com/Microsoft/psi/blob/master/Samples/KinectSample) | This sample illustrates how to augment an existing voice activity detector by leveraging information about lips motion extracted from Kinect face tracking. | Yes | - |
 | [SpeechSample](https://github.com/Microsoft/psi/blob/master/Samples/SpeechSample) | This sample illustrates how to use various speech recognition components. | Yes | - |
 | [LinuxSpeechSample](https://github.com/Microsoft/psi/blob/master/Samples/LinuxSpeechSample) | This sample illustrates how to use various speech recognition components on Linux. | - | Yes |
