@@ -13,7 +13,7 @@ Install [Visual Studio 2019](https://www.visualstudio.com/vs/). The Community Ed
   * __.NET Core cross-platform development__
   * __Desktop development with C++__
 * Individual Components:
-  * __MSVC v142 - VS 2019 C++ x64/x86 Spectre-mitigated libs (v14.25)__
+  * __MSVC v142 - VS 2019 C++ x64/x86 Spectre-mitigated libs (v14.xx, latest version)__
   * __C++ ATL for latest v142 build tools with Spectre Mitigations (x86 & x64)__
   * __Windows 10 SDK (10.0.18362.0)__
 
