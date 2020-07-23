@@ -10,7 +10,7 @@
 
 **[[Samples]]**
 
-**[Tutorials](Basic-Tutorials)**
+**[[Tutorials]]**
 * [[Basic Stream Operators]]
 * [[Writing Components]]
 * [[Pipeline Execution]]
