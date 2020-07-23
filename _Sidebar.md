@@ -10,7 +10,7 @@
 
 **[[Samples]]**
 
-**[[Tutorials]]**
+**[Tutorials](Basic-Tutorials)**
 * [[Basic Stream Operators]]
 * [[Writing Components]]
 * [[Pipeline Execution]]
@@ -23,7 +23,7 @@
 * [[Shared Objects]]
 * [[Intervals]]
 
-**[[Other Topics]]**
+**[Other Topics](More-Advanced-Topics)**
 * [[Remoting]]
 * [Bridging to Python, JS, ...](Interop)
 * [Bridging to ROS](ROS-Integration)
