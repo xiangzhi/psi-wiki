@@ -6,30 +6,29 @@
 * [[Using via NuGet Packages]]
 * [[Building the Codebase]]
 
-**[[Basic Tutorials]]**
-* [[Brief Introduction]]
+**[[Brief Introduction]]**
+
+**[[Samples]]**
+
+**[[Tutorials]]**
 * [[Basic Stream Operators]]
 * [[Writing Components]]
 * [[Pipeline Execution]]
 * [[Delivery Policies]]
-
-**[[Samples]]**
-
-**Platform/Language Interop**
-* [Bridge to Python, JS, ...](Interop)
-* [Bridge to ROS](ROS-Integration)
-
-**[[More Advanced Topics]]**
 * [[Stream Fusion and Merging]]
 * [[Interpolation and Sampling]]
 * [[Windowing Operators]]
 * [[Stream Generators]]
 * [[Parallel Operator]]
 * [[Shared Objects]]
+* [[Intervals]]
+
+**[[Other Topics]]**
+* [[Remoting]]
+* [Bridging to Python, JS, ...](Interop)
+* [Bridging to ROS](ROS-Integration)
 * [[Datasets]]
 * [[Event Sources]]
-* [[Remoting]]
-* [[Intervals]]
 * [[3rd Party Visualizers]]
 
 **Components and Toolkits**
