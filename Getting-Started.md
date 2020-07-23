@@ -1,4 +1,4 @@
-To familiarize yourself and to get started with Platform for Situated Intelligence, we recommend you begin with the [Brief Introduction](Brief-Introduction), which provides a guided walk-through for some of the main concepts in \\psi. It shows how to create a simple program, describes the core concept of a stream, and explains how to transform, synchronize, visualize, persist and replay streams from disk. We recommend that you first work through the examples in this tutorial to familiarize yourself with these core concepts. 
+To learn about Platform for Situated Intelligence, we recommend you begin with the [Brief Introduction](Brief-Introduction), which provides a guided walk-through for some of the main concepts in \\psi. It shows how to create a simple program, describes the core concept of a stream, and explains how to transform, synchronize, visualize, persist and replay streams from disk. We recommend that you first work through the examples in this tutorial to familiarize yourself with these core concepts. 
 
 In addition, a number of tutorials, samples, and other resources can help you learn more about the framework, as described below:
 
