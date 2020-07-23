@@ -1,7 +1,7 @@
 The table below contains the list of available tutorials. If you are new to Platform for Situated Intelligence, we recommend starting with the [Brief Introduction](Brief-Introduction), as it provides an easy introduction to the core \\psi concepts, and then perusing some of the tutorials below.
 
 | Tutorial | Description |
-| :---- | :----------------- |
+| :------- | :----------------- |
 | [Basic Stream Operators](Basic-Stream-Operators) | Provides a brief introduction to basic stream operators available in Platform for Situated Intelligence. |
 | [Writing Components](Writing-Components) | Explains how to write new components in the Platform for Situated Intelligence framework. | 
 | [Pipeline Execution](Pipeline-Execution) | Explains the basics of running \psi pipelines live, or in replay, and controlling pipeline execution. |
