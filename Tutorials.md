@@ -11,5 +11,4 @@ The table below contains the list of available tutorials. If you are new to Plat
 | [Windowing Operators](Windowing-Operators) | Explains the operators that allow buffering over streams of data. |
 | [Stream Generators](Stream-Generators) | Explains stream generators and timers. |
 | [Parallel Operator](Parallel-Operator) | Explains `Parallel`, an operator that enables vector-based parallel computation and dynamic pipelines. |
-| [Shared Objects](Shared-Objects) | Explains memory management optimizations in \\psi and the concept of _shared objects_, useful when dealing with large data types |
 | [Intervals](Intervals) | Explains the `Interval` data type and how to work with absolute and relative time intervals. |
