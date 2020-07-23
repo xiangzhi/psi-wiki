@@ -23,7 +23,7 @@
 * [[Shared Objects]]
 * [[Intervals]]
 
-**[Other Topics](More-Advanced-Topics)**
+**[[Other Topics]]**
 * [[Remoting]]
 * [Bridging to Python, JS, ...](Interop)
 * [Bridging to ROS](ROS-Integration)
