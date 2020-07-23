@@ -20,13 +20,13 @@
 * [[Windowing Operators]]
 * [[Stream Generators]]
 * [[Parallel Operator]]
-* [[Shared Objects]]
 * [[Intervals]]
 
 **[[Other Topics]]**
 * [[Remoting]]
 * [Bridging to Python, JS, ...](Interop)
 * [Bridging to ROS](ROS-Integration)
+* [[Shared Objects]]
 * [[Datasets]]
 * [[Event Sources]]
 * [[3rd Party Visualizers]]
