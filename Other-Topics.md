@@ -1,4 +1,4 @@
-The table below contains a list of more advanced documentation topics.
+The table below contains a list of additional documentation topics.
 
 | Topic | Description |
 | :---- | :----------------- |
