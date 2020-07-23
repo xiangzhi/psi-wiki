@@ -1,4 +1,4 @@
-Platform for Situated Intelligence is used in a number of industry and academic research labs, including (but not limited to):
+Platform for Situated Intelligence has been and is currently used in a number of industry and academic research labs, including (but not limited to):
 * in the [Situated Interaction](https://www.microsoft.com/en-us/research/project/situated-interaction/) project, as well as other research projects at Microsoft Research.
 * in the [MultiComp Lab](http://multicomp.cs.cmu.edu/) at Carnegie Mellon University.
 * in the [Speech Language and Interactive Machines](https://coen.boisestate.edu/slim/) research group at Boise State University.
