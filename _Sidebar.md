@@ -32,8 +32,8 @@
 * [[3rd Party Visualizers]]
 
 **Components and Toolkits**
-* [[List of Components]]
 * [[List of NuGet Packages]]
+* [[List of Components]]
 * [[Audio Overview]]
 * [[Azure Kinect Overview]]
 * [[Kinect Overview]]
