@@ -5,6 +5,7 @@ Platform for Situated Intelligence has been and is currently used in a number of
 * in the [Qualitative Reasoning Group](http://www.qrg.northwestern.edu/), Northwestern University. 
 * in the [Intelligent Human Perception Lab](https://www.ihp-lab.org), at USC Institute for Creative Technologies.
 * in the [Teledia research group](https://www.cs.cmu.edu/~cprose), at Carnegie Mellon University.
+* in the [F&M Computational, Affective, Robotic, and Ethical Sciences (F&M CARES) lab](https://fandm-cares.github.io/), at Franklin and Marshall College.
 
 
 
