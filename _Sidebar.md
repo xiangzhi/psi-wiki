@@ -1,5 +1,4 @@
 **[[Home]]**
-* [[Platform Overview]]
 * [[Getting Started]]
 
 **[[Using and Building]]**
