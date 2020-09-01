@@ -23,7 +23,7 @@
 
 **[[Other Topics]]**
 * [[Remoting]]
-* [Bridging to Other Ecosystems](Interop)
+* [Bridging to Other Ecosystems](Bridging-to-Other-Ecosystems)
     * [Bridging to ROS](ROS-Integration)
     * [Bridging to Python](Python-Interop-Walkthrough)
 * [[Shared Objects]]
