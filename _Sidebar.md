@@ -25,7 +25,7 @@
 * [[Remoting]]
 * [Bridging to Other Ecosystems](Interop)
     * [Bridging to ROS](ROS-Integration)
-    * [Bridging to Python](PythonInteropWalkthrough)
+    * [Bridging to Python](Python-Interop-Walkthrough)
 * [[Shared Objects]]
 * [[Datasets]]
 * [[Event Sources]]
