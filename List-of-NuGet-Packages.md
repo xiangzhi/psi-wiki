@@ -24,6 +24,10 @@ The table below contains the list of Platform for Situated Intelligence NuGet pa
 | Microsoft.Psi.Media.Linux    | Provides Linux-specific APIs and components for audio-visual capture. | Yes | - | AnyCPU |
 | Microsoft.Psi.Media.Windows.x64    | Provides Windows-specific APIs and components for audio-visual capture and processing. | - | Yes | x64 |
 | Microsoft.Psi.MicrosoftSpeech.Windows    | Provides Windows-specific components for the using the Microsoft.Speech recognition platform. | - | Yes | AnyCPU |
+| Microsoft.Psi.Onnx.Cpu   | Provides components for running ONNX models without a GPU. | Yes | Yes | AnyCPU |
+| Microsoft.Psi.Onnx.Gpu   | Provides components for running ONNX models with a supported GPU. | Yes | Yes | AnyCPU |
+| Microsoft.Psi.Onnx.ModelRunners.Cpu   | Provides components for running pre-trained ONNX models without a GPU. | Yes | Yes | AnyCPU |
+| Microsoft.Psi.Onnx.ModelRunners.Gpu   | Provides components for running pre-trained ONNX models with a supported GPU. | Yes | Yes | AnyCPU |
 | Microsoft.Psi.ROS   | Provides APIs for using ROS from .NET Framework | Yes | Yes | AnyCPU |
 | Microsoft.Psi.Runtime    | Provides the core APIs and components for Platform for Situated Intelligence. | Yes | Yes | AnyCPU |
 | Microsoft.Psi.Runtime.Windows    | Provides Windows-specific perf counter APIs for Platform for Situated Intelligence. | - | Yes | AnyCPU |

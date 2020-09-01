@@ -2,7 +2,6 @@ The Platform for Situated Intelligence framework provides a set of APIs that all
 
 This document provides an introduction to the dataset APIs. It is structured in the following sections:
 
-
 1. [Stores and Datasets](#StoresAndDatasets): introduces the concepts of stores and datasets.
 2. [The Structure of a Dataset: Sessions and Partitions](#Structure): describes the internal structure of a dataset.
 3. [Organizing Data With the Dataset APIs](#OrganizingData): covers some of the basic APIs for organizing and managing datasets.
@@ -14,18 +13,18 @@ This document provides an introduction to the dataset APIs. It is structured in 
 
 First, we should clarify some terminology - specifically the notions of a <b><i>\\psi store</i></b> and a <b><i>\\psi dataset</i></b>. A
 store is the unit of storage that is created when an application persists data to disk. As described in the [Brief Introduction](Brief-Introduction),
-\\psi applications can write streams to disk using the `Store.Create` function and the `Write` stream
+\\psi applications can write streams to disk using the `PsiStore.Create` function and the `Write` stream
 operator. For example:
 
 ```csharp
 // Create a store to write data to (change this path as you wish - the data will be stored there)
-var store = Store.Create(p, "demo", "c:\\recordings");
+var store = PsiStore.Create(p, "demo", "c:\\recordings");
     
 // Write a stream to the store
 myStream.Write("MyStream", store);
 ```
 
-As a result of the `Store.Create` call, a \\psi store is created on disk at the specified location. The store 
+As a result of the `PsiStore.Create` call, a \\psi store is created on disk at the specified location. The store 
 contains the serialized data from all the streams that are written to it, and consists of several files, 
 including the catalog, data, and index files. When the application terminates, the store is closed. 
 
@@ -117,29 +116,29 @@ var partition = session.CreateStorePartition("NewStore", "c:\\stores", "NewParti
 
 This creates a new store named "NewStore" under the c:\\stores folder, and associates it with a new partition in the session named "NewPartition". Note that the last argument (the partition name) is optional, and if omitted, the store name will be used for the partition name. Note that the partition name serves to distinguish partitions from one another within a session, whereas the store name relates to the name of the store on disk.
 
-A partition may also be created from an existing store and added to the session using the `AddStorePartition` method:
+A partition may also be created from an existing store and added to the session using the `AddPsiStorePartition` method:
 
 ```csharp
 // Add a partition from an existing store
-var partition = session.AddStorePartition("MyStore", "c:\\recordings", "MyPartition");
+var partition = session.AddPsiStorePartition("MyStore", "c:\\recordings", "MyPartition");
 ```
 
 This creates a new partition named "MyPartition" representing the store "MyStore" located in the c:\\recordings folder, and adds it to the session.
 
 For convenience, the `Dataset` class also provides a number of methods to add existing store partitions directly to the dataset or to create an entirely new dataset from an existing store on disk. In all cases, each resulting partition will be contained within its own session in the dataset.
 
-For instance, we can create a new dataset from previously recorded store on disk using the static `CreateFromExistingStore` method:
+For instance, we can create a new dataset from previously recorded store on disk using the static `CreateFromStore` method:
 
 ```csharp
-// Create a new Dataset from an existing store
-var dataset = Dataset.CreateFromExistingStore("MyStore", "c:\\recordings", "MyPartition");
+// Create a new Dataset from an existing \psi store
+var dataset = Dataset.CreateFromStore(new PsiStoreStreamReader("MyStore", "c:\\recordings"), "MyPartition");
 ```
 
-If we simply wanted to add a store partition in its own separate session to an existing dataset, we would use the `AddSessionFromExistingStore` method:
+If we simply wanted to add a store partition in its own separate session to an existing dataset, we would use the `AddSessionFromPsiStore` method:
 
 ```csharp
 // Create and add a new Session from an existing store
-var session = dataset.AddSessionFromExistingStore("MySession", "MyStore", "c:\\recordings", "MyPartition");
+var session = dataset.AddSessionFromPsiStore("MySession", "MyStore", "c:\\recordings", "MyPartition");
 ```
 
 Datasets and the organizational structure they define may be saved to a dataset file. This allows the structure of the sessions and partitions to be retained and reused at a later time (for instance to visualize the same set of data). Note that saving the dataset only preserves the layout structure of the data. The original stores containing the actual data are not saved and are assumed to exist on disk at the same path locations relative to the dataset file.

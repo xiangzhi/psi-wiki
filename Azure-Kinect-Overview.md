@@ -160,7 +160,7 @@ This component consumes `DepthImage` and `InfraredImage` streams as well as a th
 For instace, assuming these streams were persisted into a store, we can open them up as follows: 
 
 ```csharp
-var store = Store.Open(pipeline, "MyRecording", @"C:\Data");
+var store = PsiStore.Open(pipeline, "MyRecording", @"C:\Data");
 var depth = store.OpenStream<Shared<DepthImage>>("DepthImage"); // DepthImage
 var infrared = store.OpenStream<Shared<Image>>("InfraredStream"); // ColorImage
 var calibration = store.OpenStream<Calibration>("AzureKinectSensorCalibration"); // AzureKinectSensorCalibration

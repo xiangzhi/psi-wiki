@@ -188,7 +188,7 @@ While the examples provided so far operate with synthetic data for simplicity, t
 using (var p = Pipeline.Create())
 {
     // Create a store to write data to (change this path as you wish - the data will be stored there)
-    var store = Store.Create(p, "demo", "c:\\recordings");
+    var store = PsiStore.Create(p, "demo", "c:\\recordings");
 
     var sequence = Generators.Sequence(p, 0d, x => x + 0.1, 100, TimeSpan.FromMilliseconds(100));
 
@@ -205,9 +205,9 @@ using (var p = Pipeline.Create())
 }
 ```
 
-The example creates and saves the _sequence_ and _sin_ and _cos_ streams of double values. This is done by creating a store component with a given name and folder path via the `Store.Create` factory method, and then using it with the `Write` stream operator. The store component knows how to serialize and write to disk virtually any .Net data type (including user-provided types) in an efficient way.
+The example creates and saves the _sequence_ and _sin_ and _cos_ streams of double values. This is done by creating a store component with a given name and folder path via the `PsiStore.Create` factory method, and then using it with the `Write` stream operator. The store component knows how to serialize and write to disk virtually any .Net data type (including user-provided types) in an efficient way.
 
-The data is written to disk in the specified location (in this case `c:\recordings`, in a folder called `demo.0000`. The `Store.Create` API creates this folder and increases the counter to `demo.0001`, `demo.0002` etc. if you run the application repeatedly. Inside the `demo.0000` folder you will find Catalog, Data and Index files. Together, these files constitute the store.
+The data is written to disk in the specified location (in this case `c:\recordings`, in a folder called `demo.0000`. The `PsiStore.Create` API creates this folder and increases the counter to `demo.0001`, `demo.0002` etc. if you run the application repeatedly. Inside the `demo.0000` folder you will find Catalog, Data and Index files. Together, these files constitute the store.
 
 <a name="ReplayingData"></a>
 
@@ -219,7 +219,7 @@ Data written to disk in the manner described above can be played back with simil
 using (var p = Pipeline.Create())
 {
     // Open the store
-    var store = Store.Open(p, "demo", "c:\\recordings");
+    var store = PsiStore.Open(p, "demo", "c:\\recordings");
 
     // Open the Sequence stream
     var sequence = store.OpenStream<double>("Sequence");
@@ -233,7 +233,7 @@ using (var p = Pipeline.Create())
 }
 ```
 
-An existing store is opened with the `Store.Open` factory method, and streams within the store can be retrieved by name using the `OpenStream` method (you will have to know the name and type of the stream you want to access). The streams can then be processed as if they were just generated from a source.
+An existing store is opened with the `PsiStore.Open` factory method, and streams within the store can be retrieved by name using the `OpenStream` method (you will have to know the name and type of the stream you want to access). The streams can then be processed as if they were just generated from a source.
 
 This method of replaying data preserves the relative timing and order of the messages, and by default plays back data at the same speed as it was produced. When you run the program, you will see the Sin values being displayed by the `Do` operator.
 
@@ -282,7 +282,7 @@ And finally, replace the body of your `Main()` method with the following:
 using (var p = Pipeline.Create())
 {
     // Create the store
-    var store = Store.Create(p, "demo", "c:\\recordings");
+    var store = PsiStore.Create(p, "demo", "c:\\recordings");
 
     var sequence = Generators.Sequence(p, 0d, x => x + 0.1, 10000, TimeSpan.FromMilliseconds(100));
 
@@ -391,7 +391,7 @@ While so far we have discussed how to use PsiStudio to visualize previously coll
 
 For this example we'll be using exactly the same code we wrote in the previous section, so start the application running again, and let it continue to run in the background collecting data.
 
-Since you just restarted your \\psi application, it's generating a new dataset in a new subdirectory, and if you still have PsiStudio open from the last tutorial section you'll still be viewing the _previous_ session.  To view the new session being created, right-click on the top-level node called _Untitled Dataset_ in the _Datasets_ tab and from the context menu select _Create Session from Existing Store..._, then in the File Open dialog go up one level to `C:\recordings` and then into the _latest_ `demo.####` subdirectory.  Since this is a live store, you can tell that you're in the correct subdirectory because all of the files' _Date modified_ attributes will be the current date and time.  If you've opened the store of the currently running \\psi application, then PsiStudio should look like this:
+Since you just restarted your \\psi application, it's generating a new dataset in a new subdirectory, and if you still have PsiStudio open from the last tutorial section you'll still be viewing the _previous_ session.  To view the new session being created, right-click on the top-level node called _Untitled Dataset_ in the _Datasets_ tab and from the context menu select _Create Session from Store..._, then in the File Open dialog go up one level to `C:\recordings` and then into the _latest_ `demo.####` subdirectory.  Since this is a live store, you can tell that you're in the correct subdirectory because all of the files' _Date modified_ attributes will be the current date and time.  If you've opened the store of the currently running \\psi application, then PsiStudio should look like this:
 
 ![PsiStudio (Live Store)](PsiStudio.OpenLiveStore.png)
 

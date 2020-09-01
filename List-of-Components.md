@@ -31,6 +31,9 @@ The table below contains the list of \psi components that are available in the c
 | <h3>Vision</h3> | | | |
 | __ImageAnalyzer__ <br> Microsoft.Psi.CognitiveServices.Vision | Component that performs image analysis via [Microsoft Cognitive Services Vision API](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/). | AnyCPU | No |
 | __FaceRecognizer__ <br> Microsoft.Psi.CognitiveServices.Face | Component that performs face recognition via [Microsoft Cognitive Services Face API](https://azure.microsoft.com/en-us/services/cognitive-services/face/). | AnyCPU | No |
+| <h3>Machine Learning</h3>| | | |
+| __OnnxModelRunner__ <br> Microsoft.Psi.Onnx | Component that runs an ONNX model. | AnyCPU | Yes |
+| __TinyYoloV2OnnxModelRunner__ <br> Microsoft.Psi.Onnx | Component that runs the Tiny Yolo V2 object detection model. | AnyCPU | Yes |
 | <h3>Audio processing</h3> | | | |
 | __AudioResampler__ <br> Microsoft.Psi.Audio | Component that resamples an audio stream into a different format | AnyCPU | No |
 | __AcousticFeaturesExtractor__ <br> Microsoft.Psi.Audio | Component that extracts acoustic features (e.g. LogEnergy, ZeroCrossing, FFT) from an audio stream | AnyCPU | Yes |

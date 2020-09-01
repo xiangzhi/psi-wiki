@@ -42,7 +42,7 @@ This produces a JSON file containing something like:
 The same could be accomplished by persisting to a regular \\psi store:
 
 ```csharp
-var store = Store.Create(p, "TestStore", @"D:\Data");
+var store = PsiStore.Create(p, "TestStore", @"D:\Data");
 store.Write<double>(sin.Out, "Sin");
 ```
 

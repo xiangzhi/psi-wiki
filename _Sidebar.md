@@ -29,6 +29,7 @@
 * [[Datasets]]
 * [[Event Sources]]
 * [[3rd Party Visualizers]]
+* [[3rd Party Stream Readers]]
 
 **Components and Toolkits**
 * [[List of NuGet Packages]]
@@ -39,6 +40,7 @@
 * [[Speech and Language Overview]]
 * [[Imaging Overview]]
 * [[Media Overview]]
+* [[ONNX Overview]]
 * [[Finite State Machine Toolkit]]
 
 [**API Reference**](https://microsoft.github.io/psi/api/classes.html)

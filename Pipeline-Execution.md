@@ -28,7 +28,7 @@ using (var p = Pipeline.Create())
     var imageStream = webcam.Out.EncodeJpeg(90, DeliveryPolicy.LatestMessage);
 
     // Create a store
-    var store = Store.Create(pipeline, "demo", "c:\\recordings");
+    var store = PsiStore.Create(pipeline, "demo", "c:\\recordings");
 
     // Write the JPEG image stream to the store
     imageStream.Write("Image", store);
@@ -80,7 +80,7 @@ In data replay mode, we are generally playing back streams from an existing fini
 using (var p = Pipeline.Create())
 {
     // Open the store
-    var store = Store.Open(p, "demo", "c:\\recordings");
+    var store = PsiStore.Open(p, "demo", "c:\\recordings");
 
     // Open the saved stream
     var jpegImageStream = store.OpenStream<Shared<EncodedImage>>("Image");
@@ -128,7 +128,7 @@ The `ReplayDescriptor.Interval` property defines the time interval in which the 
 using (var p = Pipeline.Create())
 {
     // Open the store
-    var store = Store.Open(p, "demo", "c:\\recordings");
+    var store = PsiStore.Open(p, "demo", "c:\\recordings");
 
     // Open the saved stream
     var jpegImageStream = store.OpenStream<Shared<EncodedImage>>("Image");

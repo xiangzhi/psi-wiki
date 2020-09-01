@@ -12,6 +12,7 @@ As indicated in the last column in the table below, some of the samples have a c
 | [RosTurtleSample](https://github.com/Microsoft/psi/blob/master/Samples/RosTurtleSample) | This sample illustrates how to connect Platform for Situated Intelligence to the `turtlesim` in ROS. | Yes | Yes | [Yes](https://github.com/Microsoft/psi/blob/master/Samples/RosTurtleSample) |
 | [RosArmControlSample](https://github.com/Microsoft/psi/blob/master/Samples/RosArmControlSample) | This sample illustrates how to connect Platform for Situated Intelligence to control the [uArm Metal](http://ufactory.cc/#/en/uarm1) using ROS. | Yes | Yes | [Yes](https://github.com/Microsoft/psi/blob/master/Samples/RosArmControlSample) |
 | [OpenCVSample](https://github.com/Microsoft/psi/blob/master/Samples/OpenCVSample) | This sample illustrates how to interop with OpenCV. | Yes | - | - |
+| [Python Interop Walkthrough](./PythonInteropWalkthrough.md) | This sample illustrates how to interop with Python, in turn using OpenCV to detect faces. | Yes | Yes | Yes |
 | [WpfSample](https://github.com/Microsoft/psi/blob/master/Samples/WpfSample) | This sample illustrates how to write a Windows Presentation Foundation app that uses Platform for Situated Intelligence. | Yes | - | - |
 
 

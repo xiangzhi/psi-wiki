@@ -1,14 +1,14 @@
 Platform for Situated Intelligence Studio (PsiStudio in short) now supports loading custom 3rd party visualizers from external DLLs. 
 
-To enable PsiStudio to load external DLLs, you can add an `<AdditionalAssemblies>` xml tag inside the main `<PsiStudioSettings>` tag in the PsiStudioSettings.xml file. This settings file is stored in the PsiStudio folder under your user Documents folder. You can specify the assemblies containing visualizers that you would like PsiStudio to load with an `<AdditionalAssemblies>` tag, for example:
+To enable PsiStudio to load external DLLs, you can add an `<AdditionalAssemblies>` XML tag inside the main `<PsiStudioSettings>` tag in the PsiStudioSettings.xml file. This settings file is stored in the PsiStudio folder under your user Documents folder. You can specify the assemblies containing visualizers that you would like PsiStudio to load with an `<AdditionalAssemblies>` tag, for example:
 
-```text
+```xml
     <AdditionalAssemblies>C:\MyVisualizers\MyVisualizers.dll</AdditionalAssemblies>
 ```
 
 Multiple assemblies can be specified via a semicolon-separated list, like below:
 
-```text
+```xml
     <AdditionalAssemblies>C:\MyVisualizers\MyVisualizers.dll;C:\MyOtherVisualizers\MyOtherVisualizers.dll</AdditionalAssemblies>
 ```
 

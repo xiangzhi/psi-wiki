@@ -1,3 +1,97 @@
+# __2020/08/31: Beta-release, version 0.13.38.2__
+
+### __Overview__:
+
+The release brings several important updates to Platform for Situated Intelligence Studio (PsiStudio), including support for temporal data annotations, additional visualizers for cartesian charts and histograms, general updates for various UI elements, as well as bug fixes and other improvements.
+
+At the runtime and infrastructure level, this release adds support for writing custom store readers (via the `IStreamReader` interface) that can provide streaming data to \\psi pipelines as well as in PsiStudio from data sources stored in third-party formats. As an example, we have written a `WaveFileStreamReader` that allows reading data and visualizing data from WAVE files.
+
+Finally, the release also introduces new \\psi components that enable running Onnx machine learning models.
+
+The full, more detailed list of changes is described below:
+
+### __Changes to Visualization and PsiStudio__
+
+* Added support for temporal annotations. Users can now create streams of multi-track annotations based on custom annotation schemas.
+* Added support for visualizing a property or field of a stream. Right-clicking on a stream and selecting “Expand members” will display these sub-fields and they can be visualized as well. 
+* Added initial support for dynamically loading batch processing tasks from 3rd party assemblies. The tasks are identified by the `[BatchProcessingTask]` attribute, and surfaced in the context menus for Dataset and Sessions. Currently only tasks that have a signature taking a (`Pipeline`, `SessionImporter`, `Exporter`) are surfaced. 
+* Added support for opening custom, third-party stores based on the available stream readers (e.g. choose `.wav` in file dialog).
+* Temporal selection region is now highlighted.
+* Added new visualizers for camera intrinsics (visualizes a camera frustum), depth image point cloud, depth image mesh, and image with intrinsics.
+* Added new visualizers for cartesian charts and histograms using LiveCharts.
+* `CoordinateSystem` visualizer now supports size and diameter as separate properties.
+* `KinectBody` and `AzureKinectBody` visualizers now support individual bone thickness and joint radius.
+* Panels now have a `BackgroundColor` property.
+* 2D and 3D panels now have a `RelativeWidth` property that allows for variable width instant panels in a container.
+* The layout selection combobox and associated buttons have been moved from the main toolbar to the Visualizations tab. Multiple minor bug fixes around switching layouts.
+* Several engineering, refactoring, and code clean-up updates, including refactoring visualization for depth images, restructuring context-menu generation, rationalizing names for the `VisualizationObject` attribute, increased readability of type names the property browser.
+* Several additional bug fixes in `DepthExtensions.ProjectTo3D`, `IntersectLineWithDepthMesh`, `Point3D` visualizer, message visualization object.
+* BREAKING CHANGE: The `Microsoft.Psi.Visualization.Common` namespace has been renamed `Microsoft.Psi.Visualization` and the project Microsoft.Psi.Visualization.Common.Windows has been renamed Microsoft.Psi.Visualization.Windows.
+
+
+### __Support for Running ONNX Models__
+
+* Added a new set of packages, Microsoft.Psi.Onnx.Gpu and Microsoft.Psi.Onnx.Cpu containing a component called `OnnxModelRunner` that enables running a specified Onnx model.
+* Added a new set of packages, Microsoft.Psi.Onnx.ModelRunners.Gpu and Microsoft.Psi.Onnx.ModelRunners.Cpu, containing wrapper components that enable more easily running specific Onnx models. As a first example, `TinyYoloV2OnnxModelRunner` enables running object detection over images with a TinyYoloV2 model. We plan to extend the set of model runners in the future.
+
+### __Custom Store Readers__
+
+* Added `IStreamReader` and `IStreamMetadata` interfaces to support reading streams from custom storage formats.
+* `PsiStoreReader` is an implementation of `IStreamReader` for \psi stores.
+* `WaveFileStreamReader` is an implementation of `IStreamReader` over WAVE files.
+* Added extension methods to add sessions and partitions specific to \psi stores and WAVE file stores.
+
+BREAKING CHANGES:
+* `Importer`, `Store`, `Dataset`, `Session` and `Partition` APIs have changed to accommodate arbitrary stream readers.
+* APIs returning `PsiStreamMetadata` now return `IStreamMetadata`.
+* Static APIs specific to \psi stores have moved from `Store` to `PsiStore` (`Store` APIs are obsolete).
+* `Importer` constructor no longer takes name and path; instead it _requires_ an `IStreamReader`.
+* `PsiStore.Create(...)` now returns `PsiExporter` (base `Exporter` is now abstract).
+
+### __Other Changes to Runtime__
+
+* Fields with the `[NonSerialized]` attribute are no longer skipped when cloning. To skip cloning such fields, register the containing type with the `SkipNonSerializedFields` cloning flag.
+* Improved serialization compatibility for some .NET types across frameworks.
+* Consolidated overloads for Pipeline.Create() factory method into a single method.
+
+BREAKING CHANGES: 
+* Renamed `PsiStreamMetadata` and `Importer` properties:
+    * `Lifetime` -> `StreamTimeInterval`
+	* `ActiveLifetime` -> `MessageCreationTimeInterval`
+	* `OriginatingLifetime` -> `MessageOriginatingTimeInterval`
+	* `FirstMessageTime` -> `FirstMessageCreationTime`
+	* `LastMessageTime` -> `LastMessageCreationTime`
+* Renamed `IndexEntry.Time` -> `IndexEntry.CreationTime`.
+* Renamed `Envelope.Time` -> `Envelope.CreationTime`.
+* Cloning objects containing unmanaged pointers and `IntPtr` fields (e.g. delegates) is no longer allowed by default. This behavior may be overridden by registering the containing type using the `KnownSerializers.Register` method with the cloning flags `ClonePointerFields` and `CloneIntPtrFields` respectively.
+
+
+### __Changes to Kinect and AzureKinect__
+
+* Added `Configuration` member to `AzureKinectSensor`.
+
+
+### __Changes to Microsoft.Psi.Imaging__
+
+* Checks on Unmanagedbuffer sizes to only copy as much data as is in the actual image (height*stride).
+* Fixes to resize/scale to preserve sizes.
+* BREAKING CHANGE: Changed `Rotate` and `DetermineRotateWidthHeight` to support loose/tight rotation.
+
+### __Changes to Microsoft.Psi.Audio.Windows__
+
+* BREAKING CHANGE: The `OutputFormat` parameter in `AudioCaptureConfiguration` has been renamed `Format`.
+* BREAKING CHANGE: The `InputFormat` parameter in `AudioPlayerConfiguration` has been renamed `Format`.
+
+### __Other__
+
+* BREAKING CHANGE: Renamed `[Task]` attribute used to define tasks to `[BatchProcessingTask]`.
+* BREAKING CHANGE: Removed `SimpleVoiceActivityDetector` component.
+* Dataset processing APIs now support progress reporting.
+* Fixed bug in `ImageAnalyzer` component where region was being ignored.
+* Set auto CRLF handling for the whole repository.
+* Updated symbol packages to the .snupkg format.
+
+
 ## __2020/06/16: Beta-release, version 0.12.53.2__
 
 ### __Overview__:

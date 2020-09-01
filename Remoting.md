@@ -24,7 +24,7 @@ On the sending side, create a `RemoteExporter` and write to it's `Exporter` as y
 
 ```csharp
     var sender = new RemoteExporter(pipeline);
-    Store.Write(myStream, "SomeName", sender.Exporter);
+    myStream.Write("SomeName", sender.Exporter);
 ```
 
 Then on the receiving side, create a `RemoteImporter`, wait for it to connect and `OpenStream` from it's `Importer`:
@@ -43,7 +43,7 @@ Then on the receiving side, create a `RemoteImporter`, wait for it to connect an
 
 # Backpressure
 
-If the network cannot keep up with messages being written to a `RemoteExporter.Exporter` then backpressure will propagate up the pipeline and messages will be handled according to the `DeliveryPolicy` given to `Store.Write(...)`.
+If the network cannot keep up with messages being written to a `RemoteExporter.Exporter` then backpressure will propagate up the pipeline and messages will be handled according to the `DeliveryPolicy` given to `PsiStore.Write(...)`.
 You may also pass an arbitrary bytes-per-second (BPS) quota when constructing the `RemoteExporter` (defaults to `long.MaxValue`).
 In this case backpressure will propagate when the average BPS exceeds this value.
 BPS is computed as an incremental average with a given time window (`bytesPerSecondSmoothingWindowSeconds` - defaults to `5.0`).`
