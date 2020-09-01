@@ -1,5 +1,3 @@
-# A Python Interop Walkthrough
-
 This walk-through is an example of a situation in which we have some useful functionality that we want to leverage from another ecosystem. In this case, we will look at how to interoperate with Python, in turn leveraging OpenCV to do face detection. One way to approach OpenCV in \psi is [with Managed C++ as demonstrated here](https://github.com/microsoft/psi-samples/tree/main/Samples/OpenCVSample). However, for this walkthrough we will call OpenCV from Python, and illustrate how to do cross-process communication between a \psi application (which will capture the images) and a Python script (which will run the face detection via OpenCV). The structure of the system is illustrated below.
 
 Then you can fill in more details. The psi application is cross-platform (can run on either windows or linux), and we persists data. Data can be visualized in PsiStudio, etc. 
