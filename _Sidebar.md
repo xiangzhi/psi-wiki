@@ -1,5 +1,6 @@
 **[[Home]]**
 * [[Getting Started]]
+* [[Frequently Asked Questions]]
 
 **[[Using and Building]]**
 * [[Using via NuGet Packages]]
