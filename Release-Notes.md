@@ -102,7 +102,7 @@ _A Note About Coordinate Systems_: This release begins to rationalize the handli
 
 ### __Azure Kinect Component (New)__
 
-* Added `AzureKinectSensor` and `AzureKinectBodyTracker` components that enable using the Azure Kinect sensor with \psi (see more: [Overview](Azure-Kinect-Overview), [Sample](https://github.com/microsoft/psi/tree/master/Samples/AzureKinectSample), [Azure Kinect Documentation](https://azure.microsoft.com/en-us/services/kinect-dk/)).
+* Added `AzureKinectSensor` and `AzureKinectBodyTracker` components that enable using the Azure Kinect sensor with \psi (see more: [Overview](Azure-Kinect-Overview), [Sample](https://github.com/microsoft/psi-samples/tree/main/Samples/AzureKinectSample), [Azure Kinect Documentation](https://azure.microsoft.com/en-us/services/kinect-dk/)).
 * The Kinect and AzureKinect body visualizers have moved into their own projects and need to be loaded as [3rd party visualizers for PsiStudio](3rd-Party-Visualizers) to become available.
 
 ### __Updates to Microsoft.Psi.Imaging__
@@ -408,7 +408,7 @@ A number of other operators for sampling, generating streams, and statistical co
 * `Interpolator<T>` was replaced with `Interpolator<TIn, TOut>` to support interpolation to a different output type.
 * `Generators.Sequence`, `Generators.Repeat` and `Generators.Range` require specifying an explicit time interval (previously the time interval parameter was optional and defaulted to 1 tick).
 * The existing overloads of the `Sample` stream operator that used an interpolator were renamed to `Interpolate`.
-* The OpenCV Sample (see Public\Samples\OpenCVSample) now requires OpenCV 4.1.1 to compile. You must also set the environment variable OpenCVDir_V4 to point to your local installation of OpenCV 4.1.1.
+* The OpenCV Sample now requires OpenCV 4.1.1 to compile. You must also set the environment variable OpenCVDir_V4 to point to your local installation of OpenCV 4.1.1.
 * Enabing diagnostics (e.g. `Pipeline.Create(true, ...)`) now takes an optional `DiagnosticsConfiguration` rather than a `TimeSpan` interval.
 
 ## __2019/07/18: Beta-release, version 0.9.6.1__

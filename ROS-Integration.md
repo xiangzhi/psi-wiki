@@ -5,8 +5,8 @@ Generally a long-running ROS system is integrated into a \\psi application by co
 
 After reading about the ROS bridge, the sample applications are a great way to understand how to integrate with \\psi.
 
-* [RosTurtleSample](https://github.com/Microsoft/psi/blob/master/Samples/RosTurtleSample) - illustrates how to connect Platform for Situated Intelligence to the `turtlesim` in ROS (no hardware required).
-* [RosArmControlSample](https://github.com/Microsoft/psi/blob/master/Samples/RosArmControlSample) - illustrates how to connect Platform for Situated Intelligence to control the [uArm Metal](http://ufactory.cc/#/en/uarm1) using ROS (hardware required).
+* [RosTurtleSample](https://github.com/Microsoft/psi-samples/blob/main/Samples/RosTurtleSample) - illustrates how to connect Platform for Situated Intelligence to the `turtlesim` in ROS (no hardware required).
+* [RosArmControlSample](https://github.com/Microsoft/psi-samples/blob/main/Samples/RosArmControlSample) - illustrates how to connect Platform for Situated Intelligence to control the [uArm Metal](http://ufactory.cc/#/en/uarm1) using ROS (hardware required).
 
 ## Comparisons
 

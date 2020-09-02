@@ -1,4 +1,4 @@
-Platform for Situated Intelligence supports reading from a Microsoft Kinect V2 Depth Camera (for the new Azure Kinect device, see the [Azure Kinect component](Azure-Kinect-Overview)). This includes capture of video, audio, body tracking, and face tracking streams from the Kinect. A [sample application here](https://github.com/microsoft/psi/tree/master/Samples/KinectSample) demonstrates its use.
+Platform for Situated Intelligence supports reading from a Microsoft Kinect V2 Depth Camera (for the new Azure Kinect device, see the [Azure Kinect component](Azure-Kinect-Overview)). This includes capture of video, audio, body tracking, and face tracking streams from the Kinect. A [sample application here](https://github.com/microsoft/psi-samples/tree/main/Samples/KinectSample) demonstrates its use.
 
 **Please note**: <br/>Support for Kinect is currently limited to Windows only.<br/>Support for Face tracking via Kinect is limited to Windows 64 bit applications.
 

@@ -1,4 +1,4 @@
-Platform for Situated Intelligence supports using a Microsoft Azure Kinect Camera (see also [Microsoft Kinect V2](Kinect-Overview) support). This includes capture of video, infrared, depth, audio, and body tracking streams from the Azure Kinect. A [sample application available here](https://github.com/microsoft/psi/tree/master/Samples/AzureKinectSample) demonstrates its use.
+Platform for Situated Intelligence supports using a Microsoft Azure Kinect Camera (see also [Microsoft Kinect V2](Kinect-Overview) support). This includes capture of video, infrared, depth, audio, and body tracking streams from the Azure Kinect. A [sample application available here](https://github.com/microsoft/psi-samples/tree/main/Samples/AzureKinectSample) demonstrates its use.
 
 **Please note**: <br/>Supported platforms for Azure Kinect currently includes 64-bit Windows 10 and Ubuntu 18.04 only ([vote for Mac support here](https://feedback.azure.com/forums/920053-azure-kinect-dk/suggestions/38061958-please-allow-for-macos-support-should-be-minima)).
 
