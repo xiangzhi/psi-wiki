@@ -217,9 +217,9 @@ While the `SharedPool<T>` and `KeyedSharedPool<T, TKey>` classes may be used dir
 
 | Shared Pool | Description |
 | :----------- | :---------- |
-| [Microsoft.Psi.SharedArrayPool&lt;T&gt;](/psi/api/class_microsoft_1_1_psi_1_1_shared_array_pool.html) | Provides a generic pool of shared arrays of type `T[]`. |
-| [Microsoft.Psi.Imaging.ImagePool](/psi/api/class_microsoft_1_1_psi_1_1_imaging_1_1_image_pool.html) | Provides a pool of shared images of type `Microsoft.Psi.Imaging.Image`. |
-| [Microsoft.Psi.Imaging.EncodedImagePool](/psi/api/class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image_pool.html) | Provides a pool of shared images of type `Microsoft.Psi.Imaging.EncodedImage`. |
+| [Microsoft.Psi.SharedArrayPool&lt;T&gt;](https://microsoft.github.io/psi/api/Microsoft.Psi.SharedArrayPool-1.html) | Provides a generic pool of shared arrays of type `T[]`. |
+| [Microsoft.Psi.Imaging.ImagePool](https://microsoft.github.io/psi/api/Microsoft.Psi.Imaging.ImagePool.html) | Provides a pool of shared images of type `Microsoft.Psi.Imaging.Image`. |
+| [Microsoft.Psi.Imaging.EncodedImagePool](https://microsoft.github.io/psi/api/Microsoft.Psi.Imaging.EncodedImagePool.html) | Provides a pool of shared images of type `Microsoft.Psi.Imaging.EncodedImage`. |
 
 ### Summary and Examples
 
