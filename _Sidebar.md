@@ -45,7 +45,7 @@
 * [[ONNX Overview]]
 * [[Finite State Machine Toolkit]]
 
-[**API Reference**](https://microsoft.github.io/psi/api/Microsoft.psi.html)
+[**API Reference**](https://microsoft.github.io/psi/api/Microsoft.Psi.html)
 
 **Community**
 * [[Getting Help]]
