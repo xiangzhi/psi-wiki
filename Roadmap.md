@@ -6,13 +6,11 @@ Moving forward, we plan to prioritize addressing the bugs and issues that are di
 
 ### Runtime
 
-- generalizing data importers and exporters to other storage types besides \\psi stores;
 - evolving the documentation with additional topics, including adding more samples and walkthroughs;
 
 ### Visualization and Platform for Situated Intelligence Studio 
 
-- enabling data annotation scenarios in PsiStudio;
-- ability to work with other data sources besides \\psi stores;
+- refining the support for data annotation scenarios in PsiStudio;
 - refining existing visualizers;
 - evolving and documenting the support for third-party visualizers and batch task processing in PsiStudio;
 
