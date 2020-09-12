@@ -52,6 +52,11 @@ The following are available as part of the `AzureKinectSensorConfiguration`:
 - **BodyTrackerConfiguration:** The body tracker configuration (default null, no body tracking).
 - **DeviceCaptureTimeout:** The timeout used for device capture (default 1 minute).
 - **FrameRateReportingFrequency:** The frequency at which frame rate is reported on the `FrameRate` emitter (default 2 seconds).
+- **ExposureTime:** Expore time of the color sensor (default `0` which is automatic).
+- **PowerlineFrequency:** The power-line frequency (default `Default`).
+- **WiredSyncMode:** Whether the sensor is operating in standalone or sycned mode (default `standalone`).
+- **DepthDelayOffColor:** The delay between capture of color image and depth image (default `0`).
+- **SuboridinateDelayOffMaster:** The image capture delay between the primary and subordinate sensors.
 
 ## Capturing the IMU
 
@@ -174,6 +179,38 @@ calibration.PipeTo(bodyTracker.AzureKinectSensorCalibration);
 
 var bodies = bodyTracker.Bodies;
 ```
+
+## Wired Hardware Synchronization of Multiple Azure Kinect Sensors
+
+The Azure Kinects have the capability for wired hardware synchronization of color image capture. In synchronization mode, all sensors will attempt to capture the color image at the same time. One sensor must be designated as the primary with all other sensors being designated as subordinate sensors. This is done by setting the `WiredSyncMode` to `Master` for the primary sensor and `Subordinate` for the subordinate sensors. The synchronization cables must be connected correctly for this to work. You can find more information about the synchronization cables [here](https://docs.microsoft.com/en-us/azure/Kinect-dk/multi-camera-sync). The exposure time and power-line frequency must also be manually set for them to work correctly. Below is an example of the configuration:
+```csharp
+// The minimum time between depth sensors accroding to AzureKinect Samples.
+// https://github.com/microsoft/Azure-Kinect-Sensor-SDK/blob/develop/examples/green_screen/main.cpp
+var minTimeBetweenDepthImageSensors = TimeSpan.FromTicks(1600);
+
+var sensor1 = new AzureKinectSensor(p, new AzureKinectSensorConfiguration()
+{
+    DeviceIndex = 0,
+    CameraFPS = FPS.FPS15,
+    WiredSyncMode = WiredSyncMode.Master,
+    PowerlineFrequency = AzureKinectSensorConfiguration.PowerlineFrequencyTypes.SixtyHz,
+    ExposureTime = TimeSpan.FromTicks(80000),
+    DepthDelayOffColor = minTimeBetweenDepthImageSensors / 2,
+});
+
+var sensor2 = new AzureKinectSensor(p, new AzureKinectSensorConfiguration()
+{
+    DeviceIndex = 1,
+    CameraFPS = FPS.FPS15,
+    WiredSyncMode = WiredSyncMode.Subordinate,
+    PowerlineFrequency = AzureKinectSensorConfiguration.PowerlineFrequencyTypes.SixtyHz,
+    ExposureTime = TimeSpan.FromTicks(80000),
+    DepthDelayOffColor = -1 * (minTimeBetweenDepthImageSensors / 2),
+});
+```
+
+Once they start, the sensors will try to take their color image at the same time. However, the actual time it reach /Psi and the pipeline might be different due to other physical constraints. Extra care must also be taken to make sure the depth sensors do not interfere with each other. You can change when the depth images are taken by changing the `DepthDelayOffColor` parameter.
+
 
 ## A Note About Coordinate Systems
 
